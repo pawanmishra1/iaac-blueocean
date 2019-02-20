@@ -12,6 +12,7 @@ pipeline {
           
           }
            sh """#!/bin/bash
+                   cd '/root/infrastructure-as-code/terraform/noncontainerized_env/'
                    /usr/local/bin/terraform destroy -auto-approve
                    /usr/local/bin/terraform apply -auto-approve"""
                                                    
