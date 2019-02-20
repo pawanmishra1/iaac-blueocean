@@ -8,8 +8,11 @@ pipeline {
     }
   stage('Provision VM') {
       steps {
-        sh 'cd  /root/infrastructure-as-code/terraform/noncontainerized_env/' 
+          dir("/root/infrastructure-as-code/terraform/noncontainerized_env/") {
+          sh "pwd"
+          sh 'terraform -version' 
       }
     }
   }
+}
 }
