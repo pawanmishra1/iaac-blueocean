@@ -21,7 +21,8 @@ pipeline {
       steps {	  
 		  ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/user_add.yml'
             }
-		   }
+	  }
+
    stage('Install Docker in  VM') {
       steps {
           ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/docker.yml.yml'
@@ -31,14 +32,15 @@ pipeline {
    stage('Setup Kubernetes Cluster) {
       steps {
 	      ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/kubernetes.yml
-          
+            }
+          } 
 
    stage('Setup Postgress DB cluster in Kubernetes') {
       steps {
           echo "DB Setup"
             }		  
            }
-    stage('Install Nginx on Kubernetes') {
+   stage('Install Nginx on Kubernetes') {
       steps {	
           echo 	 "nginx setup"
             }
