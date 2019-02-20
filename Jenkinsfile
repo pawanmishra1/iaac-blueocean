@@ -12,15 +12,6 @@ pipeline {
           sh 'pwd'
           }
         }
-   stage('Deleting VM ') {  
-      steps {
-          sh label: '', returnStdout: true, script: '''
-			terraform destroy -auto-approve
- 			terraform apply -auto-approve
-						   '''
-
-            }  
-          }
   }
 }
 
