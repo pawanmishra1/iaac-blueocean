@@ -12,8 +12,8 @@ pipeline {
           
           }
            sh """#!/bin/bash
-                   terraform destroy -auto-approve
-                   terraform apply -auto-approve"""
+                   /usr/local/bin/terraform destroy -auto-approve
+                   /usr/local/bin/terraform apply -auto-approve"""
                                                    
         
 }
