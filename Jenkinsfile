@@ -11,10 +11,10 @@ pipeline {
           dir("/root/infrastructure-as-code/terraform/noncontainerized_env/"){ 
           
           }
-           sh label: '', returnStdout: true, script: '''
-                        terraform destroy -auto-approve
-                        terraform apply -auto-approve
-                                                   '''
+           sh """#!/bin/bash
+                   terraform destroy -auto-approve
+                   terraform apply -auto-approve"""
+                                                   
         
 }
   }
