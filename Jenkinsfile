@@ -8,10 +8,15 @@ pipeline {
     }
   stage('Provision VM') {
       steps {
-          dir("/root/infrastructure-as-code/terraform/noncontainerized_env/") 
-          sh 'pwd'
+          dir("/root/infrastructure-as-code/terraform/noncontainerized_env/"){ 
+          
           }
-        }
+           sh label: '', returnStdout: true, script: '''
+                        terraform destroy -auto-approve
+                        terraform apply -auto-approve
+                                                   '''
+        
+}
   }
 }
-
+}
