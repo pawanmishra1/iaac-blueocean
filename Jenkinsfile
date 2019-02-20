@@ -10,22 +10,17 @@ pipeline {
       steps {
           dir("/root/infrastructure-as-code/terraform/noncontainerized_env/") 
           sh 'pwd'
-          sh label: '', script: '''cd infrastructure-as-code/terraform/noncontainerized_env/
-                                   terraform destroy -auto-approve
-                                   terraform apply -auto-approve
-                                '''
+          }
+        }
+   stage('Deleting VM ') {  
+      steps {
+          sh label: '', returnStdout: true, script: '''
+			terraform destroy -auto-approve
+ 			terraform apply -auto-approve
+						   '''
 
-
-
-      }
-
-      
-
-
-
-
-
-}
+            }  
+          }
   }
 }
 
