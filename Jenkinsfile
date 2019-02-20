@@ -29,7 +29,7 @@ pipeline {
             }
            }
 
-   stage('Setup Kubernetes Cluster) {
+   stage('Setup Kubernetes Cluster') {
       steps {
 	      ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/kubernetes.yml
             }
