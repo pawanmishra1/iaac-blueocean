@@ -25,13 +25,13 @@ pipeline {
 
    stage('Install Docker in  VM') {
       steps {
-          ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/docker.yml.yml'
+          ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/docker.yml'
             }
            }
 
    stage('Setup Kubernetes Cluster') {
       steps {
-	      ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/kubernetes.yml
+	      ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/kubernetes.yml'
             }
           } 
 
