@@ -10,12 +10,19 @@ pipeline {
       steps {
           dir("/root/infrastructure-as-code/terraform/noncontainerized_env/") 
           sh 'pwd'
+          sh label: '', script: '''cd infrastructure-as-code/terraform/noncontainerized_env/
+                                   terraform destroy -auto-approve
+                                   terraform apply -auto-approve
+                                '''
+
+
+
       }
 
       
-      steps {
-       sh 'terraform apply -auto-approve'
-       }
+
+
+
 
 
 }
