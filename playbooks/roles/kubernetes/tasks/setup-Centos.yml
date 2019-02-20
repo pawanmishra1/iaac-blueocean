@@ -1,0 +1,78 @@
+---
+- name: Install Requisites
+  yum: name=device-mapper-persistent-data,lvm2 state=installed
+
+- name: Download docker-ce.repo
+  get_url:
+    url: https://download.docker.com/linux/centos/docker-ce.repo
+    dest: /etc/yum.repos.d/docker-ce.repo
+
+- name: Install docker-ce 18.06.1
+  yum: name=docker-ce-18.06.1.ce state=installed update_cache=yes
+
+- name: Create /etc/docker dir
+  file: path=/etc/docker state=directory
+
+- copy:
+    dest: /etc/docker/daemon.json
+    content: |
+        {
+          "storage-driver": "devicemapper"
+        }
+- name: Create /etc/systemd/system/docker.service.d dir
+  file: path=/etc/systemd/system/docker.service.d state=directory recurse=yes
+
+- name: Start docker service
+  service: name=docker state=started enabled=yes
+  
+- copy:
+    dest: /etc/yum.repos.d/kubernetes.repo
+    content: |
+        [kubernetes]
+        name=Kubernetes
+        baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+        enabled=1
+        gpgcheck=1
+        repo_gpgcheck=0
+        gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+# - name: import gpg key
+#  rpm_key:
+#    key: https://packages.cloud.google.com/yum/doc/yum-key.gpg
+#    state: present
+- name: Install kubernetes packages
+  package: name=kubelet-{{kube_version}},kubeadm-{{kube_version}},kubectl-{{kube_version}} state=present update_cache=yes
+  when: kube_version != "latest"
+
+- name: Install kubernetes packages
+  package: name=kubelet,kubeadm,kubectl state=latest
+  when: kube_version == "latest"
+
+- name: Start kubelet service
+  service: name=kubelet state=started enabled=yes
+
+- lineinfile:
+    path: /etc/sysctl.d/k8s.conf
+    regexp: '^net.bridge.bridge-nf-call-ip6tables'
+    line: 'net.bridge.bridge-nf-call-ip6tables = 1'
+    create: yes
+  notify: sysctl-system
+
+- lineinfile:
+    path: /etc/sysctl.d/k8s.conf
+    regexp: '^net.bridge.bridge-nf-call-iptables'
+    line: 'net.bridge.bridge-nf-call-iptables = 1'
+    create: yes
+  notify: sysctl-system
+
+- name: sysctl-system
+  command: sysctl --system
+
+- name: Stop and disable firewalld
+  service:
+    name: firewalld
+    state: stopped
+    enabled: False
+  ignore_errors: yes
+
+- name: Include "{{kube_type_of_node}}" tasks
+  include: "{{kube_type_of_node}}.yaml"

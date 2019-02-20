@@ -1,0 +1,8 @@
+---
+# handlers file for docker
+
+
+- name: restart docker
+  become: yes
+  become_user: root
+  service: "name=docker state={{ docker_restart_handler_state }}"

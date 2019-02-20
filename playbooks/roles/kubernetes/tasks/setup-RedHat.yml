@@ -1,0 +1,35 @@
+---
+- name: Ensure Kubernetes repository exists.
+  become: yes
+  become_user: root
+  yum_repository:
+    name: kubernetes
+    description: Kubernetes
+    enabled: true
+    gpgcheck: true
+    sslverify:  0
+    repo_gpgcheck: false
+    baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el7-{{ kubernetes_yum_arch }}
+    gpgkey:
+      - https://packages.cloud.google.com/yum/doc/yum-key.gpg
+      - https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+
+#- name: Add Kubernetes GPG keys.
+#  become: yes
+#  become_user: root
+#  sslverify:  0
+#  rpm_key:
+#    key: "{{ item }}"
+#    state: present
+#  register: kubernetes_rpm_key
+#  with_items:
+#    - https://packages.cloud.google.com/yum/doc/yum-key.gpg
+#    - https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+
+#- name: Make cache if Kubernetes GPG key changed.
+#  become: yes
+#  become_user: root
+#  command: "yum -q makecache -y --disablerepo='*' --enablerepo='kubernetes'"
+#  when: kubernetes_rpm_key is changed
+#  args:
+#    warn: false
