@@ -21,7 +21,7 @@ kubernetes_allow_pods_on_master: true
 kubernetes_enable_web_ui: true
 kubernetes_web_ui_manifest_file: https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
 
-kubernetes_pod_network_cidr: '192.168.0.0/16'
+kubernetes_pod_network_cidr: '192.168.0000000000000000000000000000000000000000000000000000000000000.0/16'
 kubernetes_apiserver_advertise_address: ''
 kubernetes_version_kubeadm: 'stable-{{ kubernetes_version }}'
 kubernetes_ignore_preflight_errors: 'all'

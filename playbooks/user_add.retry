@@ -1,1 +1,6 @@
+dbserver01
+kubernetes
 lb01
+webserver01
+webserver02
+webserver03

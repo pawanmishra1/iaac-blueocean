@@ -14,22 +14,40 @@
       - https://packages.cloud.google.com/yum/doc/yum-key.gpg
       - https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 
-#- name: Add Kubernetes GPG keys.
-#  become: yes
-#  become_user: root
-#  sslverify:  0
-#  rpm_key:
-#    key: "{{ item }}"
-#    state: present
-#  register: kubernetes_rpm_key
-#  with_items:
-#    - https://packages.cloud.google.com/yum/doc/yum-key.gpg
-#    - https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+- name: Add Kubernetes GPG keys.
+  become: yes
+  become_user: root
+  sslverify:  0
+  rpm_key:
+    key: "{{ item }}"
+    state: present
+  register: kubernetes_rpm_key
+  with_items:
+    - https://packages.cloud.google.com/yum/doc/yum-key.gpg
+    - https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 
-#- name: Make cache if Kubernetes GPG key changed.
-#  become: yes
-#  become_user: root
-#  command: "yum -q makecache -y --disablerepo='*' --enablerepo='kubernetes'"
-#  when: kubernetes_rpm_key is changed
-#  args:
-#    warn: false
+- name: Make cache if Kubernetes GPG key changed.
+  become: yes
+  become_user: root
+  command: "yum -q makecache -y --disablerepo='*' --enablerepo='kubernetes'"
+  when: kubernetes_rpm_key is changed
+  args:
+    warn: false
+
+- lineinfile:
+    path: /etc/sysctl.d/k8s.conf
+    regexp: '^net.bridge.bridge-nf-call-ip6tables'
+    line: 'net.bridge.bridge-nf-call-ip6tables = 1'
+    create: yes
+
+- lineinfile:
+    path: /etc/sysctl.d/k8s.conf
+    regexp: '^net.bridge.bridge-nf-call-iptables'
+    line: 'net.bridge.bridge-nf-call-iptables = 1'
+    create: yes
+
+- name: sysctl system
+  become: yes
+  become_user: root
+  command: sysctl --system
+
