@@ -6,17 +6,25 @@ pipeline {
         echo 'Gathering LAB Inforamtion '
       }
     }
-  stage('Provisioning  VM,s') {
+  stage('Provisioning VM,s Delete VM') {
       steps {
             sh """#!/bin/bash
             cd '/root/infrastructure-as-code/terraform/noncontainerized_env/'
             /usr/local/bin/terraform destroy -auto-approve
-			echo 'All VM deleted '
-            /usr/local/bin/terraform apply -auto-approve
-			echo "Six VM Created"  """
+			echo 'All VM deleted' """
             }
           }
 		  
+  stage('Provisioning VM,s Create VM') {
+      steps {
+            sh """#!/bin/bash
+            cd '/root/infrastructure-as-code/terraform/noncontainerized_env/'
+                /usr/local/bin/terraform apply -auto-approve
+                echo 'ALL VM Created'  """
+            }
+          }
+
+
   stage('Adding User,s ') {
       steps {	  
 		  ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/user_add.yml'
@@ -29,27 +37,21 @@ pipeline {
             }
            }
 
-  stage('Install Kubernetes') {
+  stage('Install & Setup Kubernetes Cluster') {
       steps {
 	      ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/kubernetes.yml'
             }
           } 
 
-  stage('Setup  Kubernetes Cluster') {
-      steps {
-              ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/kubernetes.yml'
-            }
-          }
- 
-
+  
   stage('Setup Postgress DB cluster in Kubernetes') {
       steps {
-          echo "DB Setup"
+          ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/postgress-kube.yml
             }		  
            }
   stage('Install Nginx on Kubernetes') {
       steps {	
-          echo 	 "nginx setup"
+            ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/nginx-kube.yml 
             }
            }			
   }
