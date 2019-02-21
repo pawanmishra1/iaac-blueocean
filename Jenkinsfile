@@ -46,12 +46,12 @@ pipeline {
   
   stage('Setup Postgress DB cluster in Kubernetes') {
       steps {
-          ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/postgress-kube.yml
+          ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/postgress-kube.yml'
             }		  
            }
   stage('Install Nginx on Kubernetes') {
       steps {	
-            ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/nginx-kube.yml 
+            ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/nginx-kube.yml'
             }
            }			
   }
