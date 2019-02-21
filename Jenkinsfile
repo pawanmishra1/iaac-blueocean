@@ -1,12 +1,12 @@
 pipeline {
   agent any
   stages {
-    stage('Start IAAC') {
+    stage('Start Build IAAC LAB') {
       steps {
-        echo 'Create VM'
+        echo 'Gathering LAB Inforamtion '
       }
     }
-  stage('Provision VM') {
+  stage('Provisioning  VM,s') {
       steps {
             sh """#!/bin/bash
             cd '/root/infrastructure-as-code/terraform/noncontainerized_env/'
@@ -17,30 +17,37 @@ pipeline {
             }
           }
 		  
-  stage('Adding Ansible User in VM') {
+  stage('Adding User,s ') {
       steps {	  
 		  ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/user_add.yml'
             }
 	  }
 
-   stage('Install Docker in  VM') {
+  stage('Installation of  Docker ') {
       steps {
           ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/docker.yml'
             }
            }
 
-   stage('Setup Kubernetes Cluster') {
+  stage('Install Kubernetes') {
       steps {
 	      ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/kubernetes.yml'
             }
           } 
 
-   stage('Setup Postgress DB cluster in Kubernetes') {
+  stage('Setup  Kubernetes Cluster') {
+      steps {
+              ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/kubernetes.yml'
+            }
+          }
+ 
+
+  stage('Setup Postgress DB cluster in Kubernetes') {
       steps {
           echo "DB Setup"
             }		  
            }
-   stage('Install Nginx on Kubernetes') {
+  stage('Install Nginx on Kubernetes') {
       steps {	
           echo 	 "nginx setup"
             }
