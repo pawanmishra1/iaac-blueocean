@@ -9,7 +9,7 @@ pipeline {
   stage('Provisioning VM,s Delete VM') {
       steps {
             sh """#!/bin/bash
-            cd '/root/infrastructure-as-code/terraform/noncontainerized_env/'
+            cd '/root/infrastructure-as-code/terraform/small-size/'
             /usr/local/bin/terraform destroy -auto-approve
 			echo 'All VM deleted' """
             }
@@ -18,7 +18,7 @@ pipeline {
   stage('Provisioning VM,s Create VM') {
       steps {
             sh """#!/bin/bash
-            cd '/root/infrastructure-as-code/terraform/noncontainerized_env/'
+            cd '/root/infrastructure-as-code/terraform/small-size/'
                 /usr/local/bin/terraform apply -auto-approve
                 echo 'ALL VM Created'  """
             }
@@ -44,7 +44,7 @@ pipeline {
           } 
 
   
-  stage('Setup Postgress DB cluster in Kubernetes') {
+  stage('Setup PostgreSQL DB cluster in Kubernetes') {
       steps {
           ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/postgress-kube.yml'
             }		  
