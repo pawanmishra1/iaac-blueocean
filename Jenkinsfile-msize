@@ -9,7 +9,7 @@ pipeline {
   stage('Provisioning VM,s Delete VM') {
       steps {
             sh """#!/bin/bash
-            cd '/root/infrastructure-as-code/terraform/small-size/'
+            cd '/root/infrastructure-as-code/terraform/medium-size/'
             /usr/local/bin/terraform destroy -auto-approve
 			echo 'All VM deleted' """
             }
@@ -18,7 +18,7 @@ pipeline {
   stage('Provisioning VM,s Create VM') {
       steps {
             sh """#!/bin/bash
-            cd '/root/infrastructure-as-code/terraform/small-size/'
+            cd '/root/infrastructure-as-code/terraform/medium-size/'
                 /usr/local/bin/terraform apply -auto-approve
                 echo 'ALL VM Created'  """
             }
