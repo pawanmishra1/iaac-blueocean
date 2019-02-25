@@ -25,35 +25,35 @@ pipeline {
           }
 
 
-  stage('Adding User,s ') {
-      steps {	  
-		  ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/user_add.yml'
-            }
-	  }
+ # stage('Adding User,s ') {
+ #     steps {	  
+#		  ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/user_add.yml'
+#            }
+#	  }
 
-  stage('Installation of  Docker ') {
-      steps {
-          ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/docker.yml'
-            }
-           }
+#  stage('Installation of  Docker ') {
+#      steps {
+#          ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/docker.yml'
+#            }
+#           }
 
-  stage('Install & Setup Kubernetes Cluster') {
-      steps {
-	      ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/kubernetes.yml'
-            }
-          } 
+#  stage('Install & Setup Kubernetes Cluster') {
+#      steps {
+#	      ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/kubernetes.yml'
+#            }
+#          } 
 
   
-  stage('Setup PostgreSQL DB cluster in Kubernetes') {
-      steps {
-          ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/postgress-kube.yml'
-            }		  
-           }
-  stage('Install Nginx on Kubernetes') {
-      steps {	
-            ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/nginx-kube.yml'
-            }
-           }			
-  }
-}
+#  stage('Setup PostgreSQL DB cluster in Kubernetes') {
+#      steps {
+#          ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/postgress-kube.yml'
+#            }		  
+#           }
+#  stage('Install Nginx on Kubernetes') {
+#      steps {	
+#            ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/nginx-kube.yml'
+#            }
+#           }			
+#  }
+#}
 
