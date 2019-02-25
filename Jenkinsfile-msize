@@ -54,6 +54,6 @@ pipeline {
 #            ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/nginx-kube.yml'
 #            }
 #           }			
-#  }
-#}
+  }
+}
 
