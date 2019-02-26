@@ -54,6 +54,11 @@ pipeline {
             ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/nginx-kube.yml'
             }
            }			
-  }
+   stage('Install RabbitMQ on Kubernetes') {
+      steps {
+            ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/rabbitmq-kube.yml'
+            }
+           }
+     }
 }
 
