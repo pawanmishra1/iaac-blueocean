@@ -59,6 +59,11 @@ pipeline {
             ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/rabbitmq-kube.yml'
             }
            }
+   stage('Install Iaac Demo App on Kubernetes') {
+      steps {
+            ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/iaacdemoapp.yml'
+            }
+           }
      }
 }
 
