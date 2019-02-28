@@ -40,7 +40,7 @@ pipeline {
   
   stage('Integration Test on QA') {
       steps {
-             echo 'Smoke and Integration test on QA
+             echo 'Smoke and Integration test on QA'
             }		  
            }
   stage('Deploy to Prod') {
