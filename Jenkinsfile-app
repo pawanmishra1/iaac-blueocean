@@ -14,7 +14,7 @@ pipeline {
 		  
   stage('Code Analysis') {
       steps {
-             echo 'Sonar Qube Code Analysis
+             echo 'Sonar Qube Code Analysis'
             }
           }
 
