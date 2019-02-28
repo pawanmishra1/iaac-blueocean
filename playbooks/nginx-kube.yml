@@ -6,18 +6,18 @@
 
   - name: Create Nginx Deployment file
     copy:
-      src: nginx-deployment.yml
+      src: kube-deplyment/nginx-deployment.yml
       dest: /root/nginx-deployment.yml 
 
-  - name: Launch 3 ngix pods
+  - name: Launch 3 nginx pods
     command: "kubectl  apply -f /root/nginx-deployment.yml"
 
-  - name: Get exposed port
-    command: "kubectl get svc nginx --output=jsonpath='{range .spec.ports[0]}{.nodePort}'"
-    register: result
-  - set_fact:
-      node_port: "{{ result.stdout }}"
+  #- name: Get exposed port
+   # command: "kubectl get pods  nginx --output=jsonpath='{range .spec.ports[0]}{.nodePort}'"
+  #  register: result
+  #- set_fact:
+  #    node_port: "{{ result.stdout }}"
 
-  - debug: msg="Exposed port {{ node_port }}"
+  #- debug: msg="Exposed port {{ node_port }}"
 
 

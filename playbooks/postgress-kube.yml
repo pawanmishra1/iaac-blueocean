@@ -29,12 +29,12 @@
     command: "kubectl  apply -f /root/postgres-deployment.yml"
 
 
-  - name: Get exposed port
-    command: "kubectl get svc postgress --output=jsonpath='{range .spec.ports[0]}{.nodePort}'"
-    register: result
-  - set_fact:
-      node_port: "{{ result.stdout }}"
+ # - name: Get exposed port
+ #   command: "kubectl get svc postgress --output=jsonpath='{range .spec.ports[0]}{.nodePort}'"
+ #   register: result
+ # - set_fact:
+ #     node_port: "{{ result.stdout }}"
 
-  - debug: msg="Exposed port {{ node_port }}"
+ # - debug: msg="Exposed port {{ node_port }}"
 
 

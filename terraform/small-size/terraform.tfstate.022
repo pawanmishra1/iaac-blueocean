@@ -1,0 +1,1660 @@
+{
+    "version": 3,
+    "terraform_version": "0.11.11",
+    "serial": 29,
+    "lineage": "c714c108-d9b5-fe2d-6876-1f4d797225fc",
+    "modules": [
+        {
+            "path": [
+                "root"
+            ],
+            "outputs": {},
+            "resources": {},
+            "depends_on": []
+        },
+        {
+            "path": [
+                "root",
+                "dbserver_vm"
+            ],
+            "outputs": {},
+            "resources": {
+                "data.vsphere_compute_cluster.cluster": {
+                    "type": "vsphere_compute_cluster",
+                    "depends_on": [
+                        "data.vsphere_datacenter.datacenter"
+                    ],
+                    "primary": {
+                        "id": "domain-c7",
+                        "attributes": {
+                            "datacenter_id": "datacenter-2",
+                            "id": "domain-c7",
+                            "name": "Cluster_iaac",
+                            "resource_pool_id": "resgroup-8"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.dbserver_vm.provider.vsphere"
+                },
+                "data.vsphere_datacenter.datacenter": {
+                    "type": "vsphere_datacenter",
+                    "depends_on": [],
+                    "primary": {
+                        "id": "datacenter-2",
+                        "attributes": {
+                            "id": "datacenter-2",
+                            "name": "Datacenter"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.dbserver_vm.provider.vsphere"
+                },
+                "data.vsphere_datastore.datastore": {
+                    "type": "vsphere_datastore",
+                    "depends_on": [
+                        "data.vsphere_datacenter.datacenter"
+                    ],
+                    "primary": {
+                        "id": "datastore-31",
+                        "attributes": {
+                            "datacenter_id": "datacenter-2",
+                            "id": "datastore-31",
+                            "name": "Datastore_VM"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.dbserver_vm.provider.vsphere"
+                },
+                "data.vsphere_host.host": {
+                    "type": "vsphere_host",
+                    "depends_on": [
+                        "data.vsphere_datacenter.datacenter"
+                    ],
+                    "primary": {
+                        "id": "host-15",
+                        "attributes": {
+                            "datacenter_id": "datacenter-2",
+                            "id": "host-15",
+                            "name": "192.168.61.12",
+                            "resource_pool_id": "resgroup-8"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.dbserver_vm.provider.vsphere"
+                },
+                "data.vsphere_network.network": {
+                    "type": "vsphere_network",
+                    "depends_on": [
+                        "data.vsphere_datacenter.datacenter"
+                    ],
+                    "primary": {
+                        "id": "dvportgroup-28",
+                        "attributes": {
+                            "datacenter_id": "datacenter-2",
+                            "id": "dvportgroup-28",
+                            "name": "DSwitch-VM Network",
+                            "type": "DistributedVirtualPortgroup"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.dbserver_vm.provider.vsphere"
+                },
+                "data.vsphere_virtual_machine.template": {
+                    "type": "vsphere_virtual_machine",
+                    "depends_on": [
+                        "data.vsphere_datacenter.datacenter"
+                    ],
+                    "primary": {
+                        "id": "420bd181-5a9f-1896-1bd9-f0fa7dca651f",
+                        "attributes": {
+                            "alternate_guest_name": "",
+                            "datacenter_id": "datacenter-2",
+                            "disks.#": "1",
+                            "disks.0.eagerly_scrub": "false",
+                            "disks.0.size": "16",
+                            "disks.0.thin_provisioned": "false",
+                            "firmware": "bios",
+                            "guest_id": "centos7_64Guest",
+                            "id": "420bd181-5a9f-1896-1bd9-f0fa7dca651f",
+                            "name": "centos-7",
+                            "network_interface_types.#": "2",
+                            "network_interface_types.0": "vmxnet3",
+                            "network_interface_types.1": "vmxnet3",
+                            "scsi_bus_sharing": "noSharing",
+                            "scsi_controller_scan_count": "1",
+                            "scsi_type": "pvscsi"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.dbserver_vm.provider.vsphere"
+                },
+                "vsphere_virtual_machine.vm": {
+                    "type": "vsphere_virtual_machine",
+                    "depends_on": [
+                        "data.vsphere_datastore.datastore",
+                        "data.vsphere_host.host",
+                        "data.vsphere_network.network",
+                        "data.vsphere_virtual_machine.template"
+                    ],
+                    "primary": {
+                        "id": "420bccd5-a328-c6f2-e8af-799da5014190",
+                        "attributes": {
+                            "alternate_guest_name": "",
+                            "annotation": "",
+                            "boot_delay": "0",
+                            "boot_retry_delay": "10000",
+                            "boot_retry_enabled": "false",
+                            "cdrom.#": "0",
+                            "change_version": "2019-02-21T10:01:52.785695Z",
+                            "clone.#": "1",
+                            "clone.0.customize.#": "1",
+                            "clone.0.customize.0.dns_server_list.#": "1",
+                            "clone.0.customize.0.dns_server_list.0": "192.168.61.9",
+                            "clone.0.customize.0.dns_suffix_list.#": "1",
+                            "clone.0.customize.0.dns_suffix_list.0": "emcdigital.lab",
+                            "clone.0.customize.0.ipv4_gateway": "192.168.61.1",
+                            "clone.0.customize.0.ipv6_gateway": "",
+                            "clone.0.customize.0.linux_options.#": "1",
+                            "clone.0.customize.0.linux_options.0.domain": "emcdigital.lab",
+                            "clone.0.customize.0.linux_options.0.host_name": "dbserver",
+                            "clone.0.customize.0.linux_options.0.hw_clock_utc": "true",
+                            "clone.0.customize.0.linux_options.0.time_zone": "",
+                            "clone.0.customize.0.network_interface.#": "1",
+                            "clone.0.customize.0.network_interface.0.dns_domain": "",
+                            "clone.0.customize.0.network_interface.0.dns_server_list.#": "0",
+                            "clone.0.customize.0.network_interface.0.ipv4_address": "192.168.61.22",
+                            "clone.0.customize.0.network_interface.0.ipv4_netmask": "24",
+                            "clone.0.customize.0.network_interface.0.ipv6_address": "",
+                            "clone.0.customize.0.network_interface.0.ipv6_netmask": "0",
+                            "clone.0.customize.0.timeout": "10",
+                            "clone.0.customize.0.windows_options.#": "0",
+                            "clone.0.customize.0.windows_sysprep_text": "",
+                            "clone.0.linked_clone": "false",
+                            "clone.0.template_uuid": "420bd181-5a9f-1896-1bd9-f0fa7dca651f",
+                            "clone.0.timeout": "30",
+                            "cpu_hot_add_enabled": "false",
+                            "cpu_hot_remove_enabled": "false",
+                            "cpu_limit": "-1",
+                            "cpu_performance_counters_enabled": "false",
+                            "cpu_reservation": "0",
+                            "cpu_share_count": "1000",
+                            "cpu_share_level": "normal",
+                            "custom_attributes.%": "0",
+                            "datastore_id": "datastore-31",
+                            "default_ip_address": "192.168.61.22",
+                            "disk.#": "1",
+                            "disk.0.attach": "false",
+                            "disk.0.datastore_id": "datastore-31",
+                            "disk.0.device_address": "scsi:0:0",
+                            "disk.0.disk_mode": "persistent",
+                            "disk.0.disk_sharing": "sharingNone",
+                            "disk.0.eagerly_scrub": "false",
+                            "disk.0.io_limit": "-1",
+                            "disk.0.io_reservation": "0",
+                            "disk.0.io_share_count": "1000",
+                            "disk.0.io_share_level": "normal",
+                            "disk.0.keep_on_remove": "false",
+                            "disk.0.key": "2000",
+                            "disk.0.label": "disk0",
+                            "disk.0.name": "",
+                            "disk.0.path": "dbserver/dbserver.vmdk",
+                            "disk.0.size": "16",
+                            "disk.0.thin_provisioned": "false",
+                            "disk.0.unit_number": "0",
+                            "disk.0.uuid": "6000C298-babc-19c8-125c-0aec02951fd5",
+                            "disk.0.write_through": "false",
+                            "efi_secure_boot_enabled": "false",
+                            "enable_disk_uuid": "false",
+                            "enable_logging": "false",
+                            "ept_rvi_mode": "automatic",
+                            "extra_config.%": "0",
+                            "firmware": "bios",
+                            "folder": "appmod_vms",
+                            "force_power_off": "true",
+                            "guest_id": "centos7_64Guest",
+                            "guest_ip_addresses.#": "2",
+                            "guest_ip_addresses.0": "192.168.61.22",
+                            "guest_ip_addresses.1": "fe80::250:56ff:fe8b:ec32",
+                            "host_system_id": "host-15",
+                            "hv_mode": "hvAuto",
+                            "id": "420bccd5-a328-c6f2-e8af-799da5014190",
+                            "latency_sensitivity": "normal",
+                            "memory": "4096",
+                            "memory_hot_add_enabled": "false",
+                            "memory_limit": "-1",
+                            "memory_reservation": "0",
+                            "memory_share_count": "40960",
+                            "memory_share_level": "normal",
+                            "migrate_wait_timeout": "30",
+                            "moid": "vm-247",
+                            "name": "dbserver",
+                            "nested_hv_enabled": "false",
+                            "network_interface.#": "1",
+                            "network_interface.0.adapter_type": "vmxnet3",
+                            "network_interface.0.bandwidth_limit": "-1",
+                            "network_interface.0.bandwidth_reservation": "0",
+                            "network_interface.0.bandwidth_share_count": "50",
+                            "network_interface.0.bandwidth_share_level": "normal",
+                            "network_interface.0.device_address": "pci:0:7",
+                            "network_interface.0.key": "4000",
+                            "network_interface.0.mac_address": "00:50:56:8b:ec:32",
+                            "network_interface.0.network_id": "dvportgroup-28",
+                            "network_interface.0.use_static_mac": "false",
+                            "num_cores_per_socket": "1",
+                            "num_cpus": "1",
+                            "reboot_required": "false",
+                            "resource_pool_id": "resgroup-8",
+                            "run_tools_scripts_after_power_on": "true",
+                            "run_tools_scripts_after_resume": "true",
+                            "run_tools_scripts_before_guest_reboot": "false",
+                            "run_tools_scripts_before_guest_shutdown": "true",
+                            "run_tools_scripts_before_guest_standby": "true",
+                            "scsi_bus_sharing": "noSharing",
+                            "scsi_controller_count": "1",
+                            "scsi_type": "pvscsi",
+                            "shutdown_wait_timeout": "3",
+                            "swap_placement_policy": "inherit",
+                            "sync_time_with_host": "false",
+                            "tags.#": "0",
+                            "uuid": "420bccd5-a328-c6f2-e8af-799da5014190",
+                            "vapp_transport.#": "0",
+                            "vmware_tools_status": "guestToolsRunning",
+                            "vmx_path": "dbserver/dbserver.vmx",
+                            "wait_for_guest_net_routable": "true",
+                            "wait_for_guest_net_timeout": "5"
+                        },
+                        "meta": {
+                            "schema_version": "3"
+                        },
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.dbserver_vm.provider.vsphere"
+                }
+            },
+            "depends_on": []
+        },
+        {
+            "path": [
+                "root",
+                "kubernetes_vm"
+            ],
+            "outputs": {},
+            "resources": {
+                "data.vsphere_compute_cluster.cluster": {
+                    "type": "vsphere_compute_cluster",
+                    "depends_on": [
+                        "data.vsphere_datacenter.datacenter"
+                    ],
+                    "primary": {
+                        "id": "domain-c7",
+                        "attributes": {
+                            "datacenter_id": "datacenter-2",
+                            "id": "domain-c7",
+                            "name": "Cluster_iaac",
+                            "resource_pool_id": "resgroup-8"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.kubernetes_vm.provider.vsphere"
+                },
+                "data.vsphere_datacenter.datacenter": {
+                    "type": "vsphere_datacenter",
+                    "depends_on": [],
+                    "primary": {
+                        "id": "datacenter-2",
+                        "attributes": {
+                            "id": "datacenter-2",
+                            "name": "Datacenter"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.kubernetes_vm.provider.vsphere"
+                },
+                "data.vsphere_datastore.datastore": {
+                    "type": "vsphere_datastore",
+                    "depends_on": [
+                        "data.vsphere_datacenter.datacenter"
+                    ],
+                    "primary": {
+                        "id": "datastore-31",
+                        "attributes": {
+                            "datacenter_id": "datacenter-2",
+                            "id": "datastore-31",
+                            "name": "Datastore_VM"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.kubernetes_vm.provider.vsphere"
+                },
+                "data.vsphere_host.host": {
+                    "type": "vsphere_host",
+                    "depends_on": [
+                        "data.vsphere_datacenter.datacenter"
+                    ],
+                    "primary": {
+                        "id": "host-15",
+                        "attributes": {
+                            "datacenter_id": "datacenter-2",
+                            "id": "host-15",
+                            "name": "192.168.61.12",
+                            "resource_pool_id": "resgroup-8"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.kubernetes_vm.provider.vsphere"
+                },
+                "data.vsphere_network.network": {
+                    "type": "vsphere_network",
+                    "depends_on": [
+                        "data.vsphere_datacenter.datacenter"
+                    ],
+                    "primary": {
+                        "id": "dvportgroup-28",
+                        "attributes": {
+                            "datacenter_id": "datacenter-2",
+                            "id": "dvportgroup-28",
+                            "name": "DSwitch-VM Network",
+                            "type": "DistributedVirtualPortgroup"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.kubernetes_vm.provider.vsphere"
+                },
+                "data.vsphere_virtual_machine.template": {
+                    "type": "vsphere_virtual_machine",
+                    "depends_on": [
+                        "data.vsphere_datacenter.datacenter"
+                    ],
+                    "primary": {
+                        "id": "420bd181-5a9f-1896-1bd9-f0fa7dca651f",
+                        "attributes": {
+                            "alternate_guest_name": "",
+                            "datacenter_id": "datacenter-2",
+                            "disks.#": "1",
+                            "disks.0.eagerly_scrub": "false",
+                            "disks.0.size": "16",
+                            "disks.0.thin_provisioned": "false",
+                            "firmware": "bios",
+                            "guest_id": "centos7_64Guest",
+                            "id": "420bd181-5a9f-1896-1bd9-f0fa7dca651f",
+                            "name": "centos-7",
+                            "network_interface_types.#": "2",
+                            "network_interface_types.0": "vmxnet3",
+                            "network_interface_types.1": "vmxnet3",
+                            "scsi_bus_sharing": "noSharing",
+                            "scsi_controller_scan_count": "1",
+                            "scsi_type": "pvscsi"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.kubernetes_vm.provider.vsphere"
+                },
+                "vsphere_virtual_machine.vm": {
+                    "type": "vsphere_virtual_machine",
+                    "depends_on": [
+                        "data.vsphere_datastore.datastore",
+                        "data.vsphere_host.host",
+                        "data.vsphere_network.network",
+                        "data.vsphere_virtual_machine.template"
+                    ],
+                    "primary": {
+                        "id": "420b6039-bdb6-e052-7f42-f5336923122f",
+                        "attributes": {
+                            "alternate_guest_name": "",
+                            "annotation": "",
+                            "boot_delay": "0",
+                            "boot_retry_delay": "10000",
+                            "boot_retry_enabled": "false",
+                            "cdrom.#": "0",
+                            "change_version": "2019-02-21T10:01:21.344185Z",
+                            "clone.#": "1",
+                            "clone.0.customize.#": "1",
+                            "clone.0.customize.0.dns_server_list.#": "1",
+                            "clone.0.customize.0.dns_server_list.0": "192.168.61.9",
+                            "clone.0.customize.0.dns_suffix_list.#": "1",
+                            "clone.0.customize.0.dns_suffix_list.0": "emcdigital.lab",
+                            "clone.0.customize.0.ipv4_gateway": "192.168.61.1",
+                            "clone.0.customize.0.ipv6_gateway": "",
+                            "clone.0.customize.0.linux_options.#": "1",
+                            "clone.0.customize.0.linux_options.0.domain": "emcdigital.lab",
+                            "clone.0.customize.0.linux_options.0.host_name": "kubernetes",
+                            "clone.0.customize.0.linux_options.0.hw_clock_utc": "true",
+                            "clone.0.customize.0.linux_options.0.time_zone": "",
+                            "clone.0.customize.0.network_interface.#": "1",
+                            "clone.0.customize.0.network_interface.0.dns_domain": "",
+                            "clone.0.customize.0.network_interface.0.dns_server_list.#": "0",
+                            "clone.0.customize.0.network_interface.0.ipv4_address": "192.168.61.23",
+                            "clone.0.customize.0.network_interface.0.ipv4_netmask": "24",
+                            "clone.0.customize.0.network_interface.0.ipv6_address": "",
+                            "clone.0.customize.0.network_interface.0.ipv6_netmask": "0",
+                            "clone.0.customize.0.timeout": "10",
+                            "clone.0.customize.0.windows_options.#": "0",
+                            "clone.0.customize.0.windows_sysprep_text": "",
+                            "clone.0.linked_clone": "false",
+                            "clone.0.template_uuid": "420bd181-5a9f-1896-1bd9-f0fa7dca651f",
+                            "clone.0.timeout": "30",
+                            "cpu_hot_add_enabled": "false",
+                            "cpu_hot_remove_enabled": "false",
+                            "cpu_limit": "-1",
+                            "cpu_performance_counters_enabled": "false",
+                            "cpu_reservation": "0",
+                            "cpu_share_count": "4000",
+                            "cpu_share_level": "normal",
+                            "custom_attributes.%": "0",
+                            "datastore_id": "datastore-31",
+                            "default_ip_address": "192.168.61.23",
+                            "disk.#": "1",
+                            "disk.0.attach": "false",
+                            "disk.0.datastore_id": "datastore-31",
+                            "disk.0.device_address": "scsi:0:0",
+                            "disk.0.disk_mode": "persistent",
+                            "disk.0.disk_sharing": "sharingNone",
+                            "disk.0.eagerly_scrub": "false",
+                            "disk.0.io_limit": "-1",
+                            "disk.0.io_reservation": "0",
+                            "disk.0.io_share_count": "1000",
+                            "disk.0.io_share_level": "normal",
+                            "disk.0.keep_on_remove": "false",
+                            "disk.0.key": "2000",
+                            "disk.0.label": "disk0",
+                            "disk.0.name": "",
+                            "disk.0.path": "kubernetes/kubernetes.vmdk",
+                            "disk.0.size": "16",
+                            "disk.0.thin_provisioned": "false",
+                            "disk.0.unit_number": "0",
+                            "disk.0.uuid": "6000C299-f139-45a6-1552-5eaa028ffd9d",
+                            "disk.0.write_through": "false",
+                            "efi_secure_boot_enabled": "false",
+                            "enable_disk_uuid": "false",
+                            "enable_logging": "false",
+                            "ept_rvi_mode": "automatic",
+                            "extra_config.%": "0",
+                            "firmware": "bios",
+                            "folder": "appmod_vms",
+                            "force_power_off": "true",
+                            "guest_id": "centos7_64Guest",
+                            "guest_ip_addresses.#": "2",
+                            "guest_ip_addresses.0": "192.168.61.23",
+                            "guest_ip_addresses.1": "fe80::250:56ff:fe8b:f7c8",
+                            "host_system_id": "host-15",
+                            "hv_mode": "hvAuto",
+                            "id": "420b6039-bdb6-e052-7f42-f5336923122f",
+                            "latency_sensitivity": "normal",
+                            "memory": "4096",
+                            "memory_hot_add_enabled": "false",
+                            "memory_limit": "-1",
+                            "memory_reservation": "0",
+                            "memory_share_count": "40960",
+                            "memory_share_level": "normal",
+                            "migrate_wait_timeout": "30",
+                            "moid": "vm-251",
+                            "name": "kubernetes",
+                            "nested_hv_enabled": "false",
+                            "network_interface.#": "1",
+                            "network_interface.0.adapter_type": "vmxnet3",
+                            "network_interface.0.bandwidth_limit": "-1",
+                            "network_interface.0.bandwidth_reservation": "0",
+                            "network_interface.0.bandwidth_share_count": "50",
+                            "network_interface.0.bandwidth_share_level": "normal",
+                            "network_interface.0.device_address": "pci:0:7",
+                            "network_interface.0.key": "4000",
+                            "network_interface.0.mac_address": "00:50:56:8b:f7:c8",
+                            "network_interface.0.network_id": "dvportgroup-28",
+                            "network_interface.0.use_static_mac": "false",
+                            "num_cores_per_socket": "1",
+                            "num_cpus": "4",
+                            "reboot_required": "false",
+                            "resource_pool_id": "resgroup-8",
+                            "run_tools_scripts_after_power_on": "true",
+                            "run_tools_scripts_after_resume": "true",
+                            "run_tools_scripts_before_guest_reboot": "false",
+                            "run_tools_scripts_before_guest_shutdown": "true",
+                            "run_tools_scripts_before_guest_standby": "true",
+                            "scsi_bus_sharing": "noSharing",
+                            "scsi_controller_count": "1",
+                            "scsi_type": "pvscsi",
+                            "shutdown_wait_timeout": "3",
+                            "swap_placement_policy": "inherit",
+                            "sync_time_with_host": "false",
+                            "tags.#": "0",
+                            "uuid": "420b6039-bdb6-e052-7f42-f5336923122f",
+                            "vapp_transport.#": "0",
+                            "vmware_tools_status": "guestToolsRunning",
+                            "vmx_path": "kubernetes/kubernetes.vmx",
+                            "wait_for_guest_net_routable": "true",
+                            "wait_for_guest_net_timeout": "5"
+                        },
+                        "meta": {
+                            "schema_version": "3"
+                        },
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.kubernetes_vm.provider.vsphere"
+                }
+            },
+            "depends_on": []
+        },
+        {
+            "path": [
+                "root",
+                "loadbalancer_vm"
+            ],
+            "outputs": {},
+            "resources": {
+                "data.vsphere_compute_cluster.cluster": {
+                    "type": "vsphere_compute_cluster",
+                    "depends_on": [
+                        "data.vsphere_datacenter.datacenter"
+                    ],
+                    "primary": {
+                        "id": "domain-c7",
+                        "attributes": {
+                            "datacenter_id": "datacenter-2",
+                            "id": "domain-c7",
+                            "name": "Cluster_iaac",
+                            "resource_pool_id": "resgroup-8"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.loadbalancer_vm.provider.vsphere"
+                },
+                "data.vsphere_datacenter.datacenter": {
+                    "type": "vsphere_datacenter",
+                    "depends_on": [],
+                    "primary": {
+                        "id": "datacenter-2",
+                        "attributes": {
+                            "id": "datacenter-2",
+                            "name": "Datacenter"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.loadbalancer_vm.provider.vsphere"
+                },
+                "data.vsphere_datastore.datastore": {
+                    "type": "vsphere_datastore",
+                    "depends_on": [
+                        "data.vsphere_datacenter.datacenter"
+                    ],
+                    "primary": {
+                        "id": "datastore-31",
+                        "attributes": {
+                            "datacenter_id": "datacenter-2",
+                            "id": "datastore-31",
+                            "name": "Datastore_VM"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.loadbalancer_vm.provider.vsphere"
+                },
+                "data.vsphere_host.host": {
+                    "type": "vsphere_host",
+                    "depends_on": [
+                        "data.vsphere_datacenter.datacenter"
+                    ],
+                    "primary": {
+                        "id": "host-15",
+                        "attributes": {
+                            "datacenter_id": "datacenter-2",
+                            "id": "host-15",
+                            "name": "192.168.61.12",
+                            "resource_pool_id": "resgroup-8"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.loadbalancer_vm.provider.vsphere"
+                },
+                "data.vsphere_network.network": {
+                    "type": "vsphere_network",
+                    "depends_on": [
+                        "data.vsphere_datacenter.datacenter"
+                    ],
+                    "primary": {
+                        "id": "dvportgroup-28",
+                        "attributes": {
+                            "datacenter_id": "datacenter-2",
+                            "id": "dvportgroup-28",
+                            "name": "DSwitch-VM Network",
+                            "type": "DistributedVirtualPortgroup"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.loadbalancer_vm.provider.vsphere"
+                },
+                "data.vsphere_virtual_machine.template": {
+                    "type": "vsphere_virtual_machine",
+                    "depends_on": [
+                        "data.vsphere_datacenter.datacenter"
+                    ],
+                    "primary": {
+                        "id": "420bd181-5a9f-1896-1bd9-f0fa7dca651f",
+                        "attributes": {
+                            "alternate_guest_name": "",
+                            "datacenter_id": "datacenter-2",
+                            "disks.#": "1",
+                            "disks.0.eagerly_scrub": "false",
+                            "disks.0.size": "16",
+                            "disks.0.thin_provisioned": "false",
+                            "firmware": "bios",
+                            "guest_id": "centos7_64Guest",
+                            "id": "420bd181-5a9f-1896-1bd9-f0fa7dca651f",
+                            "name": "centos-7",
+                            "network_interface_types.#": "2",
+                            "network_interface_types.0": "vmxnet3",
+                            "network_interface_types.1": "vmxnet3",
+                            "scsi_bus_sharing": "noSharing",
+                            "scsi_controller_scan_count": "1",
+                            "scsi_type": "pvscsi"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.loadbalancer_vm.provider.vsphere"
+                },
+                "vsphere_virtual_machine.vm": {
+                    "type": "vsphere_virtual_machine",
+                    "depends_on": [
+                        "data.vsphere_datastore.datastore",
+                        "data.vsphere_host.host",
+                        "data.vsphere_network.network",
+                        "data.vsphere_virtual_machine.template"
+                    ],
+                    "primary": {
+                        "id": "420b42af-041a-cc27-aa01-42e83715b806",
+                        "attributes": {
+                            "alternate_guest_name": "",
+                            "annotation": "",
+                            "boot_delay": "0",
+                            "boot_retry_delay": "10000",
+                            "boot_retry_enabled": "false",
+                            "cdrom.#": "0",
+                            "change_version": "2019-02-21T10:01:49.409863Z",
+                            "clone.#": "1",
+                            "clone.0.customize.#": "1",
+                            "clone.0.customize.0.dns_server_list.#": "1",
+                            "clone.0.customize.0.dns_server_list.0": "192.168.61.9",
+                            "clone.0.customize.0.dns_suffix_list.#": "1",
+                            "clone.0.customize.0.dns_suffix_list.0": "emcdigital.lab",
+                            "clone.0.customize.0.ipv4_gateway": "192.168.61.1",
+                            "clone.0.customize.0.ipv6_gateway": "",
+                            "clone.0.customize.0.linux_options.#": "1",
+                            "clone.0.customize.0.linux_options.0.domain": "emcdigital.lab",
+                            "clone.0.customize.0.linux_options.0.host_name": "loadbalancer",
+                            "clone.0.customize.0.linux_options.0.hw_clock_utc": "true",
+                            "clone.0.customize.0.linux_options.0.time_zone": "",
+                            "clone.0.customize.0.network_interface.#": "1",
+                            "clone.0.customize.0.network_interface.0.dns_domain": "",
+                            "clone.0.customize.0.network_interface.0.dns_server_list.#": "0",
+                            "clone.0.customize.0.network_interface.0.ipv4_address": "192.168.61.18",
+                            "clone.0.customize.0.network_interface.0.ipv4_netmask": "24",
+                            "clone.0.customize.0.network_interface.0.ipv6_address": "",
+                            "clone.0.customize.0.network_interface.0.ipv6_netmask": "0",
+                            "clone.0.customize.0.timeout": "10",
+                            "clone.0.customize.0.windows_options.#": "0",
+                            "clone.0.customize.0.windows_sysprep_text": "",
+                            "clone.0.linked_clone": "false",
+                            "clone.0.template_uuid": "420bd181-5a9f-1896-1bd9-f0fa7dca651f",
+                            "clone.0.timeout": "30",
+                            "cpu_hot_add_enabled": "false",
+                            "cpu_hot_remove_enabled": "false",
+                            "cpu_limit": "-1",
+                            "cpu_performance_counters_enabled": "false",
+                            "cpu_reservation": "0",
+                            "cpu_share_count": "1000",
+                            "cpu_share_level": "normal",
+                            "custom_attributes.%": "0",
+                            "datastore_id": "datastore-31",
+                            "default_ip_address": "192.168.61.18",
+                            "disk.#": "1",
+                            "disk.0.attach": "false",
+                            "disk.0.datastore_id": "datastore-31",
+                            "disk.0.device_address": "scsi:0:0",
+                            "disk.0.disk_mode": "persistent",
+                            "disk.0.disk_sharing": "sharingNone",
+                            "disk.0.eagerly_scrub": "false",
+                            "disk.0.io_limit": "-1",
+                            "disk.0.io_reservation": "0",
+                            "disk.0.io_share_count": "1000",
+                            "disk.0.io_share_level": "normal",
+                            "disk.0.keep_on_remove": "false",
+                            "disk.0.key": "2000",
+                            "disk.0.label": "disk0",
+                            "disk.0.name": "",
+                            "disk.0.path": "loadbalancer/loadbalancer.vmdk",
+                            "disk.0.size": "16",
+                            "disk.0.thin_provisioned": "false",
+                            "disk.0.unit_number": "0",
+                            "disk.0.uuid": "6000C290-c1a9-0823-f602-79c5fa228f97",
+                            "disk.0.write_through": "false",
+                            "efi_secure_boot_enabled": "false",
+                            "enable_disk_uuid": "false",
+                            "enable_logging": "false",
+                            "ept_rvi_mode": "automatic",
+                            "extra_config.%": "0",
+                            "firmware": "bios",
+                            "folder": "appmod_vms",
+                            "force_power_off": "true",
+                            "guest_id": "centos7_64Guest",
+                            "guest_ip_addresses.#": "2",
+                            "guest_ip_addresses.0": "192.168.61.18",
+                            "guest_ip_addresses.1": "fe80::250:56ff:fe8b:b7a0",
+                            "host_system_id": "host-15",
+                            "hv_mode": "hvAuto",
+                            "id": "420b42af-041a-cc27-aa01-42e83715b806",
+                            "latency_sensitivity": "normal",
+                            "memory": "4096",
+                            "memory_hot_add_enabled": "false",
+                            "memory_limit": "-1",
+                            "memory_reservation": "0",
+                            "memory_share_count": "40960",
+                            "memory_share_level": "normal",
+                            "migrate_wait_timeout": "30",
+                            "moid": "vm-246",
+                            "name": "loadbalancer",
+                            "nested_hv_enabled": "false",
+                            "network_interface.#": "1",
+                            "network_interface.0.adapter_type": "vmxnet3",
+                            "network_interface.0.bandwidth_limit": "-1",
+                            "network_interface.0.bandwidth_reservation": "0",
+                            "network_interface.0.bandwidth_share_count": "50",
+                            "network_interface.0.bandwidth_share_level": "normal",
+                            "network_interface.0.device_address": "pci:0:7",
+                            "network_interface.0.key": "4000",
+                            "network_interface.0.mac_address": "00:50:56:8b:b7:a0",
+                            "network_interface.0.network_id": "dvportgroup-28",
+                            "network_interface.0.use_static_mac": "false",
+                            "num_cores_per_socket": "1",
+                            "num_cpus": "1",
+                            "reboot_required": "false",
+                            "resource_pool_id": "resgroup-8",
+                            "run_tools_scripts_after_power_on": "true",
+                            "run_tools_scripts_after_resume": "true",
+                            "run_tools_scripts_before_guest_reboot": "false",
+                            "run_tools_scripts_before_guest_shutdown": "true",
+                            "run_tools_scripts_before_guest_standby": "true",
+                            "scsi_bus_sharing": "noSharing",
+                            "scsi_controller_count": "1",
+                            "scsi_type": "pvscsi",
+                            "shutdown_wait_timeout": "3",
+                            "swap_placement_policy": "inherit",
+                            "sync_time_with_host": "false",
+                            "tags.#": "0",
+                            "uuid": "420b42af-041a-cc27-aa01-42e83715b806",
+                            "vapp_transport.#": "0",
+                            "vmware_tools_status": "guestToolsRunning",
+                            "vmx_path": "loadbalancer/loadbalancer.vmx",
+                            "wait_for_guest_net_routable": "true",
+                            "wait_for_guest_net_timeout": "5"
+                        },
+                        "meta": {
+                            "schema_version": "3"
+                        },
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.loadbalancer_vm.provider.vsphere"
+                }
+            },
+            "depends_on": []
+        },
+        {
+            "path": [
+                "root",
+                "webserver01_vm"
+            ],
+            "outputs": {},
+            "resources": {
+                "data.vsphere_compute_cluster.cluster": {
+                    "type": "vsphere_compute_cluster",
+                    "depends_on": [
+                        "data.vsphere_datacenter.datacenter"
+                    ],
+                    "primary": {
+                        "id": "domain-c7",
+                        "attributes": {
+                            "datacenter_id": "datacenter-2",
+                            "id": "domain-c7",
+                            "name": "Cluster_iaac",
+                            "resource_pool_id": "resgroup-8"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.webserver01_vm.provider.vsphere"
+                },
+                "data.vsphere_datacenter.datacenter": {
+                    "type": "vsphere_datacenter",
+                    "depends_on": [],
+                    "primary": {
+                        "id": "datacenter-2",
+                        "attributes": {
+                            "id": "datacenter-2",
+                            "name": "Datacenter"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.webserver01_vm.provider.vsphere"
+                },
+                "data.vsphere_datastore.datastore": {
+                    "type": "vsphere_datastore",
+                    "depends_on": [
+                        "data.vsphere_datacenter.datacenter"
+                    ],
+                    "primary": {
+                        "id": "datastore-31",
+                        "attributes": {
+                            "datacenter_id": "datacenter-2",
+                            "id": "datastore-31",
+                            "name": "Datastore_VM"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.webserver01_vm.provider.vsphere"
+                },
+                "data.vsphere_host.host": {
+                    "type": "vsphere_host",
+                    "depends_on": [
+                        "data.vsphere_datacenter.datacenter"
+                    ],
+                    "primary": {
+                        "id": "host-15",
+                        "attributes": {
+                            "datacenter_id": "datacenter-2",
+                            "id": "host-15",
+                            "name": "192.168.61.12",
+                            "resource_pool_id": "resgroup-8"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.webserver01_vm.provider.vsphere"
+                },
+                "data.vsphere_network.network": {
+                    "type": "vsphere_network",
+                    "depends_on": [
+                        "data.vsphere_datacenter.datacenter"
+                    ],
+                    "primary": {
+                        "id": "dvportgroup-28",
+                        "attributes": {
+                            "datacenter_id": "datacenter-2",
+                            "id": "dvportgroup-28",
+                            "name": "DSwitch-VM Network",
+                            "type": "DistributedVirtualPortgroup"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.webserver01_vm.provider.vsphere"
+                },
+                "data.vsphere_virtual_machine.template": {
+                    "type": "vsphere_virtual_machine",
+                    "depends_on": [
+                        "data.vsphere_datacenter.datacenter"
+                    ],
+                    "primary": {
+                        "id": "420bd181-5a9f-1896-1bd9-f0fa7dca651f",
+                        "attributes": {
+                            "alternate_guest_name": "",
+                            "datacenter_id": "datacenter-2",
+                            "disks.#": "1",
+                            "disks.0.eagerly_scrub": "false",
+                            "disks.0.size": "16",
+                            "disks.0.thin_provisioned": "false",
+                            "firmware": "bios",
+                            "guest_id": "centos7_64Guest",
+                            "id": "420bd181-5a9f-1896-1bd9-f0fa7dca651f",
+                            "name": "centos-7",
+                            "network_interface_types.#": "2",
+                            "network_interface_types.0": "vmxnet3",
+                            "network_interface_types.1": "vmxnet3",
+                            "scsi_bus_sharing": "noSharing",
+                            "scsi_controller_scan_count": "1",
+                            "scsi_type": "pvscsi"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.webserver01_vm.provider.vsphere"
+                },
+                "vsphere_virtual_machine.vm": {
+                    "type": "vsphere_virtual_machine",
+                    "depends_on": [
+                        "data.vsphere_datastore.datastore",
+                        "data.vsphere_host.host",
+                        "data.vsphere_network.network",
+                        "data.vsphere_virtual_machine.template"
+                    ],
+                    "primary": {
+                        "id": "420bfeff-1a4b-6592-edf2-facbf22dd947",
+                        "attributes": {
+                            "alternate_guest_name": "",
+                            "annotation": "",
+                            "boot_delay": "0",
+                            "boot_retry_delay": "10000",
+                            "boot_retry_enabled": "false",
+                            "cdrom.#": "0",
+                            "change_version": "2019-02-21T10:01:55.823302Z",
+                            "clone.#": "1",
+                            "clone.0.customize.#": "1",
+                            "clone.0.customize.0.dns_server_list.#": "1",
+                            "clone.0.customize.0.dns_server_list.0": "192.168.61.9",
+                            "clone.0.customize.0.dns_suffix_list.#": "1",
+                            "clone.0.customize.0.dns_suffix_list.0": "emcdigital.lab",
+                            "clone.0.customize.0.ipv4_gateway": "192.168.61.1",
+                            "clone.0.customize.0.ipv6_gateway": "",
+                            "clone.0.customize.0.linux_options.#": "1",
+                            "clone.0.customize.0.linux_options.0.domain": "emcdigital.lab",
+                            "clone.0.customize.0.linux_options.0.host_name": "webserver01",
+                            "clone.0.customize.0.linux_options.0.hw_clock_utc": "true",
+                            "clone.0.customize.0.linux_options.0.time_zone": "",
+                            "clone.0.customize.0.network_interface.#": "1",
+                            "clone.0.customize.0.network_interface.0.dns_domain": "",
+                            "clone.0.customize.0.network_interface.0.dns_server_list.#": "0",
+                            "clone.0.customize.0.network_interface.0.ipv4_address": "192.168.61.19",
+                            "clone.0.customize.0.network_interface.0.ipv4_netmask": "24",
+                            "clone.0.customize.0.network_interface.0.ipv6_address": "",
+                            "clone.0.customize.0.network_interface.0.ipv6_netmask": "0",
+                            "clone.0.customize.0.timeout": "10",
+                            "clone.0.customize.0.windows_options.#": "0",
+                            "clone.0.customize.0.windows_sysprep_text": "",
+                            "clone.0.linked_clone": "false",
+                            "clone.0.template_uuid": "420bd181-5a9f-1896-1bd9-f0fa7dca651f",
+                            "clone.0.timeout": "30",
+                            "cpu_hot_add_enabled": "false",
+                            "cpu_hot_remove_enabled": "false",
+                            "cpu_limit": "-1",
+                            "cpu_performance_counters_enabled": "false",
+                            "cpu_reservation": "0",
+                            "cpu_share_count": "1000",
+                            "cpu_share_level": "normal",
+                            "custom_attributes.%": "0",
+                            "datastore_id": "datastore-31",
+                            "default_ip_address": "192.168.61.19",
+                            "disk.#": "1",
+                            "disk.0.attach": "false",
+                            "disk.0.datastore_id": "datastore-31",
+                            "disk.0.device_address": "scsi:0:0",
+                            "disk.0.disk_mode": "persistent",
+                            "disk.0.disk_sharing": "sharingNone",
+                            "disk.0.eagerly_scrub": "false",
+                            "disk.0.io_limit": "-1",
+                            "disk.0.io_reservation": "0",
+                            "disk.0.io_share_count": "1000",
+                            "disk.0.io_share_level": "normal",
+                            "disk.0.keep_on_remove": "false",
+                            "disk.0.key": "2000",
+                            "disk.0.label": "disk0",
+                            "disk.0.name": "",
+                            "disk.0.path": "webserver01/webserver01.vmdk",
+                            "disk.0.size": "16",
+                            "disk.0.thin_provisioned": "false",
+                            "disk.0.unit_number": "0",
+                            "disk.0.uuid": "6000C29c-60d3-88b9-96c6-09cd715edabc",
+                            "disk.0.write_through": "false",
+                            "efi_secure_boot_enabled": "false",
+                            "enable_disk_uuid": "false",
+                            "enable_logging": "false",
+                            "ept_rvi_mode": "automatic",
+                            "extra_config.%": "0",
+                            "firmware": "bios",
+                            "folder": "appmod_vms",
+                            "force_power_off": "true",
+                            "guest_id": "centos7_64Guest",
+                            "guest_ip_addresses.#": "2",
+                            "guest_ip_addresses.0": "192.168.61.19",
+                            "guest_ip_addresses.1": "fe80::250:56ff:fe8b:7c7c",
+                            "host_system_id": "host-15",
+                            "hv_mode": "hvAuto",
+                            "id": "420bfeff-1a4b-6592-edf2-facbf22dd947",
+                            "latency_sensitivity": "normal",
+                            "memory": "4096",
+                            "memory_hot_add_enabled": "false",
+                            "memory_limit": "-1",
+                            "memory_reservation": "0",
+                            "memory_share_count": "40960",
+                            "memory_share_level": "normal",
+                            "migrate_wait_timeout": "30",
+                            "moid": "vm-249",
+                            "name": "webserver01",
+                            "nested_hv_enabled": "false",
+                            "network_interface.#": "1",
+                            "network_interface.0.adapter_type": "vmxnet3",
+                            "network_interface.0.bandwidth_limit": "-1",
+                            "network_interface.0.bandwidth_reservation": "0",
+                            "network_interface.0.bandwidth_share_count": "50",
+                            "network_interface.0.bandwidth_share_level": "normal",
+                            "network_interface.0.device_address": "pci:0:7",
+                            "network_interface.0.key": "4000",
+                            "network_interface.0.mac_address": "00:50:56:8b:7c:7c",
+                            "network_interface.0.network_id": "dvportgroup-28",
+                            "network_interface.0.use_static_mac": "false",
+                            "num_cores_per_socket": "1",
+                            "num_cpus": "1",
+                            "reboot_required": "false",
+                            "resource_pool_id": "resgroup-8",
+                            "run_tools_scripts_after_power_on": "true",
+                            "run_tools_scripts_after_resume": "true",
+                            "run_tools_scripts_before_guest_reboot": "false",
+                            "run_tools_scripts_before_guest_shutdown": "true",
+                            "run_tools_scripts_before_guest_standby": "true",
+                            "scsi_bus_sharing": "noSharing",
+                            "scsi_controller_count": "1",
+                            "scsi_type": "pvscsi",
+                            "shutdown_wait_timeout": "3",
+                            "swap_placement_policy": "inherit",
+                            "sync_time_with_host": "false",
+                            "tags.#": "0",
+                            "uuid": "420bfeff-1a4b-6592-edf2-facbf22dd947",
+                            "vapp_transport.#": "0",
+                            "vmware_tools_status": "guestToolsRunning",
+                            "vmx_path": "webserver01/webserver01.vmx",
+                            "wait_for_guest_net_routable": "true",
+                            "wait_for_guest_net_timeout": "5"
+                        },
+                        "meta": {
+                            "schema_version": "3"
+                        },
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.webserver01_vm.provider.vsphere"
+                }
+            },
+            "depends_on": []
+        },
+        {
+            "path": [
+                "root",
+                "webserver02_vm"
+            ],
+            "outputs": {},
+            "resources": {
+                "data.vsphere_compute_cluster.cluster": {
+                    "type": "vsphere_compute_cluster",
+                    "depends_on": [
+                        "data.vsphere_datacenter.datacenter"
+                    ],
+                    "primary": {
+                        "id": "domain-c7",
+                        "attributes": {
+                            "datacenter_id": "datacenter-2",
+                            "id": "domain-c7",
+                            "name": "Cluster_iaac",
+                            "resource_pool_id": "resgroup-8"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.webserver02_vm.provider.vsphere"
+                },
+                "data.vsphere_datacenter.datacenter": {
+                    "type": "vsphere_datacenter",
+                    "depends_on": [],
+                    "primary": {
+                        "id": "datacenter-2",
+                        "attributes": {
+                            "id": "datacenter-2",
+                            "name": "Datacenter"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.webserver02_vm.provider.vsphere"
+                },
+                "data.vsphere_datastore.datastore": {
+                    "type": "vsphere_datastore",
+                    "depends_on": [
+                        "data.vsphere_datacenter.datacenter"
+                    ],
+                    "primary": {
+                        "id": "datastore-31",
+                        "attributes": {
+                            "datacenter_id": "datacenter-2",
+                            "id": "datastore-31",
+                            "name": "Datastore_VM"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.webserver02_vm.provider.vsphere"
+                },
+                "data.vsphere_host.host": {
+                    "type": "vsphere_host",
+                    "depends_on": [
+                        "data.vsphere_datacenter.datacenter"
+                    ],
+                    "primary": {
+                        "id": "host-15",
+                        "attributes": {
+                            "datacenter_id": "datacenter-2",
+                            "id": "host-15",
+                            "name": "192.168.61.12",
+                            "resource_pool_id": "resgroup-8"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.webserver02_vm.provider.vsphere"
+                },
+                "data.vsphere_network.network": {
+                    "type": "vsphere_network",
+                    "depends_on": [
+                        "data.vsphere_datacenter.datacenter"
+                    ],
+                    "primary": {
+                        "id": "dvportgroup-28",
+                        "attributes": {
+                            "datacenter_id": "datacenter-2",
+                            "id": "dvportgroup-28",
+                            "name": "DSwitch-VM Network",
+                            "type": "DistributedVirtualPortgroup"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.webserver02_vm.provider.vsphere"
+                },
+                "data.vsphere_virtual_machine.template": {
+                    "type": "vsphere_virtual_machine",
+                    "depends_on": [
+                        "data.vsphere_datacenter.datacenter"
+                    ],
+                    "primary": {
+                        "id": "420bd181-5a9f-1896-1bd9-f0fa7dca651f",
+                        "attributes": {
+                            "alternate_guest_name": "",
+                            "datacenter_id": "datacenter-2",
+                            "disks.#": "1",
+                            "disks.0.eagerly_scrub": "false",
+                            "disks.0.size": "16",
+                            "disks.0.thin_provisioned": "false",
+                            "firmware": "bios",
+                            "guest_id": "centos7_64Guest",
+                            "id": "420bd181-5a9f-1896-1bd9-f0fa7dca651f",
+                            "name": "centos-7",
+                            "network_interface_types.#": "2",
+                            "network_interface_types.0": "vmxnet3",
+                            "network_interface_types.1": "vmxnet3",
+                            "scsi_bus_sharing": "noSharing",
+                            "scsi_controller_scan_count": "1",
+                            "scsi_type": "pvscsi"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.webserver02_vm.provider.vsphere"
+                },
+                "vsphere_virtual_machine.vm": {
+                    "type": "vsphere_virtual_machine",
+                    "depends_on": [
+                        "data.vsphere_datastore.datastore",
+                        "data.vsphere_host.host",
+                        "data.vsphere_network.network",
+                        "data.vsphere_virtual_machine.template"
+                    ],
+                    "primary": {
+                        "id": "420ba2de-8a85-dda7-0e9f-550d202ad2e9",
+                        "attributes": {
+                            "alternate_guest_name": "",
+                            "annotation": "",
+                            "boot_delay": "0",
+                            "boot_retry_delay": "10000",
+                            "boot_retry_enabled": "false",
+                            "cdrom.#": "0",
+                            "change_version": "2019-02-21T10:01:49.048189Z",
+                            "clone.#": "1",
+                            "clone.0.customize.#": "1",
+                            "clone.0.customize.0.dns_server_list.#": "1",
+                            "clone.0.customize.0.dns_server_list.0": "192.168.61.9",
+                            "clone.0.customize.0.dns_suffix_list.#": "1",
+                            "clone.0.customize.0.dns_suffix_list.0": "emcdigital.lab",
+                            "clone.0.customize.0.ipv4_gateway": "192.168.61.1",
+                            "clone.0.customize.0.ipv6_gateway": "",
+                            "clone.0.customize.0.linux_options.#": "1",
+                            "clone.0.customize.0.linux_options.0.domain": "emcdigital.lab",
+                            "clone.0.customize.0.linux_options.0.host_name": "webserver02",
+                            "clone.0.customize.0.linux_options.0.hw_clock_utc": "true",
+                            "clone.0.customize.0.linux_options.0.time_zone": "",
+                            "clone.0.customize.0.network_interface.#": "1",
+                            "clone.0.customize.0.network_interface.0.dns_domain": "",
+                            "clone.0.customize.0.network_interface.0.dns_server_list.#": "0",
+                            "clone.0.customize.0.network_interface.0.ipv4_address": "192.168.61.20",
+                            "clone.0.customize.0.network_interface.0.ipv4_netmask": "24",
+                            "clone.0.customize.0.network_interface.0.ipv6_address": "",
+                            "clone.0.customize.0.network_interface.0.ipv6_netmask": "0",
+                            "clone.0.customize.0.timeout": "10",
+                            "clone.0.customize.0.windows_options.#": "0",
+                            "clone.0.customize.0.windows_sysprep_text": "",
+                            "clone.0.linked_clone": "false",
+                            "clone.0.template_uuid": "420bd181-5a9f-1896-1bd9-f0fa7dca651f",
+                            "clone.0.timeout": "30",
+                            "cpu_hot_add_enabled": "false",
+                            "cpu_hot_remove_enabled": "false",
+                            "cpu_limit": "-1",
+                            "cpu_performance_counters_enabled": "false",
+                            "cpu_reservation": "0",
+                            "cpu_share_count": "1000",
+                            "cpu_share_level": "normal",
+                            "custom_attributes.%": "0",
+                            "datastore_id": "datastore-31",
+                            "default_ip_address": "192.168.61.20",
+                            "disk.#": "1",
+                            "disk.0.attach": "false",
+                            "disk.0.datastore_id": "datastore-31",
+                            "disk.0.device_address": "scsi:0:0",
+                            "disk.0.disk_mode": "persistent",
+                            "disk.0.disk_sharing": "sharingNone",
+                            "disk.0.eagerly_scrub": "false",
+                            "disk.0.io_limit": "-1",
+                            "disk.0.io_reservation": "0",
+                            "disk.0.io_share_count": "1000",
+                            "disk.0.io_share_level": "normal",
+                            "disk.0.keep_on_remove": "false",
+                            "disk.0.key": "2000",
+                            "disk.0.label": "disk0",
+                            "disk.0.name": "",
+                            "disk.0.path": "webserver02/webserver02.vmdk",
+                            "disk.0.size": "16",
+                            "disk.0.thin_provisioned": "false",
+                            "disk.0.unit_number": "0",
+                            "disk.0.uuid": "6000C292-187c-4449-e0db-09833798cf87",
+                            "disk.0.write_through": "false",
+                            "efi_secure_boot_enabled": "false",
+                            "enable_disk_uuid": "false",
+                            "enable_logging": "false",
+                            "ept_rvi_mode": "automatic",
+                            "extra_config.%": "0",
+                            "firmware": "bios",
+                            "folder": "appmod_vms",
+                            "force_power_off": "true",
+                            "guest_id": "centos7_64Guest",
+                            "guest_ip_addresses.#": "2",
+                            "guest_ip_addresses.0": "192.168.61.20",
+                            "guest_ip_addresses.1": "fe80::250:56ff:fe8b:f5c0",
+                            "host_system_id": "host-15",
+                            "hv_mode": "hvAuto",
+                            "id": "420ba2de-8a85-dda7-0e9f-550d202ad2e9",
+                            "latency_sensitivity": "normal",
+                            "memory": "4096",
+                            "memory_hot_add_enabled": "false",
+                            "memory_limit": "-1",
+                            "memory_reservation": "0",
+                            "memory_share_count": "40960",
+                            "memory_share_level": "normal",
+                            "migrate_wait_timeout": "30",
+                            "moid": "vm-248",
+                            "name": "webserver02",
+                            "nested_hv_enabled": "false",
+                            "network_interface.#": "1",
+                            "network_interface.0.adapter_type": "vmxnet3",
+                            "network_interface.0.bandwidth_limit": "-1",
+                            "network_interface.0.bandwidth_reservation": "0",
+                            "network_interface.0.bandwidth_share_count": "50",
+                            "network_interface.0.bandwidth_share_level": "normal",
+                            "network_interface.0.device_address": "pci:0:7",
+                            "network_interface.0.key": "4000",
+                            "network_interface.0.mac_address": "00:50:56:8b:f5:c0",
+                            "network_interface.0.network_id": "dvportgroup-28",
+                            "network_interface.0.use_static_mac": "false",
+                            "num_cores_per_socket": "1",
+                            "num_cpus": "1",
+                            "reboot_required": "false",
+                            "resource_pool_id": "resgroup-8",
+                            "run_tools_scripts_after_power_on": "true",
+                            "run_tools_scripts_after_resume": "true",
+                            "run_tools_scripts_before_guest_reboot": "false",
+                            "run_tools_scripts_before_guest_shutdown": "true",
+                            "run_tools_scripts_before_guest_standby": "true",
+                            "scsi_bus_sharing": "noSharing",
+                            "scsi_controller_count": "1",
+                            "scsi_type": "pvscsi",
+                            "shutdown_wait_timeout": "3",
+                            "swap_placement_policy": "inherit",
+                            "sync_time_with_host": "false",
+                            "tags.#": "0",
+                            "uuid": "420ba2de-8a85-dda7-0e9f-550d202ad2e9",
+                            "vapp_transport.#": "0",
+                            "vmware_tools_status": "guestToolsRunning",
+                            "vmx_path": "webserver02/webserver02.vmx",
+                            "wait_for_guest_net_routable": "true",
+                            "wait_for_guest_net_timeout": "5"
+                        },
+                        "meta": {
+                            "schema_version": "3"
+                        },
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.webserver02_vm.provider.vsphere"
+                }
+            },
+            "depends_on": []
+        },
+        {
+            "path": [
+                "root",
+                "webserver03_vm"
+            ],
+            "outputs": {},
+            "resources": {
+                "data.vsphere_compute_cluster.cluster": {
+                    "type": "vsphere_compute_cluster",
+                    "depends_on": [
+                        "data.vsphere_datacenter.datacenter"
+                    ],
+                    "primary": {
+                        "id": "domain-c7",
+                        "attributes": {
+                            "datacenter_id": "datacenter-2",
+                            "id": "domain-c7",
+                            "name": "Cluster_iaac",
+                            "resource_pool_id": "resgroup-8"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.webserver03_vm.provider.vsphere"
+                },
+                "data.vsphere_datacenter.datacenter": {
+                    "type": "vsphere_datacenter",
+                    "depends_on": [],
+                    "primary": {
+                        "id": "datacenter-2",
+                        "attributes": {
+                            "id": "datacenter-2",
+                            "name": "Datacenter"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.webserver03_vm.provider.vsphere"
+                },
+                "data.vsphere_datastore.datastore": {
+                    "type": "vsphere_datastore",
+                    "depends_on": [
+                        "data.vsphere_datacenter.datacenter"
+                    ],
+                    "primary": {
+                        "id": "datastore-31",
+                        "attributes": {
+                            "datacenter_id": "datacenter-2",
+                            "id": "datastore-31",
+                            "name": "Datastore_VM"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.webserver03_vm.provider.vsphere"
+                },
+                "data.vsphere_host.host": {
+                    "type": "vsphere_host",
+                    "depends_on": [
+                        "data.vsphere_datacenter.datacenter"
+                    ],
+                    "primary": {
+                        "id": "host-15",
+                        "attributes": {
+                            "datacenter_id": "datacenter-2",
+                            "id": "host-15",
+                            "name": "192.168.61.12",
+                            "resource_pool_id": "resgroup-8"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.webserver03_vm.provider.vsphere"
+                },
+                "data.vsphere_network.network": {
+                    "type": "vsphere_network",
+                    "depends_on": [
+                        "data.vsphere_datacenter.datacenter"
+                    ],
+                    "primary": {
+                        "id": "dvportgroup-28",
+                        "attributes": {
+                            "datacenter_id": "datacenter-2",
+                            "id": "dvportgroup-28",
+                            "name": "DSwitch-VM Network",
+                            "type": "DistributedVirtualPortgroup"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.webserver03_vm.provider.vsphere"
+                },
+                "data.vsphere_virtual_machine.template": {
+                    "type": "vsphere_virtual_machine",
+                    "depends_on": [
+                        "data.vsphere_datacenter.datacenter"
+                    ],
+                    "primary": {
+                        "id": "420bd181-5a9f-1896-1bd9-f0fa7dca651f",
+                        "attributes": {
+                            "alternate_guest_name": "",
+                            "datacenter_id": "datacenter-2",
+                            "disks.#": "1",
+                            "disks.0.eagerly_scrub": "false",
+                            "disks.0.size": "16",
+                            "disks.0.thin_provisioned": "false",
+                            "firmware": "bios",
+                            "guest_id": "centos7_64Guest",
+                            "id": "420bd181-5a9f-1896-1bd9-f0fa7dca651f",
+                            "name": "centos-7",
+                            "network_interface_types.#": "2",
+                            "network_interface_types.0": "vmxnet3",
+                            "network_interface_types.1": "vmxnet3",
+                            "scsi_bus_sharing": "noSharing",
+                            "scsi_controller_scan_count": "1",
+                            "scsi_type": "pvscsi"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.webserver03_vm.provider.vsphere"
+                },
+                "vsphere_virtual_machine.vm": {
+                    "type": "vsphere_virtual_machine",
+                    "depends_on": [
+                        "data.vsphere_datastore.datastore",
+                        "data.vsphere_host.host",
+                        "data.vsphere_network.network",
+                        "data.vsphere_virtual_machine.template"
+                    ],
+                    "primary": {
+                        "id": "420b603f-04bd-e534-7a4f-2ddd0f19577f",
+                        "attributes": {
+                            "alternate_guest_name": "",
+                            "annotation": "",
+                            "boot_delay": "0",
+                            "boot_retry_delay": "10000",
+                            "boot_retry_enabled": "false",
+                            "cdrom.#": "0",
+                            "change_version": "2019-02-21T10:01:46.193079Z",
+                            "clone.#": "1",
+                            "clone.0.customize.#": "1",
+                            "clone.0.customize.0.dns_server_list.#": "1",
+                            "clone.0.customize.0.dns_server_list.0": "192.168.61.9",
+                            "clone.0.customize.0.dns_suffix_list.#": "1",
+                            "clone.0.customize.0.dns_suffix_list.0": "emcdigital.lab",
+                            "clone.0.customize.0.ipv4_gateway": "192.168.61.1",
+                            "clone.0.customize.0.ipv6_gateway": "",
+                            "clone.0.customize.0.linux_options.#": "1",
+                            "clone.0.customize.0.linux_options.0.domain": "emcdigital.lab",
+                            "clone.0.customize.0.linux_options.0.host_name": "webserver03",
+                            "clone.0.customize.0.linux_options.0.hw_clock_utc": "true",
+                            "clone.0.customize.0.linux_options.0.time_zone": "",
+                            "clone.0.customize.0.network_interface.#": "1",
+                            "clone.0.customize.0.network_interface.0.dns_domain": "",
+                            "clone.0.customize.0.network_interface.0.dns_server_list.#": "0",
+                            "clone.0.customize.0.network_interface.0.ipv4_address": "192.168.61.21",
+                            "clone.0.customize.0.network_interface.0.ipv4_netmask": "24",
+                            "clone.0.customize.0.network_interface.0.ipv6_address": "",
+                            "clone.0.customize.0.network_interface.0.ipv6_netmask": "0",
+                            "clone.0.customize.0.timeout": "10",
+                            "clone.0.customize.0.windows_options.#": "0",
+                            "clone.0.customize.0.windows_sysprep_text": "",
+                            "clone.0.linked_clone": "false",
+                            "clone.0.template_uuid": "420bd181-5a9f-1896-1bd9-f0fa7dca651f",
+                            "clone.0.timeout": "30",
+                            "cpu_hot_add_enabled": "false",
+                            "cpu_hot_remove_enabled": "false",
+                            "cpu_limit": "-1",
+                            "cpu_performance_counters_enabled": "false",
+                            "cpu_reservation": "0",
+                            "cpu_share_count": "1000",
+                            "cpu_share_level": "normal",
+                            "custom_attributes.%": "0",
+                            "datastore_id": "datastore-31",
+                            "default_ip_address": "192.168.61.21",
+                            "disk.#": "1",
+                            "disk.0.attach": "false",
+                            "disk.0.datastore_id": "datastore-31",
+                            "disk.0.device_address": "scsi:0:0",
+                            "disk.0.disk_mode": "persistent",
+                            "disk.0.disk_sharing": "sharingNone",
+                            "disk.0.eagerly_scrub": "false",
+                            "disk.0.io_limit": "-1",
+                            "disk.0.io_reservation": "0",
+                            "disk.0.io_share_count": "1000",
+                            "disk.0.io_share_level": "normal",
+                            "disk.0.keep_on_remove": "false",
+                            "disk.0.key": "2000",
+                            "disk.0.label": "disk0",
+                            "disk.0.name": "",
+                            "disk.0.path": "webserver03/webserver03.vmdk",
+                            "disk.0.size": "16",
+                            "disk.0.thin_provisioned": "false",
+                            "disk.0.unit_number": "0",
+                            "disk.0.uuid": "6000C297-9dd2-8971-378a-07a6cc3a613d",
+                            "disk.0.write_through": "false",
+                            "efi_secure_boot_enabled": "false",
+                            "enable_disk_uuid": "false",
+                            "enable_logging": "false",
+                            "ept_rvi_mode": "automatic",
+                            "extra_config.%": "0",
+                            "firmware": "bios",
+                            "folder": "appmod_vms",
+                            "force_power_off": "true",
+                            "guest_id": "centos7_64Guest",
+                            "guest_ip_addresses.#": "2",
+                            "guest_ip_addresses.0": "192.168.61.21",
+                            "guest_ip_addresses.1": "fe80::250:56ff:fe8b:b250",
+                            "host_system_id": "host-15",
+                            "hv_mode": "hvAuto",
+                            "id": "420b603f-04bd-e534-7a4f-2ddd0f19577f",
+                            "latency_sensitivity": "normal",
+                            "memory": "4096",
+                            "memory_hot_add_enabled": "false",
+                            "memory_limit": "-1",
+                            "memory_reservation": "0",
+                            "memory_share_count": "40960",
+                            "memory_share_level": "normal",
+                            "migrate_wait_timeout": "30",
+                            "moid": "vm-250",
+                            "name": "webserver03",
+                            "nested_hv_enabled": "false",
+                            "network_interface.#": "1",
+                            "network_interface.0.adapter_type": "vmxnet3",
+                            "network_interface.0.bandwidth_limit": "-1",
+                            "network_interface.0.bandwidth_reservation": "0",
+                            "network_interface.0.bandwidth_share_count": "50",
+                            "network_interface.0.bandwidth_share_level": "normal",
+                            "network_interface.0.device_address": "pci:0:7",
+                            "network_interface.0.key": "4000",
+                            "network_interface.0.mac_address": "00:50:56:8b:b2:50",
+                            "network_interface.0.network_id": "dvportgroup-28",
+                            "network_interface.0.use_static_mac": "false",
+                            "num_cores_per_socket": "1",
+                            "num_cpus": "1",
+                            "reboot_required": "false",
+                            "resource_pool_id": "resgroup-8",
+                            "run_tools_scripts_after_power_on": "true",
+                            "run_tools_scripts_after_resume": "true",
+                            "run_tools_scripts_before_guest_reboot": "false",
+                            "run_tools_scripts_before_guest_shutdown": "true",
+                            "run_tools_scripts_before_guest_standby": "true",
+                            "scsi_bus_sharing": "noSharing",
+                            "scsi_controller_count": "1",
+                            "scsi_type": "pvscsi",
+                            "shutdown_wait_timeout": "3",
+                            "swap_placement_policy": "inherit",
+                            "sync_time_with_host": "false",
+                            "tags.#": "0",
+                            "uuid": "420b603f-04bd-e534-7a4f-2ddd0f19577f",
+                            "vapp_transport.#": "0",
+                            "vmware_tools_status": "guestToolsRunning",
+                            "vmx_path": "webserver03/webserver03.vmx",
+                            "wait_for_guest_net_routable": "true",
+                            "wait_for_guest_net_timeout": "5"
+                        },
+                        "meta": {
+                            "schema_version": "3"
+                        },
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": "module.webserver03_vm.provider.vsphere"
+                }
+            },
+            "depends_on": []
+        }
+    ]
+}

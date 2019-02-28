@@ -1,0 +1,19 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: iaacdemoapp
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: iaacdemoapp
+    spec:
+      containers:
+      - name: iaacdemoapp
+        image: 192.168.61.30:5000/iaacdemoapp
+
+        ports:
+          - containerPort: 8080
+            name: port-8080
+
