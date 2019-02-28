@@ -1,0 +1,53 @@
+pipeline {
+  agent any
+  stages {
+    stage('Code Check Out')
+      steps {
+        echo 'Check Out App Code '
+      }
+    }
+  stage('Build & Test') {
+      steps {
+            echo 'Maven Build'
+            }
+          }
+		  
+  stage('Code Analysis') {
+      steps {
+             echo 'Sonar Qube Code Analysis
+            }
+          }
+
+
+  stage('Deploy To Test') {
+      steps {	  
+		  echo 'Deployment on Test Environment'
+            }
+	  }
+
+  stage('Integration Test on Test ') {
+      steps {
+             echo 'Integration Test Completed'
+            }
+           }
+
+  stage('Deploy to QA') {
+      steps {
+	      echo 'Deploy to QA Environment'
+            }
+          } 
+
+  
+  stage('Integration Test on QA') {
+      steps {
+             echo 'Smoke and Integration test on QA
+            }		  
+           }
+  stage('Deploy to Prod') {
+      steps {	
+             echo 'Deploy to Production Environment'
+            }
+           }			
+     }
+}
+
