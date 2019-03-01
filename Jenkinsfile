@@ -45,8 +45,8 @@ pipeline {
 		}  
 		  
     stage('Provision Cluster') {
-       stage('Create Cluster') {
-         steps {
+       steps('Create Cluster') {
+         
 		       ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/kubernetes.yml'
             }
           }
@@ -77,6 +77,5 @@ pipeline {
               }
             }
           }
-		}
-      }
+	 }
     }
