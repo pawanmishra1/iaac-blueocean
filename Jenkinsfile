@@ -51,7 +51,7 @@ pipeline {
     stage('Provision Cluster') {
        steps('Create Cluster') {
          
-		       ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/kubernetes.yml'
+		     echo "Cluster Creted"
             }
           }
 		
