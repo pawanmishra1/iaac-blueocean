@@ -1,0 +1,43 @@
+pipeline {
+  agent any
+  stages {
+    stage('Start Build IAAC LAB') {
+      steps {
+        echo 'Gathering LAB Inforamtion '
+      }
+    }
+  stage('Provisioning VM,s Delete VM') {
+      steps {
+            sh """#!/bin/bash
+            cd '/root/infrastructure-as-code/terraform/small-size/'
+            /usr/local/bin/terraform destroy -auto-approve
+			echo 'All VM deleted' """
+            }
+          }
+		  
+  stage('Provisioning VM,s Create VM') {
+      steps {
+            sh """#!/bin/bash
+            cd '/root/infrastructure-as-code/terraform/small-size/'
+                /usr/local/bin/terraform apply -auto-approve
+                echo 'ALL VM Created'  """
+            }
+          }
+
+
+  stage('Adding User,s ') {
+      steps {	  
+		  ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/user_add.yml'
+            }
+	  }
+
+  stage('Installation and Setup of Kubernetes ') {
+      steps {
+          ansiblePlaybook inventory: '/root/IAAC/playbooks/kubespray/inventory/mycluster/hosts.ini', playbook: '/root/IAAC/playbooks/kubespray/cluster.yml'
+            }
+           }
+
+
+     }
+}
+
