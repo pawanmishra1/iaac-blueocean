@@ -1,69 +1,83 @@
 pipeline {
   agent any
   stages {
-    stage('Start Build IAAC LAB') {
-      steps {
-        echo 'Gathering LAB Inforamtion '
-      }
-    }
-  stage('Provisioning VM,s Delete VM') {
-      steps {
+    stage('Provisioning') {
+      parallel {
+	    stage('Cleanup VM') {
+          steps {
             sh """#!/bin/bash
             cd '/root/infrastructure-as-code/terraform/small-size/'
-            /usr/local/bin/terraform destroy -auto-approve
-			echo 'All VM deleted' """
-            }
-          }
-		  
-  stage('Provisioning VM,s Create VM') {
-      steps {
+                /usr/local/bin/terraform destroy -auto-approve
+                        echo 'All VM deleted' """
+               }
+             }
+
+     stage('Create VM') {
+         steps {
             sh """#!/bin/bash
             cd '/root/infrastructure-as-code/terraform/small-size/'
                 /usr/local/bin/terraform apply -auto-approve
                 echo 'ALL VM Created'  """
             }
           }
+        
 
-
-  stage('Adding User,s ') {
-      steps {	  
-		  ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/user_add.yml'
+      stage('Add User') {
+        steps {
+                  ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/user_add.yml'
             }
-	  }
-
-  stage('Installation of  Docker ') {
-      steps {
-          ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/docker.yml'
-            }
-           }
-
-  stage('Install & Setup Kubernetes Cluster') {
-      steps {
-	      ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/kubernetes.yml'
-            }
-          } 
-
-  
-  stage('Setup PostgreSQL DB cluster in Kubernetes') {
-      steps {
-          ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/postgress-kube.yml'
-            }		  
-           }
-  stage('Install Nginx on Kubernetes') {
-      steps {	
-            ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/nginx-kube.yml'
-            }
-           }			
-   stage('Install RabbitMQ on Kubernetes') {
-      steps {
-            ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/rabbitmq-kube.yml'
+          }
+		}
+       }
+	   
+	   
+    stage('Install Container') {
+       stage('Docker') {
+         steps {
+            ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/docker.yml'
             }
            }
-   stage('Install Iaac Demo App on Kubernetes') {
-      steps {
-            ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/iaacdemoapp.yml'
+
+    stage('Install Kubernetes') {
+       steps {
+             echo "Install Kubernetes"
+            }
+          }
+		}  
+		  
+    stage('Provision Cluster') {
+       stage('Create Cluster') {
+         steps {
+		       ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/kubernetes.yml'
+            }
+          }
+		}
+    
+    stage('Deploy App Stack') {
+      parallel {
+        stage('couchbase ') {
+          steps {
+             ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/postgress-kube.yml'
             }
            }
-     }
-}
-
+		   
+        stage('Nginx') {
+          steps {
+             ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/nginx-kube.yml'
+            }
+           }
+   
+        stage('RabbitMQ ') {
+          steps {
+             ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/rabbitmq-kube.yml'
+            }
+           }
+         stage('Deply App ') {
+            steps {
+               ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/iaacdemoapp.yml'
+              }
+            }
+          }
+		}
+      }
+    }
