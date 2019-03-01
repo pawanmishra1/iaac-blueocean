@@ -33,16 +33,17 @@ pipeline {
 	   
     stage('Install Container') {
        steps('Docker') {
-         
+         steps {
             ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/docker.yml'
             }
-           
+           }
 
     steps('Install Kubernetes') {
-             echo "Install Kubernetes"
+       
+              ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/kubernetes.yml'
             }
           }
-		}  
+		  
 		  
     stage('Provision Cluster') {
        steps('Create Cluster') {
@@ -50,7 +51,7 @@ pipeline {
 		       ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/kubernetes.yml'
             }
           }
-		}
+		
     
     stage('Deploy App Stack') {
       parallel {
@@ -77,5 +78,7 @@ pipeline {
               }
             }
           }
-	 }
-    }
+		}
+      }
+	}  
+    
