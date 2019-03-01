@@ -33,13 +33,11 @@ pipeline {
 	   
     stage('Install Container') {
        steps('Docker') {
-         steps {
-            ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/docker.yml'
+             ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/docker.yml'
             }
            }
 
-    steps('Install Kubernetes') {
-       
+    steps('Install Kubernetes') {       
               ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/kubernetes.yml'
             }
           }
@@ -80,5 +78,5 @@ pipeline {
           }
 		}
       }
-	}  
+	  
     
