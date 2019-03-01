@@ -21,17 +21,18 @@ pipeline {
             }
           }        
 
-      stage('Add User') {
-        steps {
-                  ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/user_add.yml'
-            }
-          }
-		stage('Provision') {
+      stage('Provision') {
         steps {
                   echo 'Completed'
             }
           }
-		}
+ 
+     stage('Add User') {
+        steps {
+                  ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/user_add.yml'
+            }
+          }
+         }
        }
 	   
 	   
