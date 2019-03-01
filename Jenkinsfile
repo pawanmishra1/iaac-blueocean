@@ -32,14 +32,13 @@ pipeline {
 	   
 	   
     stage('Install Container') {
-       stage('Docker') {
-         steps {
+       steps('Docker') {
+         
             ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/docker.yml'
             }
-           }
+           
 
-    stage('Install Kubernetes') {
-       steps {
+    steps('Install Kubernetes') {
              echo "Install Kubernetes"
             }
           }
