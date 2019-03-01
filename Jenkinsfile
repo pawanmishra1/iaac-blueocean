@@ -19,12 +19,16 @@ pipeline {
                 /usr/local/bin/terraform apply -auto-approve
                 echo 'ALL VM Created'  """
             }
-          }
-        
+          }        
 
       stage('Add User') {
         steps {
                   ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/user_add.yml'
+            }
+          }
+		stage('Provision') {
+        steps {
+                  echo 'Completed'
             }
           }
 		}
