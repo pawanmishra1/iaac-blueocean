@@ -32,9 +32,8 @@ pipeline {
            }   
 
     stage('Install Container') {
-       stage('Install Docker') {
-          steps {
-             ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/docker.yml'
+       steps('Install Docker') {
+                 ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/docker.yml'
             }
            }
 
@@ -43,20 +42,20 @@ pipeline {
               ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/kubernetes.yml'
             }
           }
-		}  
+		  
 
 
 
     stage('Provision Cluster') {
-       stage('Create Cluster') {
-              steps {
+       steps('Create Cluster') {
+              
                      sh """#!/bin/bash
                      sleep 120
                      echo "Cluster Initialized"  """
 
             }
           }
-		 } 
+	 
 
 
 
