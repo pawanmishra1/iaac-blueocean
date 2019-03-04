@@ -151,7 +151,7 @@ pipeline {
 
         stage('Application Deployment') {
           parallel {
-              stage('A SCM Checkout') {
+              stage('App Git Code Checkout') {
                 steps {
                   sh '''#!/bin/bash
                      sleep 20
