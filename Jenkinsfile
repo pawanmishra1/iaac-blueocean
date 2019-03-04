@@ -1,6 +1,5 @@
 pipeline {
   agent any
-    stages {
     stages('Provisioning') {
        stage('Cleanup VM') {
           steps {
@@ -89,5 +88,5 @@ pipeline {
     }
   }
  }
-}  
+  
 
