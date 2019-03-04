@@ -9,17 +9,18 @@ pipeline {
                       cd \'/root/infrastructure-as-code/terraform/small-size/\'
                           /usr/local/bin/terraform destroy -auto-approve
                            echo \'All VM deleted\' '''
-            }
-		  steps('Create VM') {
-            sh '''#!/bin/bash
+            
+	
+             sh '''#!/bin/bash
                  cd \'/root/infrastructure-as-code/terraform/small-size/\'
                 /usr/local/bin/terraform apply -auto-approve
                 echo \'ALL VM Created\'  '''
-            }
-		   steps {
-              ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/user_add.yml')
+         
+                 ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/user_add.yml')
                  }		  
                 }
+
+
         stage('Clean VM ') {
           steps {
 		         sh '''#!/bin/bash
