@@ -1,7 +1,7 @@
 pipeline {
   agent any
-    stages('Provisioning') {
-       stage('Cleanup VM') {
+    stages {
+       stage('Provisioning') {
           steps {
                 sh """#!/bin/bash
                       cd '/root/infrastructure-as-code/terraform/small-size/'
@@ -10,7 +10,7 @@ pipeline {
                }
              }
 
-     stage('Create VM') {
+       stage('Create VM') {
          steps {
             sh """#!/bin/bash
             cd '/root/infrastructure-as-code/terraform/small-size/'
@@ -19,21 +19,21 @@ pipeline {
             }
           }
 
-      stage('Provision') {
+       stage('Provision') {
         steps {
                   echo 'Completed'
             }
           }
 
-     stage('Add User') {
-        steps {
+       stage('Add User') {
+          steps {
                   ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/user_add.yml'
             }
            }   
 
-    stages('Install Container') {
+    stage('Install Container') {
        stage('Install Docker') {
-              steps {
+          steps {
              ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/docker.yml'
             }
            }
@@ -43,10 +43,11 @@ pipeline {
               ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/kubernetes.yml'
             }
           }
+		}  
 
 
 
-    stages('Provision Cluster') {
+    stage('Provision Cluster') {
        stage('Create Cluster') {
               steps {
                      sh """#!/bin/bash
@@ -55,6 +56,7 @@ pipeline {
 
             }
           }
+		 } 
 
 
 
@@ -86,7 +88,5 @@ pipeline {
         }
       }
     }
-  }
- }
   
 
