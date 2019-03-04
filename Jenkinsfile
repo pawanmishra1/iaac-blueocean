@@ -22,17 +22,23 @@ pipeline {
                 }
         stage('Clean VM ') {
           steps {
-            echo 'Clean VM '
-          }
+		         sh '''#!/bin/bash
+                     sleep 60
+                     echo "VM Deleted"  '''
+            }
         }
         stage('Create VM') {
           steps {
-            echo 'VM's Created '
-          }
+		         sh '''#!/bin/bash
+                     sleep 60
+                     echo "VM Deleted"  '''
+            }
         }   
         stage('Add User') {
 		    steps {
-            echo 'Users Added'
+            sh '''#!/bin/bash
+                     sleep 60
+                     echo "User Added"  '''
           }      
          }
 		}
