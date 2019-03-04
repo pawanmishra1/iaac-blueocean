@@ -1,14 +1,12 @@
 pipeline {
   agent any
-  stages {
-    stage('Provisioning') {
-      parallel {
-            stage('Cleanup VM') {
-          steps {
-            sh """#!/bin/bash
-            cd '/root/infrastructure-as-code/terraform/small-size/'
-                /usr/local/bin/terraform destroy -auto-approve
-                        echo 'All VM deleted' """
+  stages('Provisioning') {
+     stage('Cleanup VM') {
+        steps {
+                sh """#!/bin/bash
+                      cd '/root/infrastructure-as-code/terraform/small-size/'
+                          /usr/local/bin/terraform destroy -auto-approve
+                           echo 'All VM deleted' """
                }
              }
 
@@ -31,10 +29,9 @@ pipeline {
         steps {
                   ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/user_add.yml'
             }
+           }
           }
-         }
-       }
-	 } 
+           
 
 
     stages('Install Container') {
@@ -49,7 +46,7 @@ pipeline {
               ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/kubernetes.yml'
             }
           }
-		}  
+		
 
 
     stages('Provision Cluster') {
@@ -61,7 +58,7 @@ pipeline {
 
             }
           }
-		}  
+
 
 
     stage('Deploy App Stack') {
@@ -91,5 +88,5 @@ pipeline {
           }
         }
       }
-        
-
+    }    
+  }
