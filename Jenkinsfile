@@ -134,7 +134,7 @@ pipeline {
                  }
             
 
-             stage('Test') {
+             stage('Unit Test') {
                 steps {
                   sh '''#!/bin/bash
                      sleep 20
