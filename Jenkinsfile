@@ -35,7 +35,7 @@ pipeline {
                      echo "VM Deleted"  '''
             }
         }   
-        stage('Add User') {
+        stage('User Add') {
 		    steps {
             sh '''#!/bin/bash
                      sleep 60
@@ -46,25 +46,64 @@ pipeline {
        }		
 		 
     stage('Install Container') {
-      steps {
-        ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/docker.yml')
+      parallel {
+        stage(Install Docker') {
+         steps {
+           ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/docker.yml')
+           ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/kubernetes.yml')
       }
     }
+   
     stage('Install Kubernetes') {
       steps {
-        ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/kubernetes.yml')
+       sh '''#!/bin/bash
+                     sleep 120
+                     echo "Cluster Initialized"  '''
+
       }
     }
-    stage('Provision Cluster') {
-      steps {
+  }
+}  
+ 
+   stage('Provision Cluster') {
+      parallel {
+       steps {
         sh '''#!/bin/bash
                      sleep 120
                      echo "Cluster Initialized"  '''
       }
+     
+    stage('Setup Helm Charts') {
+      steps {
+       sh '''#!/bin/bash
+                     sleep 120
+                     echo "Setup Helm Charts"  '''
+
+      }
     }
+
+   stage('Setup ELK') {
+      steps {
+       sh '''#!/bin/bash
+                     sleep 120
+                     echo "Setup ELK"  '''
+
+      }
+    }
+    
+   stage('Setup Vault ') {
+      steps {
+       sh '''#!/bin/bash
+                     sleep 120
+                     echo "Setup Vault"  '''
+
+      }
+    }
+   }
+ }
     stage('Deploy App Stack') {
       parallel {
-        stage('couchbase ') {
+        stage('Couchbase ') {
           steps {
             ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/postgress-kube.yml')
           }
@@ -79,13 +118,51 @@ pipeline {
             ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/rabbitmq-kube.yml')
           }
         }
-        stage('Deply App ') {
-          steps {
-            ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/iaacdemoapp.yml')
+       }
+      } 
+
+
+        stage('Application Deployment') {
+          parallel {
+              stage('SCM Checkout') {
+                steps {
+                  sh '''#!/bin/bash
+                     sleep 20
+                     echo "SCM Check OUT"  '''
+               }
+              }
+              stage('Build App') {
+                steps {
+                  sh '''#!/bin/bash
+                     sleep 20
+                     echo "Build APP"  '''
+                  }
+                 }
+            
+
+             stage('Test') {
+                steps {
+                  sh '''#!/bin/bash
+                     sleep 20
+                     echo "Unit Test and Code Coverage"  '''
+                  }
+                 }
+
+            stage('Build App') {
+                steps {
+                  ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/iaacdemoapp.yml')
           }
         }
-      }
-    }
-  }
-}
+           stage('Integration Test') {
+                steps {
+                  sh '''#!/bin/bash
+                     sleep 20
+                     echo "Deply  APP Successfully "  '''
+                  }
+                }
+              }
+            }   
+          }
+        }
+      
 
