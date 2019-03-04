@@ -4,43 +4,40 @@ pipeline {
     stage('Provisioning') {
       parallel {
         stage('Provisioning') {
-          steps {
+          steps('Delete VM ') {
             sh '''#!/bin/bash
                       cd \'/root/infrastructure-as-code/terraform/small-size/\'
                           /usr/local/bin/terraform destroy -auto-approve
                            echo \'All VM deleted\' '''
-          }
-        }
-        stage('Clean VM ') {
-          steps {
-            echo 'Clean Vm '
-          }
-        }
-        stage('VM Creation ') {
-          steps {
-            echo 'Test '
-          }
-        }
-      }
-    }
-    stage('Create VM') {
-      steps {
-        sh '''#!/bin/bash
-            cd \'/root/infrastructure-as-code/terraform/small-size/\'
+            }
+		  steps('Create VM') {
+            sh '''#!/bin/bash
+                 cd \'/root/infrastructure-as-code/terraform/small-size/\'
                 /usr/local/bin/terraform apply -auto-approve
                 echo \'ALL VM Created\'  '''
-      }
-    }
-    stage('Provision') {
-      steps {
-        echo 'Completed'
-      }
-    }
-    stage('Add User') {
-      steps {
-        ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/user_add.yml')
-      }
-    }
+            }
+		   steps {
+              ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/user_add.yml')
+                 }		  
+                }
+        stage('Clean VM ') {
+          steps {
+            echo 'Clean VM '
+          }
+        }
+        stage('Create VM') {
+          steps {
+            echo 'VM's Created '
+          }
+        }   
+        stage('Add User') {
+		    steps {
+            echo 'Users Added'
+          }      
+         }
+		}
+       }		
+		 
     stage('Install Container') {
       steps {
         ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/docker.yml')
@@ -84,3 +81,4 @@ pipeline {
     }
   }
 }
+
