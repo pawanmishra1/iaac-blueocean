@@ -1,8 +1,9 @@
 pipeline {
   agent any
-  stages('Provisioning') {
-     stage('Cleanup VM') {
-        steps {
+    stages {
+    stages('Provisioning') {
+       stage('Cleanup VM') {
+          steps {
                 sh """#!/bin/bash
                       cd '/root/infrastructure-as-code/terraform/small-size/'
                           /usr/local/bin/terraform destroy -auto-approve
@@ -29,14 +30,11 @@ pipeline {
         steps {
                   ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/user_add.yml'
             }
-           }
-          }
-           
-
+           }   
 
     stages('Install Container') {
        stage('Install Docker') {
-	      steps {
+              steps {
              ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/docker.yml'
             }
            }
@@ -46,12 +44,12 @@ pipeline {
               ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/kubernetes.yml'
             }
           }
-		
+
 
 
     stages('Provision Cluster') {
        stage('Create Cluster') {
-	      steps {
+              steps {
                      sh """#!/bin/bash
                      sleep 120
                      echo "Cluster Initialized"  """
@@ -88,5 +86,8 @@ pipeline {
           }
         }
       }
-    }    
+    }
   }
+ }
+}  
+
