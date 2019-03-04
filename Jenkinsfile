@@ -53,15 +53,48 @@ pipeline {
        sh '''#!/bin/bash
                      sleep 157
                      echo "Cluster Initialized"  '''
+      }
+    }
+
+      stage('Install KubeAdm') {
+      steps {
+       sh '''#!/bin/bash
+                     sleep 120
+                     echo "Install KubeAdm"  '''
 
       }
     }
-  }
-}  
+    
+     stage('Install Kubectl & Kubelet') {
+      steps {
+       sh '''#!/bin/bash
+                     sleep 120
+                     echo "Install Kubectl & Kubelet"  '''
+
+      }
+    }
+   
+     stage('Install Kubspay') {
+      steps {
+       sh '''#!/bin/bash
+                     sleep 120
+                     echo "Install Kubectl & Kubelet"  '''
+
+      }
+    }
+
+
+ 
+
+
+     }
+    }
+  
+ 
  
    stage('Provision Cluster') {
       parallel {
-       stage('Kubernetes Cluster') {
+       stage('Midsize Cluster') {
         steps {
          ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/kubernetes.yml')
       }
