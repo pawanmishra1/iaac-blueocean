@@ -67,11 +67,13 @@ pipeline {
  
    stage('Provision Cluster') {
       parallel {
-       steps {
+       stage('Kubernetes Cluster') {
+        steps {
         sh '''#!/bin/bash
                      sleep 120
                      echo "Cluster Initialized"  '''
       }
+     }
      
     stage('Setup Helm Charts') {
       steps {
