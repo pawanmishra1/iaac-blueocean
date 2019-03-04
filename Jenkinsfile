@@ -47,7 +47,7 @@ pipeline {
 		 
     stage('Install Container') {
       parallel {
-        stage(Install Docker') {
+        stage('Install Docker') {
          steps {
            ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/docker.yml')
            ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/kubernetes.yml')
