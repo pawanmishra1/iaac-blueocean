@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Provisioning') {
       parallel {
-        stage('Create Vm
+        stage('Create VM') {
           steps('Create VM ') {
             sh '''#!/bin/bash
                       cd \'/root/infrastructure-as-code/terraform/small-size/\'
