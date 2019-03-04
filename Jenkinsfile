@@ -118,7 +118,7 @@ pipeline {
 
         stage('Application Deployment') {
           parallel {
-              stage('SCM Checkout') {
+              stage('A SCM Checkout') {
                 steps {
                   sh '''#!/bin/bash
                      sleep 20
@@ -142,7 +142,7 @@ pipeline {
                   }
                  }
 
-            stage('Build App') {
+            stage('Deploy App') {
                 steps {
                   ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/iaacdemoapp.yml')
           }
