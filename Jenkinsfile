@@ -31,7 +31,7 @@ pipeline {
         stage('Create VM') {
           steps {
 		         sh '''#!/bin/bash
-                     sleep 60
+                     sleep 214
                      echo "VM Deleted"  '''
             }
         }   
@@ -50,14 +50,14 @@ pipeline {
         stage('Install Docker') {
          steps {
            ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/docker.yml')
-           ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/kubernetes.yml')
+           
       }
     }
    
     stage('Install Kubernetes') {
       steps {
        sh '''#!/bin/bash
-                     sleep 120
+                     sleep 157
                      echo "Cluster Initialized"  '''
 
       }
@@ -69,9 +69,7 @@ pipeline {
       parallel {
        stage('Kubernetes Cluster') {
         steps {
-        sh '''#!/bin/bash
-                     sleep 120
-                     echo "Cluster Initialized"  '''
+         ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/kubernetes.yml')
       }
      }
      
