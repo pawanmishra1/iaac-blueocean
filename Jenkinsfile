@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Provisioning') {
       parallel {
-	    stage('Cleanup VM') {
+            stage('Cleanup VM') {
           steps {
             sh """#!/bin/bash
             cd '/root/infrastructure-as-code/terraform/small-size/'
@@ -19,14 +19,14 @@ pipeline {
                 /usr/local/bin/terraform apply -auto-approve
                 echo 'ALL VM Created'  """
             }
-          }        
+          }
 
       stage('Provision') {
         steps {
                   echo 'Completed'
             }
           }
- 
+
      stage('Add User') {
         steps {
                   ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/user_add.yml'
@@ -34,29 +34,36 @@ pipeline {
           }
          }
        }
-	   
-	   
-    stage('Install Container') {
-       steps('Docker') {
+	 } 
+
+
+    stages('Install Container') {
+       stage('Install Docker') {
+	      steps {
              ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/docker.yml'
             }
            }
-    
+
     stage ('Install Kubernetes') {
-	steps('Install Kubernetes') {       
+        steps('Install Kubernetes') {
               ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/kubernetes.yml'
             }
           }
-		  
-		  
-    stage('Provision Cluster') {
-       steps('Create Cluster') {
-         
-		     echo "Cluster Creted"
+		}  
+
+
+    stages('Provision Cluster') {
+       stage('Create Cluster') {
+	      steps {
+                     sh """#!/bin/bash
+                     sleep 120
+                     echo "Cluster Initialized"  """
+
             }
           }
-		
-    
+		}  
+
+
     stage('Deploy App Stack') {
       parallel {
         stage('couchbase ') {
@@ -64,13 +71,13 @@ pipeline {
              ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/postgress-kube.yml'
             }
            }
-		   
+
         stage('Nginx') {
           steps {
              ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/nginx-kube.yml'
             }
            }
-   
+
         stage('RabbitMQ ') {
           steps {
              ansiblePlaybook inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/rabbitmq-kube.yml'
@@ -82,7 +89,7 @@ pipeline {
               }
             }
           }
-		}
+        }
       }
-	 } 
-    
+        
+
