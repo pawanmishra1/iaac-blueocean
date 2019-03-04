@@ -32,7 +32,7 @@ pipeline {
               stage('User Add') {
 		    steps {
             sh '''#!/bin/bash
-                     sleep 60
+                     sleep 210
                      echo "User Added"  '''
           }      
          }
