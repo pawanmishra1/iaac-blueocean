@@ -3,8 +3,8 @@ pipeline {
   stages {
     stage('Provisioning') {
       parallel {
-        stage('Provisioning') {
-          steps('Delete VM ') {
+        stage('Create Vm
+          steps('Create VM ') {
             sh '''#!/bin/bash
                       cd \'/root/infrastructure-as-code/terraform/small-size/\'
                           /usr/local/bin/terraform destroy -auto-approve
@@ -21,28 +21,22 @@ pipeline {
                 }
 
 
-        stage('Clean VM ') {
-          steps {
+           stage('Clean VM ') {
+             steps {
 		         sh '''#!/bin/bash
                      sleep 60
                      echo "VM Deleted"  '''
             }
         }
-        stage('Create VM') {
-          steps {
-		         sh '''#!/bin/bash
-                     sleep 214
-                     echo "VM Deleted"  '''
-            }
-        }   
-        stage('User Add') {
+        
+              stage('User Add') {
 		    steps {
             sh '''#!/bin/bash
                      sleep 60
                      echo "User Added"  '''
           }      
          }
-		}
+        }
        }		
 		 
     stage('Install Container') {
