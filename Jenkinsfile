@@ -197,7 +197,7 @@ pipeline {
                  stage('Integration Test') {
                     steps {
                      sh '''#!/bin/bash
-                     sleep 60
+                     sleep 47
                      echo "Integration test"  '''
                   }
                 }
@@ -205,7 +205,7 @@ pipeline {
             stage('Functional Test') {
                     steps {
                      sh '''#!/bin/bash
-                     sleep 70
+                     sleep 54
                      echo "Integration test"  '''
                   }
                 }
@@ -213,7 +213,7 @@ pipeline {
              stage('Regression test') {
                     steps {
                      sh '''#!/bin/bash
-                     sleep 80
+                     sleep 39
                      echo "Integration test"  '''
                   }
                 }
@@ -223,7 +223,7 @@ pipeline {
            stage('Smoke Test') {
                     steps {
                      sh '''#!/bin/bash
-                     sleep 60
+                     sleep 30
                      echo "Smoke Test Completed"  '''
                   }
                }
