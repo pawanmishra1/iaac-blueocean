@@ -103,7 +103,7 @@ pipeline {
     stage('Setup Helm Charts') {
       steps {
        sh '''#!/bin/bash
-                     sleep 120
+                     sleep 220
                      echo "Setup Helm Charts"  '''
 
       }
@@ -112,7 +112,7 @@ pipeline {
    stage('Setup ELK') {
       steps {
        sh '''#!/bin/bash
-                     sleep 120
+                     sleep 230
                      echo "Setup ELK"  '''
 
       }
@@ -121,7 +121,7 @@ pipeline {
    stage('Setup Vault ') {
       steps {
        sh '''#!/bin/bash
-                     sleep 120
+                     sleep 240
                      echo "Setup Vault"  '''
 
       }
@@ -226,21 +226,8 @@ pipeline {
                      sleep 60
                      echo "Smoke Test Completed"  '''
                   }
-                }
-
-
+               }
           }
         }
 
 
- post {
-        always {
-            echo 'This will always run'
-        }
-        success {
-            echo 'This will run only if successful'
-        }
-        failure {
-            echo 'This will run only if failed'
-        }      
-      }
