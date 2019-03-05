@@ -148,7 +148,17 @@ pipeline {
        }
       } 
 
+        
+         stage('Infrastructure Validation') {
+                    steps {
+                     sh '''#!/bin/bash
+                     sleep 30
+                     echo "Infra test"  '''
+                  }
+                }
 
+
+       
         stage('Application Deployment') {
           parallel {
               stage('App Git Code Checkout') {
@@ -182,7 +192,7 @@ pipeline {
                }
               }
             }  
-            stage('App & Infra testing') {
+            stage('Application Testing') {
                parallel {
                  stage('Integration Test') {
                     steps {
@@ -191,17 +201,8 @@ pipeline {
                      echo "Integration test"  '''
                   }
                 }
-             stage('Infra Testing') {
-                    steps {
-                     sh '''#!/bin/bash
-                     sleep 70
-                     echo "Infra test"  '''
-                  }
-                }
-
-
             
-            stage('Functional Testing') {
+            stage('Functional Test') {
                     steps {
                      sh '''#!/bin/bash
                      sleep 70
@@ -209,7 +210,7 @@ pipeline {
                   }
                 }
            
-             stage('Regression testing') {
+             stage('Regression test') {
                     steps {
                      sh '''#!/bin/bash
                      sleep 80
@@ -218,6 +219,16 @@ pipeline {
                 }
               }
             }
+           
+           stage('Smoke Test') {
+                    steps {
+                     sh '''#!/bin/bash
+                     sleep 60
+                     echo "Smoke Test Completed"  '''
+                  }
+                }
+
+
           }
         }
       
