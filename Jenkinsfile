@@ -51,7 +51,7 @@ pipeline {
     stage('Install Kubernetes') {
       steps {
        sh '''#!/bin/bash
-                     sleep 80
+                     sleep 55
                      echo "Install Kubernetes"  '''
       }
     }
@@ -59,7 +59,7 @@ pipeline {
       stage('Install KubeAdm') {
       steps {
        sh '''#!/bin/bash
-                     sleep 50
+                     sleep 40
                      echo "Install KubeAdm"  '''
 
       }
@@ -68,7 +68,7 @@ pipeline {
      stage('Install Kubectl') {
       steps {
        sh '''#!/bin/bash
-                     sleep 60
+                     sleep 45
                      echo "Install Kubectl"  '''
 
       }
@@ -77,7 +77,7 @@ pipeline {
      stage('Install Kubelet') {
       steps {
        sh '''#!/bin/bash
-                     sleep 70
+                     sleep 50
                      echo "Install Kubelet"  '''
 
       }
