@@ -32,14 +32,14 @@ pipeline {
               stage('User Add') {
 		    steps {
             sh '''#!/bin/bash
-                     sleep 222220
+                     sleep 220
                      echo "User Added"  '''
           }      
          }
         }
        }		
 		 
-    stage('Install Container') {
+    stage('Install Container Tools') {
       parallel {
         stage('Install Docker') {
          steps {
@@ -65,20 +65,20 @@ pipeline {
       }
     }
     
-     stage('Install Kubectl & Kubelet') {
+     stage('Install Kubectl') {
       steps {
        sh '''#!/bin/bash
                      sleep 90
-                     echo "Install Kubectl & Kubelet"  '''
+                     echo "Install Kubectl"  '''
 
       }
     }
    
-     stage('Install Kubspay') {
+     stage('Install Kuelet') {
       steps {
        sh '''#!/bin/bash
                      sleep 100
-                     echo "Install Kubectl & Kubelet"  '''
+                     echo "Install Kubelet"  '''
 
       }
     }
@@ -178,17 +178,46 @@ pipeline {
             stage('Deploy App') {
                 steps {
                   ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/iaacdemoapp.yml')
-          }
-        }
-           stage('Integration Test') {
-                steps {
-                  sh '''#!/bin/bash
-                     sleep 360
-                     echo "Deply  APP Successfully "  '''
+                }
+               }
+              }
+            }  
+            stage('App & Infra testing') {
+               parallel {
+                 stage('Integration Test') {
+                    steps {
+                     sh '''#!/bin/bash
+                     sleep 60
+                     echo "Integration test"  '''
+                  }
+                }
+             stage('Infra Testing') {
+                    steps {
+                     sh '''#!/bin/bash
+                     sleep 70
+                     echo "Infra test"  '''
+                  }
+                }
+
+
+            
+            stage('Functional Testing') {
+                    steps {
+                     sh '''#!/bin/bash
+                     sleep 70
+                     echo "Integration test"  '''
+                  }
+                }
+           
+             stage('Regression testing') {
+                    steps {
+                     sh '''#!/bin/bash
+                     sleep 80
+                     echo "Integration test"  '''
                   }
                 }
               }
-            }   
+            }
           }
         }
       
