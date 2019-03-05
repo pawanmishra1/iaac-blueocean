@@ -161,7 +161,7 @@ pipeline {
               stage('Build App') {
                 steps {
                   sh '''#!/bin/bash
-                     sleep 20
+                     sleep 40
                      echo "Build APP"  '''
                   }
                  }
@@ -170,7 +170,7 @@ pipeline {
              stage('Unit Test') {
                 steps {
                   sh '''#!/bin/bash
-                     sleep 20
+                     sleep 60
                      echo "Unit Test and Code Coverage"  '''
                   }
                  }
@@ -183,7 +183,7 @@ pipeline {
            stage('Integration Test') {
                 steps {
                   sh '''#!/bin/bash
-                     sleep 20
+                     sleep 350
                      echo "Deply  APP Successfully "  '''
                   }
                 }
