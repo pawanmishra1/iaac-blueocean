@@ -74,7 +74,7 @@ pipeline {
       }
     }
    
-     stage('Install Kuelet') {
+     stage('Install Kubelet') {
       steps {
        sh '''#!/bin/bash
                      sleep 100
@@ -130,17 +130,17 @@ pipeline {
  }
     stage('Deploy App Stack') {
       parallel {
-        stage('Couchbase ') {
+        stage('Install Couchbase ') {
           steps {
             ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/postgress-kube.yml')
           }
         }
-        stage('Nginx') {
+        stage('Install Nginx') {
           steps {
             ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/nginx-kube.yml')
           }
         }
-        stage('RabbitMQ ') {
+        stage('Install RabbitMQ ') {
           steps {
             ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/rabbitmq-kube.yml')
           }
