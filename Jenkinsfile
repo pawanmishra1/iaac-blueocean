@@ -32,7 +32,7 @@ pipeline {
               stage('User Add') {
 		    steps {
             sh '''#!/bin/bash
-                     sleep 210
+                     sleep 222220
                      echo "User Added"  '''
           }      
          }
@@ -51,7 +51,7 @@ pipeline {
     stage('Install Kubernetes') {
       steps {
        sh '''#!/bin/bash
-                     sleep 157
+                     sleep 110
                      echo "Cluster Initialized"  '''
       }
     }
@@ -59,7 +59,7 @@ pipeline {
       stage('Install KubeAdm') {
       steps {
        sh '''#!/bin/bash
-                     sleep 120
+                     sleep 80
                      echo "Install KubeAdm"  '''
 
       }
@@ -68,7 +68,7 @@ pipeline {
      stage('Install Kubectl & Kubelet') {
       steps {
        sh '''#!/bin/bash
-                     sleep 120
+                     sleep 90
                      echo "Install Kubectl & Kubelet"  '''
 
       }
@@ -77,7 +77,7 @@ pipeline {
      stage('Install Kubspay') {
       steps {
        sh '''#!/bin/bash
-                     sleep 120
+                     sleep 100
                      echo "Install Kubectl & Kubelet"  '''
 
       }
@@ -183,7 +183,7 @@ pipeline {
            stage('Integration Test') {
                 steps {
                   sh '''#!/bin/bash
-                     sleep 350
+                     sleep 360
                      echo "Deply  APP Successfully "  '''
                   }
                 }
