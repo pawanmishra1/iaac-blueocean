@@ -8,7 +8,8 @@ pipeline {
             sh '''#!/bin/bash
                       cd \'/root/infrastructure-as-code/terraform/small-size/\'
                           /usr/local/bin/terraform destroy -auto-approve
-                           echo \'All VM deleted\' '''
+                          sleep 30 
+                          echo \'All VM deleted\' '''
             
 	
              sh '''#!/bin/bash
@@ -24,7 +25,7 @@ pipeline {
            stage('Clean VM ') {
              steps {
 		         sh '''#!/bin/bash
-                     sleep 60
+                     sleep 40
                      echo "VM Deleted"  '''
             }
         }
