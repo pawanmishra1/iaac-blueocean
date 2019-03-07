@@ -236,10 +236,12 @@ pipeline {
                   }
                 }
              
-              stage('Security Scan') {
+              stage('App Security Scan') {
                  steps {
-                   sh 'echo "docker.io/exampleuser/examplerepo:latest `pwd`/Dockerfile" > anchore_images'
-                   anchore name: 'anchore_images'
+                sh '''#!/bin/bash
+                     sleep 39
+                     echo "Security scan for App"  '''
+
                 }
                }          
 
