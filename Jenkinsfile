@@ -221,7 +221,8 @@ pipeline {
                      sh '''#!/bin/bash
                      sleep 39
                      echo "Publish Security Scan Report"  '''
-  
+                        }
+                      }   
 
 
 
