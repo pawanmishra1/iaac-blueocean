@@ -161,7 +161,7 @@ pipeline {
       } 
 
         
-         stage('Infrastructure Analyzer') {
+         stage('Infra Vulnerabilities Analyzer') {
                     steps {
                      sh '''#!/bin/bash
                      sleep 30
