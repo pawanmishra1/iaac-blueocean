@@ -40,6 +40,17 @@ pipeline {
         }
        }		
 		 
+    stage('Infrastructure Scan') {
+       steps {
+                         sh '''#!/bin/bash
+                     sleep 40
+                     echo "Security Scan Completed"  '''
+            }
+        }
+
+
+
+
     stage('Install Container Tools') {
       parallel {
         stage('Install Docker') {
@@ -218,13 +229,6 @@ pipeline {
                      echo "Integration test"  '''
                      }
                    }
-              stage('Nessus Security Scan') {
-                    steps {
-                     sh '''#!/bin/bash
-                     sleep 39
-                     echo "Publish Security Scan Report"  '''
-                        }
-                      }   
 
 
 
@@ -232,6 +236,13 @@ pipeline {
                   }
                 }
              
+           stage('Nessus Security Scan') {
+                    steps {
+                     sh '''#!/bin/bash
+                     sleep 39
+                     echo "Publish Security Scan Report"  '''
+                        }
+                      }
            
            
            stage('Smoke Test') {
