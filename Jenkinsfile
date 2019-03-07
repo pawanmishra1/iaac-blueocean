@@ -216,7 +216,9 @@ pipeline {
                      sh '''#!/bin/bash
                      sleep 39
                      echo "Integration test"  '''
-             stage('Nessus Security Scan') {
+                     }
+                   }
+              stage('Nessus Security Scan') {
                     steps {
                      sh '''#!/bin/bash
                      sleep 39
@@ -229,8 +231,8 @@ pipeline {
 
                   }
                 }
-              }
-            }
+             
+           
            
            stage('Smoke Test') {
                     steps {
