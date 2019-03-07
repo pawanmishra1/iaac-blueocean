@@ -178,11 +178,11 @@ pipeline {
                  }
             
 
-             stage('Unit Test') {
+             stage('Static Code Analysis') {
                 steps {
                   sh '''#!/bin/bash
                      sleep 60
-                     echo "Unit Test and Code Coverage"  '''
+                     echo "Unit Test and Sonar  Code Coverage"  '''
                   }
                  }
 
@@ -216,6 +216,16 @@ pipeline {
                      sh '''#!/bin/bash
                      sleep 39
                      echo "Integration test"  '''
+             stage('Nessus Security Scan') {
+                    steps {
+                     sh '''#!/bin/bash
+                     sleep 39
+                     echo "Publish Security Scan Report"  '''
+  
+
+
+
+
                   }
                 }
               }
