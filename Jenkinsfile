@@ -161,7 +161,7 @@ pipeline {
       } 
 
         
-         stage('Infrastructure Validation') {
+         stage('Infrastructure Analyzer') {n
                     steps {
                      sh '''#!/bin/bash
                      sleep 30
@@ -236,13 +236,13 @@ pipeline {
                   }
                 }
              
-           stage('Nessus Security Scan') {
-                    steps {
-                     sh '''#!/bin/bash
-                     sleep 39
-                     echo "Publish Security Scan Report"  '''
-                        }
-                      }
+              stage('Security Scan') {
+                 steps {
+                   sh 'echo "docker.io/exampleuser/examplerepo:latest `pwd`/Dockerfile" > anchore_images'
+                   anchore name: 'anchore_images'
+                }
+               }          
+
            
            
            stage('Smoke Test') {
