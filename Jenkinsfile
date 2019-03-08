@@ -27,10 +27,10 @@ pipeline {
 		         sh '''#!/bin/bash
                      sleep 40
                      echo "VM Deleted"  '''
+             }
             }
-        }
         
-              stage('User Add') {
+           stage('User Add') {
 		    steps {
             sh '''#!/bin/bash
                      sleep 220
@@ -40,15 +40,13 @@ pipeline {
         }
        }		
 		 
-    stage('Infrastructure Scan') {
+    stage('Infra Security Scan') {
        steps {
                          sh '''#!/bin/bash
                      sleep 40
                      echo "Security Scan Completed"  '''
-            }
-        }
-
-
+               }
+              }
 
 
     stage('Install Container Tools') {
@@ -92,15 +90,10 @@ pipeline {
                      sleep 50
                      echo "Install Kubelet"  '''
 
+        }
+       }
       }
-    }
-
-
- 
-
-
      }
-    }
   
  
  
@@ -161,7 +154,7 @@ pipeline {
       } 
 
         
-         stage('Infra Vulnerabilities Analyzer') {
+         stage('Vulnerabilities scan') {
                     steps {
                      sh '''#!/bin/bash
                      sleep 30
@@ -173,7 +166,7 @@ pipeline {
        
         stage('Application Deployment') {
           parallel {
-              stage('App Git Code Checkout') {
+              stage('App Code Git Checkout') {
                 steps {
                   sh '''#!/bin/bash
                      sleep 20
@@ -228,33 +221,26 @@ pipeline {
                      sleep 39
                      echo "Integration test"  '''
                      }
+                    } 
                    }
-
-
-
-
                   }
-                }
              
-              stage('App Security Scan') {
+              stage('Infra Security Inspection') {
                  steps {
                 sh '''#!/bin/bash
                      sleep 39
-                     echo "Security scan for App"  '''
-
+                     echo "Security Inspection for Complete Infrastructure"  '''
                 }
-               }          
-
+               } 
            
-           
-           stage('Smoke Test') {
+           stage('Smoke Test') { 
                     steps {
                      sh '''#!/bin/bash
                      sleep 30
                      echo "Smoke Test Completed"  '''
                   }
+                 } 
+                }
                }
-          }
-        }
 
 
