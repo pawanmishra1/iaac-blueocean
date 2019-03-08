@@ -1,0 +1,9 @@
+---
+- name: Ensure docker users are added to the docker group.
+  become: yes
+  become_user: root
+  user:
+    name: "{{ item }}"
+    groups: docker
+    append: true
+  with_items: "{{ docker_users }}"

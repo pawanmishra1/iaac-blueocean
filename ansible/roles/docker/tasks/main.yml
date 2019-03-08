@@ -1,0 +1,41 @@
+---
+# tasks file for docker
+
+- include_tasks: setup-RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- include_tasks: setup-Debian.yml
+  when: ansible_os_family == 'Debian'
+
+- name: Install Requisites
+  yum: name=device-mapper-persistent-data,lvm2 state=installed
+
+- name: Install Docker.
+  become: yes
+  become_user: root
+  package:
+    name: "{{ docker_package }}"
+    state: "{{ docker_package_state }}"
+  notify: restart docker
+
+- name: Ensure Docker is started and enabled at boot.
+  become: yes
+  become_user: root
+  service:
+    name: docker
+    state: "{{ docker_service_state }}"
+    enabled: "{{ docker_service_enabled }}"
+
+- name: Ensure handlers are notified now to avoid firewall conflicts.
+  meta: flush_handlers
+
+#- include_tasks: docker-compose.yml
+#  when: docker_install_compose
+
+<<<<<<< HEAD
+#- include_tasks: docker-users.yml
+#  when: docker_users
+=======
+- include_tasks: docker-users.yml
+  when: docker_users
+>>>>>>> 72ce031e6eb9d878c797f1141c396a8112110b68

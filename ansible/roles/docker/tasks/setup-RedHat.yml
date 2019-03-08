@@ -1,0 +1,64 @@
+---
+- name: Stop and disable firewalld
+  become: yes
+  become_user: root
+  service:
+    name: firewalld
+    state: stopped
+    enabled: False
+  ignore_errors: yes
+
+
+- name: Disable swap
+  become: yes
+  become_user: root
+  command: swapoff -a 
+
+
+- name: Set Selinix into Permessive Mode
+  become: yes
+  become_user: root
+  command: setenforce 0 
+
+
+- name: Create /etc/docker dir
+  become: yes
+  become_user: root
+  file: path=/etc/docker state=directory
+
+- name: Set Storage Drive
+  become: yes
+  become_user: root 
+  copy:
+    dest: /etc/docker/daemon.json
+    content: |
+        {
+          "storage-driver": "devicemapper"
+        }
+
+- name: Ensure old versions of Docker are not installed.
+  package:
+    name:
+      - docker
+      - docker-common
+      - docker-engine
+    state: absent
+
+- name: Add Docker GPG key.
+  become: yes
+  become_user: root
+  rpm_key:
+    key: https://download.docker.com/linux/centos/gpg
+    state: present
+    
+
+- name: Add Docker repository.
+  become: yes
+  become_user: root
+  get_url:
+    url: "{{ docker_yum_repo_url }}"
+    dest: '/etc/yum.repos.d/docker-{{ docker_edition }}.repo'
+    owner: root
+    group: root
+    mode: 0644
+

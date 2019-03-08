@@ -1,0 +1,8 @@
+# Sample configuration file for VMware Guest dynamic inventory
+plugin: vmware_vm_inventory
+strict: False
+hostname: 10.65.223.31
+username: administrator@vsphere.local
+password: Esxi@123$%
+validate_certs: False
+with_tags: True

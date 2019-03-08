@@ -1,0 +1,32 @@
+<<<<<<< HEAD
+---
+- hosts: kubemaster
+=======
+- hosts: kubemaster 
+>>>>>>> 72ce031e6eb9d878c797f1141c396a8112110b68
+  become: yes
+  become_user: root
+  vars:
+    kubernetes_allow_pods_on_master: True
+    kubernetes_role: "master"
+<<<<<<< HEAD
+  roles:
+    - kubernetes
+=======
+  roles:    
+    - kubernetes 
+>>>>>>> 72ce031e6eb9d878c797f1141c396a8112110b68
+
+- hosts: kubenode
+  become: yes
+  become_user: root
+  vars:
+    kubernetes_allow_pods_on_master: True
+    kubernetes_role: "node"
+  roles:
+    - kubernetes
+
+<<<<<<< HEAD
+
+=======
+>>>>>>> 72ce031e6eb9d878c797f1141c396a8112110b68

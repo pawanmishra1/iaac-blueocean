@@ -1,0 +1,35 @@
+---
+- hosts: "all"
+  become: yes
+  vars:
+    users:
+    - "ansible"
+  tasks:
+  - name: "Create user accounts"
+    become: yes
+    user:
+      name: "{{ item }}"
+      password: "$6$4Gfe/gBb$KpeNtBJzrVlZU6dTBp.1Mkvb4rxqtHegozjg3AHk.clyGYHxMOOZ1GuJ0rCVy2ebwjG3U1QVMgz606gOBb9pM1"
+      groups: "wheel"
+    with_items: "{{ users }}"
+  - name: "Add authorized keys"
+    become: yes
+    authorized_key:
+      user: "{{ item }}"
+      key: "{{ lookup('file', '/home/ansible/.ssh/'+ 'id_rsa.pub') }}"
+    with_items: "{{ users }}"
+  - name: "Add root authorized keys"
+    become: yes
+    authorized_key:
+      user: root
+      key: "{{ lookup('file', '/root/.ssh/'+ 'id_rsa.pub') }}"
+    with_items: root
+  
+
+  - name: "Allow admin users to sudo without a password"
+    become: yes
+    lineinfile:
+      dest: "/etc/sudoers" # path: in version 2.3
+      state: "present"
+      regexp: "^%wheel"
+      line: "%wheel ALL=(ALL) NOPASSWD: ALL"

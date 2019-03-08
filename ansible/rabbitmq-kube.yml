@@ -1,0 +1,23 @@
+---
+- hosts: kubemaster
+  become: yes
+  become_user: root
+  tasks:
+
+  - name: Create RabbitMQ Deployment file
+    copy:
+      src: kube-deplyment/rabbitmq-deployment.yml
+      dest: /root/rabbitmq-deployment.yml 
+
+  - name: Launch 3 RabbitMQ pods
+    command: "kubectl  apply -f /root/rabbitmq-deployment.yml"
+
+  - name: Create RabbitMQ Service file
+    copy:
+      src: kube-deplyment/rabbitmq-svc.yml
+      dest: /root/rabbitmq-svc.yml
+
+  - name: Start RabbitMQ Service
+    command: "kubectl  apply -f /root/rabbitmq-svc.yml"
+
+

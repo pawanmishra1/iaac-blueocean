@@ -1,0 +1,38 @@
+---
+- hosts: kubemaster
+  become: yes
+  become_user: root
+  tasks:
+
+  - name: Create Docker folder
+    command: "mkdir /root/Dockerfiles"
+
+  - name: Create Demo App in to server
+    copy:
+      src: kube-deplyment/iaacdemoapp.war
+      dest: /root/Dockerfiles/iaacdemoapp.war 
+
+  - name: Create Docker file
+    copy: 
+      src: kube-deplyment/Dockerfile
+      dest: /root/Dockerfiles/Dockerfile
+
+  - name: Create App Docker image  
+    command: "cd /root/Dockerfiles/ && docker build -t iaacdemoapp ."
+  
+  - name: Create Docker Private Reposiory 
+    command: " docker run -d -p 5000:5000 --restart=always --name registry registry:2 "
+
+  - name: push app image to local Repository 
+    command: "docker tag iaacdemoapp:latest localhost:5000/iaacdemoapp"
+    command: "docker push localhost:5000/iaacdemoapp"
+
+  - name: Create App Deployment file
+    copy:
+      src: kube-deplyment/iaacdemoapp-deployment.yml
+      dest: /root/iaacdemoapp-deployment.yml
+
+  - name: Deploy Demo App
+    command: "kubectl  apply -f /root/iaacdemoapp-deployment.yml"
+
+

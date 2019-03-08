@@ -1,0 +1,27 @@
+---
+- hosts: kubemaster
+  become: yes
+  become_user: root
+  tasks:
+
+  - name: Create Nginx Deployment file
+    copy:
+      src: kube-deplyment/nginx-deployment.yml
+      dest: /root/nginx-deployment.yml 
+
+<<<<<<< HEAD
+  - name: Launch 3 nginx pods
+=======
+  - name: Launch 3 ngix pods
+>>>>>>> 72ce031e6eb9d878c797f1141c396a8112110b68
+    command: "kubectl  apply -f /root/nginx-deployment.yml"
+
+  #- name: Get exposed port
+   # command: "kubectl get pods  nginx --output=jsonpath='{range .spec.ports[0]}{.nodePort}'"
+  #  register: result
+  #- set_fact:
+  #    node_port: "{{ result.stdout }}"
+
+  #- debug: msg="Exposed port {{ node_port }}"
+
+

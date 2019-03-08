@@ -1,0 +1,6 @@
+
+
+  - hosts: server02
+    become: yes
+    roles: 
+      - haproxy 

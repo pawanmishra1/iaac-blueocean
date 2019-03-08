@@ -1,0 +1,34 @@
+---
+# tasks file for appsetup
+ - name: Creates directory
+   file:
+     path: /home/ansible/app/
+     state: directory
+     owner: ansible
+     group: ansible
+     mode: 0775 
+ 
+ - name: copying application jar file
+   copy:
+     src: /home/appmod/IAAC/App/tnt-advice-server/spring-boot-sample-rest/target/spring-boot-sample-rest-0.0.1-SNAPSHOT.jar
+     dest: /home/ansible/app/spring-boot-sample-rest-0.0.1-SNAPSHOT.jar
+     owner: ansible
+     group: ansible
+     mode: 0755
+
+ - name: Check if Application  is running
+   tags: java
+   shell: 'ps -ef | grep  java | grep -v grep'
+   ignore_errors: yes
+   changed_when: false
+   register: service_java_status
+
+
+ - name: Start application
+   # shell: /bin/java -jar spring-boot-sample-rest-0.0.1-SNAPSHOT.jar >> app.log 2>&1 &
+   tags: java
+   shell: "nohup java -jar /home/ansible/app/spring-boot-sample-rest-0.0.1-SNAPSHOT.jar >> /home/ansible/app/app.log 2>&1 &"
+   register: result 
+   changed_when: true 
+   check_mode: false
+   when: service_java_status.rc == 1 

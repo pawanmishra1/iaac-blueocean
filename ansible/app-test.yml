@@ -1,0 +1,6 @@
+--- 
+ - hosts: webserver03 
+   become: yes
+   become_user: ansible
+   roles: 
+     - appsetup 

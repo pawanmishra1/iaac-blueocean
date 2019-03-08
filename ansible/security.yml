@@ -1,0 +1,7 @@
+---
+- hosts: lb01 
+  become: yes
+  become_user: root
+  roles:
+    - security
+
