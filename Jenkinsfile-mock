@@ -107,7 +107,7 @@ pipeline {
     stage('Setup Helm Charts') {
       steps {
        sh '''#!/bin/bash
-                     sleep 220
+                     sleep 20
                      echo "Setup Helm Charts"  '''
 
       }
@@ -116,7 +116,7 @@ pipeline {
    stage('Setup ELK') {
       steps {
        sh '''#!/bin/bash
-                     sleep 230
+                     sleep 20
                      echo "Setup ELK"  '''
 
       }
@@ -125,7 +125,7 @@ pipeline {
    stage('Setup Vault ') {
       steps {
        sh '''#!/bin/bash
-                     sleep 240
+                     sleep 40
                      echo "Setup Vault"  '''
 
       }
@@ -191,7 +191,7 @@ pipeline {
              stage('Static Code Analysis') {
                 steps {
                   sh '''#!/bin/bash
-                     sleep 60
+                     sleep 30
                      echo "Unit Test and Sonar  Code Coverage"  '''
                   }
                  }
@@ -199,7 +199,7 @@ pipeline {
             stage('Deploy App') {
                 steps {
                  sh '''#!/bin/bash
-                     sleep 60
+                     sleep 50
                      echo "Deploy app"  '''
 
                 }
@@ -211,7 +211,7 @@ pipeline {
                  stage('Integration Test') {
                     steps {
                      sh '''#!/bin/bash
-                     sleep 47
+                     sleep 17
                      echo "Integration test"  '''
                   }
                 }
@@ -219,7 +219,7 @@ pipeline {
             stage('Functional Test') {
                     steps {
                      sh '''#!/bin/bash
-                     sleep 54
+                     sleep 34
                      echo "Integration test"  '''
                   }
                 }
@@ -227,7 +227,7 @@ pipeline {
              stage('Regression test') {
                     steps {
                      sh '''#!/bin/bash
-                     sleep 39
+                     sleep 29
                      echo "Integration test"  '''
                      }
                     } 
@@ -237,7 +237,7 @@ pipeline {
               stage('Infra Security Inspection') {
                  steps {
                 sh '''#!/bin/bash
-                     sleep 39
+                     sleep 19
                      echo "Security Inspection for Complete Infrastructure"  '''
                 }
                } 
@@ -245,7 +245,7 @@ pipeline {
            stage('Smoke Test') { 
                     steps {
                      sh '''#!/bin/bash
-                     sleep 30
+                     sleep 10
                      echo "Smoke Test Completed"  '''
                   }
                  } 
