@@ -137,7 +137,7 @@ pipeline {
       parallel {
         stage('Install Couchbase ') {
           steps {
-            ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/postgress-kube.yml')
+            ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/couchbase-kube.yml')
           }
         }
         stage('Install Nginx') {
