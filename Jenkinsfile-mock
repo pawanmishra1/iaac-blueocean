@@ -4,32 +4,25 @@ pipeline {
     stage('Provisioning') {
       parallel {
         stage('Create VM') {
-          steps('Create VM ') {
+          steps('Clean VM ') {
             sh '''#!/bin/bash
                           sleep 30 
-                          echo \'All VM deleted\' '''
-            
-	
-             sh '''#!/bin/bash
-                 sleep 47
-                 echo \'ALL VM Created\'  '''
-         
+                          echo 'All VM deleted' '''
                  }		  
                 }
 
 
-           stage('Clean VM ') {
+           stage('Create VM ') {
              steps {
-		         sh '''#!/bin/bash
-                     sleep 40
-                     echo "VM Deleted"  '''
+             sh label: '', returnStdout: true, script: '''sleep 40
+             echo "VM Created"'''
              }
             }
         
            stage('User Add') {
 		    steps {
             sh '''#!/bin/bash
-                     sleep 60
+                     sleep 49
                      echo "User Added"  '''
           }      
          }
@@ -38,8 +31,8 @@ pipeline {
 		 
     stage('Infra Security Scan') {
        steps {
-                         sh '''#!/bin/bash
-                     sleep 40
+                     sh '''#!/bin/bash
+                     sleep 37
                      echo "Security Scan Completed"  '''
                }
               }
