@@ -6,8 +6,8 @@ pipeline {
         stage('Create VM') {
           steps('Clean VM ') {
                         sh '''#!/bin/bash
-                        /*  This stage will clean already created VM,s
-                         *  Use this stage if VM,s Need to delete
+                        /*  This stage will clean already created                                                                       VM,s
+                         *  Use this stage if VM,s Need to                                                                              delete
                          */
 
 
@@ -20,8 +20,10 @@ pipeline {
 
            stage('Create VM ') {
              steps {
-             sh label: '', returnStdout: false, script: 
-             '''#!/bin/bash
+             sh '''#!/bin/bash
+             /*  This stage will create all reuired VM,s                                                                               VM,s
+                         *  Use this stage if VM,s Need to                                                                             Create
+                         */      
              sleep 40
              echo "VM Created"'''
              }
@@ -30,8 +32,11 @@ pipeline {
            stage('User Add') {
 		    steps {
             sh '''#!/bin/bash
-                     sleep 49
-                     echo "User Added"  '''
+                  /*  This stage will add users                                                                                         VM,s
+                         *  Use this stage if users needs to be                                                                         Add
+                         */
+                         sleep 49
+                        echo "User Added"  '''
           }      
          }
         }
@@ -40,6 +45,9 @@ pipeline {
     stage('Infra Security Scan') {
        steps {
                      sh '''#!/bin/bash
+                     /*  This stage will run Infrstructure Security Scan in all                                                         VM,s
+                         *  Use this stage if VM,s Need to scan                                                                         Scan
+                         */
                      sleep 37
                      echo "Security Scan Completed"  '''
                }
@@ -50,6 +58,9 @@ pipeline {
       parallel {
         stage('Install Docker') {
          steps {
+          /*  This stage will Install Docker in all Required                                                                            VM,s
+                         *  Use this stage if Docker needs to be                                                                        Install 
+                         */
           sh '''#!/bin/bash
           sleep 20
            echo "Docker Installed" '''
@@ -59,6 +70,9 @@ pipeline {
     stage('Install Kubernetes') {
       steps {
        sh '''#!/bin/bash
+          /*  This stage Install Kubernetes in all Required                                                                            VM,s
+                         *  Use this stage if Kubernetes need to be                                                                    Install 
+                         */
                      sleep 55
                      echo "Install Kubernetes"  '''
       }
