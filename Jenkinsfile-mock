@@ -5,10 +5,13 @@ pipeline {
       parallel {
         stage('Create VM') {
           steps('Clean VM ') {
-             /*  This stage will clean already created VM,s
-             *  Use this stage if VM,s Need to delete         
-             */            
                         sh '''#!/bin/bash
+                        /*  This stage will clean already created VM,s
+                         *  Use this stage if VM,s Need to delete
+                         */
+
+
+
                           sleep 30 
                           echo 'All VM deleted' '''
                  }		  
