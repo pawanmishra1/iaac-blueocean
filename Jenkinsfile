@@ -3,17 +3,19 @@ pipeline {
   stages {
     stage('Provisioning') {
       parallel {
-        stage('Create VM') {
-          steps('Create VM ') {
-            sh '''#!/bin/bash
-                      cd \'/root/infrastructure-as-code/terraform/small-size/\'
+        parameters {
+           choice choices: ['medium-size', 'small-size', 'large-size'], description: 'Chose VM Size', name: 'clu-size'
+              stage('Create VM') {
+                steps('Create VM ') {
+                   sh '''#!/bin/bash
+                      cd \'/root/infrastructure-as-code/terraform/${clu-size}'
                           /usr/local/bin/terraform destroy -auto-approve
                           sleep 30 
                           echo \'All VM deleted\' '''
             
 	
              sh '''#!/bin/bash
-                 cd \'/root/infrastructure-as-code/terraform/small-size/\'
+                 cd \'/root/infrastructure-as-code/terraform/clu-size'
                 /usr/local/bin/terraform apply -auto-approve
                 echo \'ALL VM Created\'  '''
          
@@ -39,7 +41,7 @@ pipeline {
          }
         }
        }		
-		 
+      }		 
     stage('Infra Security Scan') {
        steps {
                          sh '''#!/bin/bash
