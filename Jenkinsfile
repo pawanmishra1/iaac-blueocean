@@ -4,14 +4,12 @@ pipeline {
     stage('Provisioning') {
       parallel {
               stage('Create VM') {
-                  input {
-  message 'vm-size'
-  parameters {
-    [choices: ['small-size', 'medium-size', 'large-size'], description: '', name: 'vm-size']
-  }
-}
-           
-                            
+                 input {
+                        message 'vm-size'
+                          parameters {
+                            choice choices: ['small-size', 'medium-size', 'large-size'], description: '', name: 'vm-size'
+                               }                
+                              }        
                  steps('Create VM ') {
                    sh '''#!/bin/bash
                       cd \'/root/infrastructure-as-code/terraform/${vm-size}'
