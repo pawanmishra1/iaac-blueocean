@@ -1,5 +1,8 @@
 pipeline {
   agent any
+    parameters {
+       choice choices: ['medium-size', 'small-size', 'large-size'], description: 'Chose VM Size', name: 'clu-size'
+        }
   stages {
     stage('Provisioning') {
       parallel {
