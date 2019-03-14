@@ -10,7 +10,7 @@ pipeline {
                          [choices: ['small-size', 'medium-size', 'large-size'], description: 'VM Size', name: 'vm-size']
                              }
                             }
-                 :steps('Create VM ') {
+                 steps('Create VM ') {
                    sh '''#!/bin/bash
                       cd \'/root/infrastructure-as-code/terraform/${vm-size}'
                           /usr/local/bin/terraform destroy -auto-approve
