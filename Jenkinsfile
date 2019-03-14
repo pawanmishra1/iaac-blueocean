@@ -1,16 +1,16 @@
 pipeline {
   agent any
-     input {
-  message 'vm-size'
-  parameters {
-    choice choices: ['small-size', 'medium-size', 'large-size'], description: 'VM  Size', name: 'vm-size'
-          }
-        }
   stages {
     stage('Provisioning') {
       parallel {
               stage('Create VM') {
-                steps('Create VM ') {
+                input {
+                        message 'vm-size'
+                        parameters {
+                        choice choices: ['small-size', 'medium-size', 'large-size'], description: 'VM  Size', name: 'vm-size'
+                      }
+                     }        
+                 steps('Create VM ') {
                    sh '''#!/bin/bash
                       cd \'/root/infrastructure-as-code/terraform/${vm-size}'
                           /usr/local/bin/terraform destroy -auto-approve
@@ -18,7 +18,7 @@ pipeline {
                           echo \'All VM deleted\' '''
             
 	
-             sh '''#!/bin/bash
+                 sh '''#!/bin/bash
                  cd \'/root/infrastructure-as-code/terraform/vm-size'
                 /usr/local/bin/terraform apply -auto-approve
                 echo \'ALL VM Created\'  '''
