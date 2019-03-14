@@ -3,8 +3,6 @@ pipeline {
   stages {
     stage('Provisioning') {
       parallel {
-        parameters {
-           choice choices: ['medium-size', 'small-size', 'large-size'], description: 'Chose VM Size', name: 'clu-size'
               stage('Create VM') {
                 steps('Create VM ') {
                    sh '''#!/bin/bash
@@ -41,7 +39,7 @@ pipeline {
          }
         }
        }		
-      }		 
+      		 
     stage('Infra Security Scan') {
        steps {
                          sh '''#!/bin/bash
