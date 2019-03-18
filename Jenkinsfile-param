@@ -1,0 +1,37 @@
+pipeline {
+  agent any
+  stages {
+    stage('Provisioning') {
+      parallel {
+              stage('Create VM') {
+                 input {
+                        message 'vm-size'
+                          parameters {
+                            choice choices: ['small-size', 'medium-size', 'large-size'], description: '', name: 'vm-size'
+                               }                
+                              }        
+                 steps('Create VM ') {
+                   sh '''#!/bin/bash
+                      cd \'/root/infrastructure-as-code/terraform/${params.vm-size}'
+                          /usr/local/bin/terraform destroy -auto-approve
+                          sleep 30 
+                          echo \'All VM deleted\' '''
+            
+	
+                 sh '''#!/bin/bash
+                 cd \'/root/infrastructure-as-code/terraform/${params.vm-size}'
+                /usr/local/bin/terraform apply -auto-approve
+                echo \'ALL VM Created\'  '''
+         
+                 ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/user_add.yml')
+                 }		  
+                }
+
+
+          }      
+         }
+        }
+       }		
+      		 
+
+
