@@ -4,22 +4,18 @@ pipeline {
     stage('Provisioning') {
       parallel {
               stage('Create VM') {
-                 input {
-                        message 'vm-size'
-                          parameters {
-                            choice choices: ['small-size', 'medium-size', 'large-size'], description: '', name: 'vm-size'
-                               }                
-                              }        
+                                               
+                                      
                  steps('Create VM ') {
                    sh '''#!/bin/bash
-                      cd \'/root/infrastructure-as-code/terraform/${params.vm-size}'
+                      cd \'/root/infrastructure-as-code/terraform/small-size'
                           /usr/local/bin/terraform destroy -auto-approve
                           sleep 30 
                           echo \'All VM deleted\' '''
             
 	
                  sh '''#!/bin/bash
-                 cd \'/root/infrastructure-as-code/terraform/${params.vm-size}'
+                 cd \'/root/infrastructure-as-code/terraform/small-size'
                 /usr/local/bin/terraform apply -auto-approve
                 echo \'ALL VM Created\'  '''
          
