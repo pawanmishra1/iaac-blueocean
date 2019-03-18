@@ -16,7 +16,8 @@ pipeline {
                           /usr/local/bin/terraform destroy -auto-approve
                           sleep 30 
                           echo \'All VM deleted\' '''
-            
+           
+                 sh "echo ${params.vm-size}" 
 	
                  sh '''#!/bin/bash
                  cd \'/root/infrastructure-as-code/terraform/${params.vm-size}'
