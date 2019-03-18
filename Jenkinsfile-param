@@ -12,7 +12,7 @@ pipeline {
                               }        
                  steps('Create VM ') {
                    sh '''#!/bin/bash
-                      cd \'/root/infrastructure-as-code/terraform/${params.vm-size}'
+                      cd '/root/infrastructure-as-code/terraform/"${params.vm-size}"'
                           /usr/local/bin/terraform destroy -auto-approve
                           sleep 30 
                           echo \'All VM deleted\' '''
@@ -20,11 +20,10 @@ pipeline {
                  sh "echo ${params.vm-size}" 
 	
                  sh '''#!/bin/bash
-                 cd \'/root/infrastructure-as-code/terraform/${params.vm-size}'
+                 cd \'/root/infrastructure-as-code/terraform/"${params.vm-size}"'
                 /usr/local/bin/terraform apply -auto-approve
                 echo \'ALL VM Created\'  '''
          
-                 ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/user_add.yml')
                  }		  
                 }
 
