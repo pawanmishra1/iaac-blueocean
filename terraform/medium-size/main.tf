@@ -19,8 +19,11 @@ module "loadbalancer_vm" {
   vsphere_virtual_machine_ipv4_gateway                = "${var.vsphere_virtual_machine_ipv4_gateway}"
   vsphere_virtual_machine_dns_server_list             = "${var.vsphere_virtual_machine_dns_server_list}"
   vsphere_virtual_machine_dns_suffix_list             = "${var.vsphere_virtual_machine_dns_suffix_list}"
+<<<<<<< HEAD
   vsphere_virtual_machine_num_cpus                    =  "${lookup(var.vsphere_virtual_machine_num_cpus, "loadbalancer")}"
   vsphere_virtual_machine_memory                      =  "${lookup(var.vsphere_virtual_machine_memory, "loadbalancer")}"
+=======
+>>>>>>> 72ce031e6eb9d878c797f1141c396a8112110b68
   #vsphere_virtual_machine_wait_for_guest_net_timeout  = "${var.vsphere_virtual_machine_wait_for_guest_net_timeout}"
   #vsphere_virtual_machine_wait_for_guest_net_routable = "${var.vsphere_virtual_machine_wait_for_guest_net_routable}"
 }
@@ -46,8 +49,11 @@ module "webserver01_vm" {
   vsphere_virtual_machine_ipv4_gateway                = "${var.vsphere_virtual_machine_ipv4_gateway}"
   vsphere_virtual_machine_dns_server_list             = "${var.vsphere_virtual_machine_dns_server_list}"
   vsphere_virtual_machine_dns_suffix_list             = "${var.vsphere_virtual_machine_dns_suffix_list}"
+<<<<<<< HEAD
   vsphere_virtual_machine_num_cpus                    =  "${lookup(var.vsphere_virtual_machine_num_cpus, "webserver01")}"
   vsphere_virtual_machine_memory                      =  "${lookup(var.vsphere_virtual_machine_memory, "webserver01")}"
+=======
+>>>>>>> 72ce031e6eb9d878c797f1141c396a8112110b68
   #vsphere_virtual_machine_wait_for_guest_net_timeout  = "${var.vsphere_virtual_machine_wait_for_guest_net_timeout}"
   #vsphere_virtual_machine_wait_for_guest_net_routable = "${var.vsphere_virtual_machine_wait_for_guest_net_routable}"
 }
@@ -73,8 +79,11 @@ module "webserver02_vm" {
   vsphere_virtual_machine_ipv4_gateway                = "${var.vsphere_virtual_machine_ipv4_gateway}"
   vsphere_virtual_machine_dns_server_list             = "${var.vsphere_virtual_machine_dns_server_list}"
   vsphere_virtual_machine_dns_suffix_list             = "${var.vsphere_virtual_machine_dns_suffix_list}"
+<<<<<<< HEAD
   vsphere_virtual_machine_num_cpus                    =  "${lookup(var.vsphere_virtual_machine_num_cpus, "webserver02")}"
   vsphere_virtual_machine_memory                      =  "${lookup(var.vsphere_virtual_machine_memory, "webserver02")}"
+=======
+>>>>>>> 72ce031e6eb9d878c797f1141c396a8112110b68
   #vsphere_virtual_machine_wait_for_guest_net_timeout  = "${var.vsphere_virtual_machine_wait_for_guest_net_timeout}"
   #vsphere_virtual_machine_wait_for_guest_net_routable = "${var.vsphere_virtual_machine_wait_for_guest_net_routable}"
 }
@@ -99,8 +108,11 @@ module "webserver03_vm" {
   vsphere_virtual_machine_ipv4_gateway                = "${var.vsphere_virtual_machine_ipv4_gateway}"
   vsphere_virtual_machine_dns_server_list             = "${var.vsphere_virtual_machine_dns_server_list}"
   vsphere_virtual_machine_dns_suffix_list             = "${var.vsphere_virtual_machine_dns_suffix_list}"
+<<<<<<< HEAD
   vsphere_virtual_machine_num_cpus                    =  "${lookup(var.vsphere_virtual_machine_num_cpus, "webserver03")}"
   vsphere_virtual_machine_memory                      =  "${lookup(var.vsphere_virtual_machine_memory, "webserver03")}"
+=======
+>>>>>>> 72ce031e6eb9d878c797f1141c396a8112110b68
   #vsphere_virtual_machine_wait_for_guest_net_timeout  = "${var.vsphere_virtual_machine_wait_for_guest_net_timeout}"
   #vsphere_virtual_machine_wait_for_guest_net_routable = "${var.vsphere_virtual_machine_wait_for_guest_net_routable}"
 }
@@ -125,8 +137,11 @@ module "dbserver_vm" {
   vsphere_virtual_machine_ipv4_gateway                = "${var.vsphere_virtual_machine_ipv4_gateway}"
   vsphere_virtual_machine_dns_server_list             = "${var.vsphere_virtual_machine_dns_server_list}"
   vsphere_virtual_machine_dns_suffix_list             = "${var.vsphere_virtual_machine_dns_suffix_list}"
+<<<<<<< HEAD
   vsphere_virtual_machine_num_cpus                    =  "${lookup(var.vsphere_virtual_machine_num_cpus, "dbserver")}"
   vsphere_virtual_machine_memory                      =  "${lookup(var.vsphere_virtual_machine_memory, "dbserver")}"
+=======
+>>>>>>> 72ce031e6eb9d878c797f1141c396a8112110b68
   #vsphere_virtual_machine_wait_for_guest_net_timeout  = "${var.vsphere_virtual_machine_wait_for_guest_net_timeout}"
   #vsphere_virtual_machine_wait_for_guest_net_routable = "${var.vsphere_virtual_machine_wait_for_guest_net_routable}"
 }
@@ -154,7 +169,11 @@ module "kubernetes_vm" {
   vsphere_virtual_machine_dns_suffix_list             = "${var.vsphere_virtual_machine_dns_suffix_list}"
   #vsphere_virtual_machine_wait_for_guest_net_timeout  = "${var.vsphere_virtual_machine_wait_for_guest_net_timeout}"
   #vsphere_virtual_machine_wait_for_guest_net_routable = "${var.vsphere_virtual_machine_wait_for_guest_net_routable}"
+<<<<<<< HEAD
   vsphere_virtual_machine_num_cpus                    =  "${lookup(var.vsphere_virtual_machine_num_cpus, "kubernetes")}"
   vsphere_virtual_machine_memory                      =  "${lookup(var.vsphere_virtual_machine_memory, "kubernetes")}"
+=======
+  vsphere_virtual_machine_num_cpus                   =   "${lookup(var.vsphere_virtual_machine_num_cpus, "kubernetes")}"
+>>>>>>> 72ce031e6eb9d878c797f1141c396a8112110b68
 }
 

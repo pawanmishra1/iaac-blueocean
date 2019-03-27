@@ -24,7 +24,7 @@ variable "vsphere_compute_cluster" {
 
 variable "vsphere_host" {
   description = "vsphere host name"
-  default     = "192.168.61.12"
+  default     = "192.168.61.11"
 }
 
 variable "vsphere_datastore" {

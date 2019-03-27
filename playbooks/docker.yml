@@ -1,7 +1,7 @@
 --- 
  - hosts: docker 
    become: yes
-   become_user: ansible
+   become_user: root 
    roles: 
      - docker
 

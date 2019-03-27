@@ -93,15 +93,24 @@ variable "vsphere_virtual_machine_num_cpus" {
   type        = "map"
 
   default = {
+<<<<<<< HEAD
     "loadbalancer" = "2"
     "webserver01"  = "2"
     "webserver02"  = "2"
     "webserver03"  = "2"
     "dbserver"     = "2"
+=======
+    "loadbalancer" = "1"
+    "webserver01"  = "1"
+    "webserver02"  = "1"
+    "webserver03"  = "1"
+    "dbserver"     = "1"
+>>>>>>> 72ce031e6eb9d878c797f1141c396a8112110b68
     "kubernetes"   = "4"
   }
 }
 
+<<<<<<< HEAD
 variable "vsphere_virtual_machine_memory" {
   description = "vsphere virtual machine memory"
   type        = "map"
@@ -117,6 +126,8 @@ variable "vsphere_virtual_machine_memory" {
 }
 
 
+=======
+>>>>>>> 72ce031e6eb9d878c797f1141c396a8112110b68
 
 variable "vsphere_virtual_machine_ipv4_netmask" {
   description = "vsphere virtual machine ipv4 netmask"

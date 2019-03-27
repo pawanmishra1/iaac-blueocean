@@ -7,7 +7,6 @@
     description: Kubernetes
     enabled: true
     gpgcheck: true
-    sslverify:  0
     repo_gpgcheck: false
     baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el7-{{ kubernetes_yum_arch }}
     gpgkey:
@@ -17,7 +16,6 @@
 - name: Add Kubernetes GPG keys.
   become: yes
   become_user: root
-  sslverify:  0
   rpm_key:
     key: "{{ item }}"
     state: present

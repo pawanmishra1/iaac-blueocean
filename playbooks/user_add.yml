@@ -18,6 +18,14 @@
       user: "{{ item }}"
       key: "{{ lookup('file', '/home/ansible/.ssh/'+ 'id_rsa.pub') }}"
     with_items: "{{ users }}"
+  - name: "Add root authorized keys"
+    become: yes
+    authorized_key:
+      user: root
+      key: "{{ lookup('file', '/root/.ssh/'+ 'id_rsa.pub') }}"
+    with_items: root
+  
+
   - name: "Allow admin users to sudo without a password"
     become: yes
     lineinfile:

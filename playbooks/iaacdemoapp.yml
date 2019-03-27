@@ -8,11 +8,19 @@
     become: yes
     become_user: root
     file: path=/root/Dockerfiles/ state=directory
-
-  - name: Download Demo App in to server
-    copy:
-      src: kube-deplyment/iaacdemoapp.war
-      dest: /root/Dockerfiles/iaacdemoapp.war 
+ 
+  - name: Copy App files
+    copy: 
+      src: kube-deplyment/portal-ui.zip
+      dest: /root/Dockerfiles/
+ 
+  - name: Create App Folder 
+    become: yes
+    become_user: root
+    unarchive:
+      src: /root/Dockerfiles/portal-ui.zip 
+      dest: /root/Dockerfiles/
+      remote_src: yes
 
   - name: Create Docker file
     copy: 
@@ -22,8 +30,9 @@
   - name: Create App Docker image  
     become: yes
     become_user: root
-    command: "docker build -f /root/Dockerfiles/Dockerfile  -t iaacdemoapp /root/Dockerfiles/"
-  
+    command: "docker build -f /root/Dockerfiles/portal-ui/Dockerfile --network=host -t portal-ui:0.0.1  /root/Dockerfiles/portal-ui/"
+
+
   - name: Deploy App on Kubernetes    
-    command: "docker run -d -p 192.168.61.19:80:8080 --name iaacdemocon iaacdemoapp"
+    command: "docker run -d -t -i  -e BUILDER_API_URL='http://api.sol-accelerators.com/portal-api'  -p 4200:4200  --name=portal-ui  portal-ui:0.0.1"
 

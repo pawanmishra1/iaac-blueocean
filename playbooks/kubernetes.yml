@@ -1,11 +1,12 @@
-- hosts: kubemaster 
+---
+- hosts: kubemaster
   become: yes
   become_user: root
   vars:
     kubernetes_allow_pods_on_master: True
     kubernetes_role: "master"
-  roles:    
-    - kubernetes 
+  roles:
+    - kubernetes
 
 - hosts: kubenode
   become: yes
@@ -15,4 +16,5 @@
     kubernetes_role: "node"
   roles:
     - kubernetes
+
 
