@@ -12,19 +12,12 @@ pipeline {
                           echo \'All VM deleted\' '''
             
 	
-<<<<<<< HEAD
                  sh '''#!/bin/bash
                  cd \'/root/infrastructure-as-code/terraform/noncontainerized_env/'
                 /usr/local/bin/terraform apply -auto-approve
                 echo \'ALL VM Created\'  '''
-=======
-                   sh '''#!/bin/bash
-                      cd \'/root/infrastructure-as-code/terraform/small-size'
-                      /usr/local/bin/terraform apply -auto-approve
-                      echo \'ALL VM Created\'  '''
->>>>>>> e632ff02192bf5e7bd6745d44ed0c5a2959c6ece
-         
-                       ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/user_add.yml')
+                        
+                 ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/user_add.yml')
               }		  
             }
 
