@@ -6,14 +6,14 @@ pipeline {
             stage('Create VM') {                                            
                steps('Create VM ') {
                    sh '''#!/bin/bash
-                      cd \'/root/infrastructure-as-code/terraform/noncontainerized_env/'
+                      cd \'/root/infrastructure-as-code/terraform/small-sie/'
                           /usr/local/bin/terraform destroy -auto-approve
                           sleep 30 
                           echo \'All VM deleted\' '''
             
 	
                  sh '''#!/bin/bash
-                 cd \'/root/infrastructure-as-code/terraform/noncontainerized_env/'
+                 cd \'/root/infrastructure-as-code/terraform/small-size/'
                 /usr/local/bin/terraform apply -auto-approve
                 echo \'ALL VM Created\'  '''
                         
