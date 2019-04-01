@@ -6,7 +6,7 @@ pipeline {
             stage('Create VM') {                                            
                steps('Create VM ') {
                    sh '''#!/bin/bash
-                      cd \'/root/infrastructure-as-code/terraform/small-sie/'
+                      cd \'/root/infrastructure-as-code/terraform/small-size/'
                           /usr/local/bin/terraform destroy -auto-approve
                           sleep 30 
                           echo \'All VM deleted\' '''
