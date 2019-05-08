@@ -28,15 +28,7 @@ pipeline {
                      sleep 40
                      echo "VM Deleted"  '''
               }
-            }
-        
-            stage('User Add') {
-		      steps {
-                     sh '''#!/bin/bash
-                     sleep 220
-                     echo "User Added"  '''
-            }      
-          }
+           }
         }
       }		
       		 
@@ -65,74 +57,20 @@ pipeline {
                      echo "Install Kubernetes"  '''
               }
             }
-
-            stage('Install KubeAdm') {
-              steps {
-                sh '''#!/bin/bash
-                     sleep 40
-                     echo "Install KubeAdm"  '''
-
-              }
-            }
-    
-            stage('Install Kubectl') {
-                  steps {
-                     sh '''#!/bin/bash
-                     sleep 45
-                     echo "Install Kubectl"  '''
-
-                  }
-                }
-   
-			stage('Install Kubelet') {
-			  steps {
-			    sh '''#!/bin/bash
-							 sleep 50
-                     echo "Install Kubelet"  '''
-
-           }
          }
        }
-     }
   
  
  
-			stage('Provision Cluster') {
-				parallel {
-				   stage('Midsize Cluster') {
-				     steps {
-					    ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/kubernetes.yml')
-			  }
-			}
-     
-            stage('Setup Helm Charts') {
-               steps {
-                  sh '''#!/bin/bash
-                     sleep 220
-                     echo "Setup Helm Charts"  '''
-
-              }
-            }
-
-			stage('Setup ELK') {
-				steps {
-				   sh '''#!/bin/bash
-								 sleep 230
-								 echo "Setup ELK"  '''
-
-			  }
-			}
-				
-			stage('Setup Vault ') {
-				steps {
-				   sh '''#!/bin/bash
-								 sleep 240
-								 echo "Setup Vault"  '''
-
-		   }
+      stage('Provision Cluster') {
+	parallel {
+	   stage('Midsize Cluster') {
+	     steps {
+         	    ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/kubernetes.yml')
 	     }
-	   }
-	 }
+	    }
+     	   }
+	  }
      stage('Deploy App Stack') {
         parallel {
             stage('Install Couchbase ') {
@@ -145,12 +83,12 @@ pipeline {
                  ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/nginx-kube.yml')
               }
             }
-			stage('Install RabbitMQ ') {
-			   steps {
-				  ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/rabbitmq-kube.yml')
-		   	  }
-			}
-		 }
+	stage('Install RabbitMQ ') {
+	   steps {
+	     ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/rabbitmq-kube.yml')
+	     }
+	    }
+	   }
 	  } 
 
         
@@ -200,11 +138,11 @@ pipeline {
       stage('Application Testing') {
          parallel {
             stage('Integration Test') {
-                     steps {
-						 sh '''#!/bin/bash
-						 sleep 47
-						 echo "Integration test"  '''
-			  }
+             steps {
+	            sh '''#!/bin/bash
+		    sleep 47
+		    echo "Integration test"  '''
+	     }
             }
             
             stage('Functional Test') {
@@ -220,17 +158,17 @@ pipeline {
                      sh '''#!/bin/bash
                      sleep 39
                      echo "Integration test"  '''
-              }
+            }
            } 
-        }
-      }
+          }
+         }
              
       stage('Infra Security Inspection') {
             steps {
                 sh '''#!/bin/bash
                      sleep 39
                      echo "Security Inspection for Complete Infrastructure"  '''
-         }
+        }
       } 
            
       stage('Smoke Test') { 
@@ -240,7 +178,7 @@ pipeline {
                      echo "Smoke Test Completed"  '''
                }
             } 
-    }
+   }
 }
 
 
