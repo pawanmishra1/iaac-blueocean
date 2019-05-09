@@ -3,43 +3,28 @@ pipeline {
     stages {
       stage('Provisioning') {
         parallel {
-            stage('Create VM') {                                            
-               steps('Create VM ') {
+            stage('Clean VM') {                                            
+               steps('Clean VM ') {
                    sh '''#!/bin/bash
                       cd \'/root/infrastructure-as-code/terraform/small-size/'
-                          /usr/local/bin/terraform destroy -auto-approve
+                          /usr/local/bin/terraform show -auto-approve
                           sleep 30 
                           echo \'All VM deleted\' '''
-            
-	
-                 sh '''#!/bin/bash
+                        }
+                       }
+             stage('Clean VM') {
+               steps('Clean VM ') {
+	         sh '''#!/bin/bash
                  cd \'/root/infrastructure-as-code/terraform/small-size/'
-                /usr/local/bin/terraform apply -auto-approve
-                echo \'ALL VM Created\'  '''
+                 /usr/local/bin/terraform apply -auto-approve
+                 echo \'ALL VM Created\'  '''
                         
                  ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/user_add.yml')
               }		  
             }
-
-
-            stage('Clean VM ') {
-              steps {
-		         sh '''#!/bin/bash
-                     sleep 40
-                     echo "VM Deleted"  '''
-              }
-           }
-        }
-      }		
-      		 
-      stage('Infra Security Scan') {
-         steps {
-                         sh '''#!/bin/bash
-                     sleep 40
-                     echo "Security Scan Completed"  '''
-               }
-            }
-
+          }
+         }
+        		
 
       stage('Install Container Tools') {
          parallel {
@@ -71,7 +56,7 @@ pipeline {
 	    }
      	   }
 	  }
-     stage('Deploy App Stack') {
+      stage('Deploy App Stack') {
         parallel {
             stage('Install Couchbase ') {
                steps {
@@ -90,15 +75,7 @@ pipeline {
 	    }
 	   }
 	  } 
-
         
-      stage('Vulnerabilities scan') {
-                steps {
-                     sh '''#!/bin/bash
-                     sleep 30
-                     echo "Infra test"  '''
-        }
-      }
 
 
        
