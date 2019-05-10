@@ -30,17 +30,15 @@ pipeline {
          parallel {
             stage('Install Docker') {
                steps {
-                ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/docker.yml')
+                     ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/docker.yml')
            
              }
             }
    
             stage('Install Kubernetes') {
               steps {
-                  sh '''#!/bin/bash
-                     sleep 55
-                     echo "Install Kubernetes"  '''
-              }
+                    ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/docker.yml') 
+             }
             }
          }
        }
