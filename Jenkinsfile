@@ -5,11 +5,11 @@ pipeline {
         parallel {
             stage('Clean VM') {                                            
                steps('Clean VM ') {
+                   ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/iaacdemoappcl.yml')
                    sh '''#!/bin/bash
                       cd \'/root/infrastructure-as-code/terraform/small-size/'
                           /usr/local/bin/terraform show -auto-approve
                           sleep 30 
-                          ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/iaacdemoappcl.yml')
                           echo \'All VM deleted\' '''
                         }
                        }
