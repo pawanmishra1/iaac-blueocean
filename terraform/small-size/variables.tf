@@ -24,7 +24,7 @@ variable "vsphere_compute_cluster" {
 
 variable "vsphere_host" {
   description = "vsphere host name"
-  default     = "192.168.61.11"
+  default     = "192.168.61.12"
 }
 
 variable "vsphere_datastore" {
@@ -34,7 +34,7 @@ variable "vsphere_datastore" {
 
 variable "vsphere_network" {
   description = "vsphere network name"
-  default     = "DSwitch-VM Network"
+  default     = "vmnet"
 }
 
 variable "vsphere_network_interface"{
@@ -111,7 +111,7 @@ variable "vsphere_virtual_machine_ipv4_netmask" {
 variable "vsphere_virtual_machine_dns_server_list" {
   description = "vsphere virtual machine dns server list"
   type        = "list"
-  default     = ["192.168.61.9"]
+  default     = ["8.8.8.8"]
 }
 
 variable "vsphere_virtual_machine_dns_suffix_list" {

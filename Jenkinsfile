@@ -12,8 +12,8 @@ pipeline {
                           echo \'All VM deleted\' '''
                         }
                        }
-             stage('Clean VM') {
-               steps('Clean VM ') {
+             stage('Create VM') {
+               steps('Create VM ') {
 	         sh '''#!/bin/bash
                  cd \'/root/infrastructure-as-code/terraform/small-size/'
                  /usr/local/bin/terraform apply -auto-approve
