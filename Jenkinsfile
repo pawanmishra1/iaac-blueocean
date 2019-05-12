@@ -9,7 +9,6 @@ pipeline {
                    sh '''#!/bin/bash
                       cd \'/root/infrastructure-as-code/terraform/small-size/'
                           /usr/local/bin/terraform show -auto-approve
-                          sleep 30 
                           echo \'All VM deleted\' '''
                         }
                        }
