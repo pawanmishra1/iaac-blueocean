@@ -145,7 +145,7 @@ pipeline {
                      echo "Smoke Test Completed"  '''
                }
             } 
-      stage('Destroy VM') {
+      stage('Destroy Old Setup') {
                steps('Destroy Old Setup ') {
                    sh '''#!/bin/bash
                       cd \'/root/infrastructure-as-code/terraform/small-size/'
