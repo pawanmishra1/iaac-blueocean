@@ -146,11 +146,11 @@ pipeline {
                }
             } 
       stage('Destroy VM') {
-               steps('Destroy VM ') {
+               steps('Destroy Old Setup ') {
                    sh '''#!/bin/bash
                       cd \'/root/infrastructure-as-code/terraform/small-size/'
                           /usr/local/bin/terraform show -auto-approve
-                          echo \'All VM Deleted\' '''
+                          echo \'All Old VM,s Deleted\' '''
                         }
                        }
 
