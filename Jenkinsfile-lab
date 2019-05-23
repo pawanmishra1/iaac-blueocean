@@ -3,22 +3,13 @@ pipeline {
     stages {
       stage('Provisioning') {
         parallel {
-            stage('Clean VM') {                                            
-               steps('Clean VM ') {
-                   ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/iaacdemoappcl.yml')
-                   sh '''#!/bin/bash
-                      cd \'/root/infrastructure-as-code/terraform/small-size/'
-                          /usr/local/bin/terraform show -auto-approve
-                          echo \'All VM deleted\' '''
-                        }
-                       }
              stage('Create VM') {
                steps('Create VM ') {
 	         sh '''#!/bin/bash
                  cd \'/root/infrastructure-as-code/terraform/small-size/'
                  /usr/local/bin/terraform apply -auto-approve
                  echo \'ALL VM Created\'  '''
-                        
+                 ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/iaacdemoappcl.yml')       
                  ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/user_add.yml')
               }		  
             }
@@ -153,6 +144,15 @@ pipeline {
                      echo "Smoke Test Completed"  '''
                }
             } 
+      stage('Destroy VM') {
+               steps('Destroy VM ') {
+                   sh '''#!/bin/bash
+                      cd \'/root/infrastructure-as-code/terraform/small-size/'
+                          /usr/local/bin/terraform show -auto-approve
+                          echo \'All VM deleted\' '''
+                        }
+                       }
+
    }
 }
 
