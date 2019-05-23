@@ -1,5 +1,5 @@
 ---
-- hosts: kubemaster
+- hosts: webserver01 
   become: yes
   become_user: root
   tasks:
