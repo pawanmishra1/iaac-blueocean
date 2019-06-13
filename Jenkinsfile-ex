@@ -163,6 +163,7 @@ pipeline {
                 ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/securitypatch.yml')
 
              }
+           }
 
            
       stage('Smoke Test') { 
