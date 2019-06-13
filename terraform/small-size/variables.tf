@@ -9,7 +9,7 @@ variable "vsphere_password" {
 
 variable "vsphere_server" {
   description = "vsphere server"
-  default     = "192.168.61.10"
+  default     = "192.168.0.10"
 }
 
 variable "vsphere_datacenter" {
@@ -24,7 +24,7 @@ variable "vsphere_compute_cluster" {
 
 variable "vsphere_host" {
   description = "vsphere host name"
-  default     = "192.168.61.12"
+  default     = "192.168.0.12"
 }
 
 variable "vsphere_datastore" {
@@ -79,12 +79,12 @@ variable "vsphere_virtual_machine_ipv4_addresses" {
   type        = "map"
 
   default = {
-    "loadbalancer" = "192.168.61.18"
-    "webserver01"  = "192.168.61.19"
-    "webserver02"  = "192.168.61.20"
-    "webserver03"  = "192.168.61.21"
-    "dbserver"     = "192.168.61.22"
-    "kubernetes"   = "192.168.61.23"
+    "loadbalancer" = "192.168.0.18"
+    "webserver01"  = "192.168.0.19"
+    "webserver02"  = "192.168.0.20"
+    "webserver03"  = "192.168.0.21"
+    "dbserver"     = "192.168.0.22"
+    "kubernetes"   = "192.168.0.23"
   }
 }
 
@@ -122,7 +122,7 @@ variable "vsphere_virtual_machine_dns_suffix_list" {
 
 variable "vsphere_virtual_machine_ipv4_gateway" {
   description = "vsphere virtual machine ipv4 gateway"
-  default     = "192.168.61.1"
+  default     = "192.168.0.1"
 }
 
 variable "vsphere_virtual_machine_wait_for_guest_net_timeout" {

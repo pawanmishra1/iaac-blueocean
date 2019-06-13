@@ -23,7 +23,7 @@ module "loadbalancer_vm" {
   #vsphere_virtual_machine_wait_for_guest_net_routable = "${var.vsphere_virtual_machine_wait_for_guest_net_routable}"
 }
 
-# Create Create Web Server 01 VM
+# Create Web Server 01 VM
 module "webserver01_vm" {
   source                                              = "../modules/vsphere_virtual_machine"
   vsphere_user                                        = "${var.vsphere_user}"
@@ -48,7 +48,7 @@ module "webserver01_vm" {
   #vsphere_virtual_machine_wait_for_guest_net_routable = "${var.vsphere_virtual_machine_wait_for_guest_net_routable}"
 }
 
-# Create Create Web Server 02 VM
+# Create Web Server 02 VM
 module "webserver02_vm" {
   source                                              = "../modules/vsphere_virtual_machine"
   vsphere_user                                        = "${var.vsphere_user}"
