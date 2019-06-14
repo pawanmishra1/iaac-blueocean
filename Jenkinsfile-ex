@@ -1,10 +1,10 @@
 pipeline {
   agent any
     stages {
-      stage('Provisioning') {
+      stage('Extract Inventory') {
         parallel {
-             stage('Create VM') {
-               steps('Create VM ') {
+             stage('Get Application Stack Infra ') {
+               steps('Get Application Stack Infra ') {
 	         sh '''#!/bin/bash
                  cd \'/root/infrastructure-as-code/terraform/small-size/'
                  /usr/local/bin/terraform apply -auto-approve
