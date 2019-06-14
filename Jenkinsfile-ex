@@ -18,9 +18,8 @@ pipeline {
       
   	 stage('Patching OS') {
              steps {
-                ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/ospatch.yml')
-
-             }
+                ansiblePlaybook extras: '--verbose', inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/ospatch.yml'
+                }
             }
 	
 
@@ -108,10 +107,9 @@ pipeline {
             }
            stage('Patching Application') {
              steps {
-                ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/apppatch.yml')
-
-             }
-            }
+                   ansiblePlaybook extras: '--verbose', inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/apppatch.yml'
+                   }
+                 } 
 
          }
       }  
@@ -160,7 +158,7 @@ pipeline {
 
      stage('Security Patching') {
              steps {
-                ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/securitypatch.yml')
+                    ansiblePlaybook extras: '--verbose', inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/securitypatch.yml'                
 
              }
            }
