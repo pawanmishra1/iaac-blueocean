@@ -24,16 +24,16 @@ pipeline {
             }
 	
 
-      stage('Install Container Tools') {
+      stage('Upgrade Container Tools') {
          parallel {
-            stage('Install Docker') {
+            stage('Upgrade Docker') {
                steps {
                      ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/docker.yml')
            
              }
             }
    
-            stage('Install Kubernetes') {
+            stage('Upgrade Kubernetes') {
               steps {
                     ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/docker.yml') 
              }
@@ -52,19 +52,19 @@ pipeline {
 	    }
      	   }
 	  }
-      stage('Deploy App Stack') {
+      stage('Upgrade App Stack') {
         parallel {
-            stage('Install Couchbase ') {
+            stage('Upgrade Couchbase ') {
                steps {
                   ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/couchbase-kube.yml')
                }
             }
-            stage('Install Nginx') {
+            stage('Upgrade Nginx') {
               steps {
                  ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/nginx-kube.yml')
               }
             }
-	stage('Install RabbitMQ ') {
+	stage('Upgrade RabbitMQ ') {
 	   steps {
 	     ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/rabbitmq-kube.yml')
 	     }
@@ -75,9 +75,9 @@ pipeline {
 
 
        
-      stage('Application Deployment') {
+      stage('Upgrade Application') {
         parallel {
-            stage('App Code Git Checkout') {
+            stage('Checking latest version') {
                 steps {
                   sh '''#!/bin/bash
                      sleep 20
@@ -101,7 +101,7 @@ pipeline {
               }
             }
 
-            stage('Deploy App') {
+            stage('Update Application Deployment') {
                 steps {
                   ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/iaacdemoapp.yml')
                }
