@@ -4,7 +4,8 @@ pipeline {
       stage('Provisioning') {
         stage('Provision PKS Cluster') {
            steps {
-         	    ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/pks-cluster.yml')
+         	  ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/pks-cluster-delete.yml  
+                  ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/pks-cluster.yml')
 	     }
 	    }
      	   }
