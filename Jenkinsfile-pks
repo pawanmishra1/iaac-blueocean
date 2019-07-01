@@ -100,7 +100,6 @@ pipeline {
              }
             }
        
-       
       
            
       stage('Smoke Test') { 
@@ -111,7 +110,7 @@ pipeline {
                }
             } 
 
-   }
+   
 }
 
 
