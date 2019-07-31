@@ -1,0 +1,116 @@
+pipeline {
+  agent any
+    stages {
+        stage('Provision PKS Cluster') {
+           steps {
+         	  ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/pks-cluster-delete.yml')  
+                  ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/pks-cluster.yml')
+	     }
+	    }
+     	   
+	  
+      stage('Deploy App Stack') {
+        parallel {
+            stage('Install Couchbase ') {
+               steps {
+                  ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/couchbase-pks.yml')
+               }
+            }
+            stage('Install Nginx') {
+              steps {
+                 ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/nginx-pks.yml')
+              }
+            }
+	stage('Install RabbitMQ ') {
+	   steps {
+	     ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/rabbitmq-pks.yml')
+	     }
+	    }
+	   }
+	  } 
+        
+
+
+       
+      stage('Application Deployment') {
+        parallel {
+            stage('App Code Git Checkout') {
+                steps {
+                  sh '''#!/bin/bash
+                     sleep 20
+                     echo "SCM Check OUT"  '''
+               }
+            }
+            stage('Build App') {
+                steps {
+                  sh '''#!/bin/bash
+                     sleep 40
+                     echo "Build APP"  '''
+              }
+            }
+            
+
+            stage('Static Code Analysis') {
+                steps {
+                  sh '''#!/bin/bash
+                     sleep 60
+                     echo "Unit Test and Sonar  Code Coverage"  '''
+              }
+            }
+
+            stage('Deploy App') {
+                steps {
+                  ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/demoapppks.yml')
+               }
+            }
+         }
+      }  
+      stage('Application Testing') {
+         parallel {
+            stage('Integration Test') {
+             steps {
+	            sh '''#!/bin/bash
+		    sleep 47
+		    echo "Integration test"  '''
+	     }
+            }
+            
+            stage('Functional Test') {
+                    steps {
+                     sh '''#!/bin/bash
+                     sleep 54
+                     echo "Integration test"  '''
+               }
+            }
+           
+            stage('Regression test') {
+                    steps {
+                     sh '''#!/bin/bash
+                     sleep 39
+                     echo "Integration test"  '''
+            }
+           } 
+          }
+         }
+
+           stage('Application vulnerability Scan') {
+             steps {
+                ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/appscan.yml')
+
+             }
+            }
+       
+      
+           
+      stage('Smoke Test') { 
+            steps {
+                     sh '''#!/bin/bash
+                     sleep 30
+                     echo "Smoke Test Completed"  '''
+               }
+            } 
+
+ }   
+}
+
+
