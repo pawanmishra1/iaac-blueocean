@@ -158,7 +158,8 @@ pipeline {
                   ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/accesssecurity.yaml')
         }
       } 
-           
+     }
+   }    
       stage('Smoke Test') { 
             steps {
                      sh '''#!/bin/bash
@@ -177,5 +178,6 @@ pipeline {
 
    }
 }
+
 
 
