@@ -4,7 +4,7 @@ pipeline {
       stage('Provisioning') {
         parallel {
              stage('Create VM') {
-               steps('Create VM ') {
+               steps('Create Docker  VM ') {
 	         sh '''#!/bin/bash
                  cd \'/root/infrastructure-as-code/terraform/small-size/'
                  /usr/local/bin/terraform apply -auto-approve
@@ -13,7 +13,13 @@ pipeline {
                  ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/iaacdemoappcl.yml')
               }		  
             }
-          }
+             stage('Create Kubernetes VM') {
+               steps('Create VM ') {
+                 sh '''#!/bin/bash
+                 cd \'/root/infrastructure-as-code/terraform/small-size/'
+                 /usr/local/bin/terraform apply -auto-approve
+
+           }
          }
         		
 
@@ -138,8 +144,17 @@ pipeline {
          }
              
       stage('Infra Security Inspection') {
+            parallel {
+
+            stage('Ports Security  Scan') {
+             steps {
+                ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/portsecurity.yml')
+
+             }
+            }
+            stage('Access Security  Scan') {
             steps {
-                  ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/ossecurity.yaml')
+                  ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/accesssecurity.yaml')
         }
       } 
            
