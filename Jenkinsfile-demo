@@ -18,7 +18,7 @@ pipeline {
                  sh '''#!/bin/bash
                  cd \'/root/infrastructure-as-code/terraform/small-size/'
                  /usr/local/bin/terraform apply -auto-approve
-
+                echo \'ALL VM Created\'  '''
            }
          }
         }
