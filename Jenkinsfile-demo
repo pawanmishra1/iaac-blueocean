@@ -21,8 +21,9 @@ pipeline {
 
            }
          }
-        		
-
+        }
+       }		
+        
       stage('Install Container Tools') {
          parallel {
             stage('Install Docker') {
