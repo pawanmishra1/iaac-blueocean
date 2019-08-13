@@ -144,14 +144,6 @@ pipeline {
                      echo "Smoke Test Completed"  '''
                }
             } 
-      stage('Destroy VM') {
-               steps('Destroy VM ') {
-                   sh '''#!/bin/bash
-                      cd \'/root/infrastructure-as-code/terraform/small-size/'
-                          /usr/local/bin/terraform show -auto-approve
-                          echo \'All VM deleted\' '''
-                        }
-                       }
 
    }
 }
