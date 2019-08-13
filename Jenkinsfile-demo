@@ -1,0 +1,175 @@
+pipeline {
+  agent any
+    stages {
+      stage('Provisioning') {
+        parallel {
+             stage('Create VM') {
+               steps('Create Docker  VM ') {
+	         sh '''#!/bin/bash
+                 cd \'/root/infrastructure-as-code/terraform/small-size/'
+                 /usr/local/bin/terraform apply -auto-approve
+                 echo \'ALL VM Created\'  '''
+                 ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/user_add.yml')
+                 ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/iaacdemoappcl.yml')
+              }		  
+            }
+             stage('Create Kubernetes VM') {
+               steps('Create VM ') {
+                 sh '''#!/bin/bash
+                 cd \'/root/infrastructure-as-code/terraform/small-size/'
+                 /usr/local/bin/terraform apply -auto-approve
+                echo \'ALL VM Created\'  '''
+           }
+         }
+        }
+       }		
+        
+      stage('Install Container Tools') {
+         parallel {
+            stage('Install Docker') {
+               steps {
+                     ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/docker.yml')
+           
+             }
+            }
+   
+            stage('Install Kubernetes') {
+              steps {
+                    ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/kubedocker.yml') 
+             }
+            }
+         }
+       }
+  
+ 
+ 
+      stage('Provision Cluster') {
+	parallel {
+	   stage('Midsize Cluster') {
+	     steps {
+         	    ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/kubernetes.yml')
+	     }
+	    }
+     	   }
+	  }
+      stage('Deploy App Stack') {
+        parallel {
+            stage('Install Couchbase ') {
+               steps {
+                  ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/couchbase-kube.yml')
+               }
+            }
+            stage('Install Nginx') {
+              steps {
+                 ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/nginx-kube.yml')
+              }
+            }
+	stage('Install RabbitMQ ') {
+	   steps {
+	     ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/rabbitmq-kube.yml')
+	     }
+	    }
+	   }
+	  } 
+        
+
+
+       
+      stage('Application Deployment') {
+        parallel {
+            stage('App Code Git Checkout') {
+                steps {
+                  sh '''#!/bin/bash
+                     sleep 20
+                     echo "SCM Check OUT"  '''
+               }
+            }
+            stage('Build App') {
+                steps {
+                  sh '''#!/bin/bash
+                     sleep 40
+                     echo "Build APP"  '''
+              }
+            }
+            
+
+            stage('Static Code Analysis') {
+                steps {
+                  sh '''#!/bin/bash
+                     sleep 60
+                     echo "Unit Test and Sonar  Code Coverage"  '''
+              }
+            }
+
+            stage('Deploy App') {
+                steps {
+                  ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/iaacdemoapp.yml')
+               }
+            }
+         }
+      }  
+      stage('Application Testing') {
+         parallel {
+
+            stage('Application vulnerability Scan') {
+             steps {
+                ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/appscan.yml')
+
+             }
+            }
+
+            stage('Integration Test') {
+             steps {
+	            sh '''#!/bin/bash
+		    sleep 47
+		    echo "Integration test"  '''
+	     }
+            }
+            
+            stage('Functional Test') {
+                    steps {
+                     sh '''#!/bin/bash
+                     sleep 54
+                     echo "Integration test"  '''
+               }
+            }
+           
+            stage('Regression test') {
+                    steps {
+                     sh '''#!/bin/bash
+                     sleep 39
+                     echo "Integration test"  '''
+            }
+           } 
+          }
+         }
+             
+      stage('Infra Security Inspection') {
+            parallel {
+
+            stage('Ports Security  Scan') {
+             steps {
+                ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/portsecurity.yml')
+
+             }
+            }
+            stage('Access Security  Scan') {
+            steps {
+                  ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/accesssecurity.yaml')
+        }
+      } 
+     }
+   }    
+      stage('Smoke Test') { 
+            steps {
+                     sh '''#!/bin/bash
+                     sleep 30
+                     echo "Smoke Test Completed"  '''
+               }
+            } 
+
+   }
+}
+
+
+
