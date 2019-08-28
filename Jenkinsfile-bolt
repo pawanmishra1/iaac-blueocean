@@ -1,0 +1,73 @@
+pipeline {
+  agent any
+    stages {
+      stage('Provisioning') {
+        parallel {
+             stage('Create VM') {
+               steps('Create Docker  VM ') {
+	         sh '''#!/bin/bash
+                 cd \'/root/infrastructure-as-code/terraform/small-size/'
+                 /usr/local/bin/terraform apply -auto-approve
+                 echo \'ALL VM Created\'  '''
+              }		  
+            }
+        }
+       }		
+        
+      stage('Install Container Tools') {
+         
+            stage('Install Docker') {
+               steps {
+                    sh '''#!/bin/bash
+                    bolt plan run docker::docker ''' 
+           
+             }
+            }
+   
+            stage('Install Kubernetes') {
+              steps {
+                  sh '''#!/bin/bash
+                    bolt plan run kubernetes::kubernetes '''
+               }
+            }
+       }
+  
+ 
+ 
+      stage('Provision Cluster') {
+	parallel {
+	   stage('Midsize Cluster') {
+	     steps {
+         	     sh '''#!/bin/bash
+                    bolt plan run kubernetes::kubecluster '''
+	     }
+	    }
+     	   }
+	  }
+      stage('Deploy App Stack') {
+        parallel {
+            stage('Install Couchbase ') {
+               steps {
+              sh '''#!/bin/bash
+                    bolt plan run couchbase::couchbase '''  
+             }
+            }
+            stage('Install Nginx') {
+              steps {
+                 sh '''#!/bin/bash
+                    bolt plan run nginx::nginx '''
+              }
+            }
+	stage('Install RabbitMQ ') {
+	   steps {
+	     sh '''#!/bin/bash
+                    bolt plan run rabbitmq::rabbitmq '''
+	     }
+	    }
+	   }
+        } 
+    }
+}
+
+
+
