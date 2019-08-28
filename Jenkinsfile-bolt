@@ -11,10 +11,9 @@ pipeline {
                  echo \'ALL VM Created\'  '''
               }		  
             }
-        }
+          }
        }		
         
-      stage('Install Container Tools') {
          
             stage('Install Docker') {
                steps {
@@ -30,9 +29,6 @@ pipeline {
                     bolt plan run kubernetes::kubernetes '''
                }
             }
-       }
-  
- 
  
       stage('Provision Cluster') {
 	parallel {
