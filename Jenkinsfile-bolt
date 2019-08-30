@@ -4,10 +4,9 @@ pipeline {
       stage('Provisioning') {
         parallel {
              stage('Create VM') {
-               steps('Create Docker  VM ') {
+               steps('Create VM,s ') {
 	         sh '''#!/bin/bash
-                 cd \'/root/infrastructure-as-code/terraform/small-size/'
-                 /usr/local/bin/terraform apply -auto-approve
+                 /usr/local/bin/bolt plan run provision::provision -u root
                  echo \'ALL VM Created\'  '''
               }		  
             }
