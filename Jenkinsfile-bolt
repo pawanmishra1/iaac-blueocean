@@ -18,7 +18,7 @@ pipeline {
             stage('Install Docker') {
                steps {
                     sh '''#!/bin/bash
-                    bolt plan run docker::docker ''' 
+                    /usr/local/bin/bolt plan run docker::docker ''' 
            
              }
             }
@@ -26,7 +26,7 @@ pipeline {
             stage('Install Kubernetes') {
               steps {
                   sh '''#!/bin/bash
-                    bolt plan run kubernetes::kubernetes '''
+                    /usr/local/bin/bolt plan run kubernetes::kubernetes '''
                }
             }
  
@@ -35,7 +35,7 @@ pipeline {
 	   stage('Midsize Cluster') {
 	     steps {
          	     sh '''#!/bin/bash
-                    bolt plan run kubernetes::kubecluster '''
+                    /usr/local/bin/bolt plan run kubernetes::kubecluster '''
 	     }
 	    }
      	   }
@@ -45,19 +45,19 @@ pipeline {
             stage('Install Couchbase ') {
                steps {
               sh '''#!/bin/bash
-                    bolt plan run couchbase::couchbase '''  
+                    /usr/local/bin/bolt plan run couchbase::couchbase '''  
              }
             }
             stage('Install Nginx') {
               steps {
                  sh '''#!/bin/bash
-                    bolt plan run nginx::nginx '''
+                    /usr/local/bin/bolt plan run nginx::nginx '''
               }
             }
 	stage('Install RabbitMQ ') {
 	   steps {
 	     sh '''#!/bin/bash
-                    bolt plan run rabbitmq::rabbitmq '''
+                    /usr/local/bin/bolt plan run rabbitmq::rabbitmq '''
 	     }
 	    }
 	   }
