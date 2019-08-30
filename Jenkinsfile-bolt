@@ -26,7 +26,7 @@ pipeline {
             stage('Install Kubernetes') {
               steps {
                   sh '''#!/bin/bash
-                    /usr/local/bin/bolt plan run kubernetes::kubernetes '''
+                    /usr/local/bin/bolt plan run kubernetes::kubernetes -u root '''
                }
             }
  
@@ -35,7 +35,7 @@ pipeline {
 	   stage('Midsize Cluster') {
 	     steps {
          	     sh '''#!/bin/bash
-                    /usr/local/bin/bolt plan run kubernetes::kubecluster '''
+                    /usr/local/bin/bolt plan run kubernetes::kubecluster -u root '''
 	     }
 	    }
      	   }
@@ -45,19 +45,19 @@ pipeline {
             stage('Install Couchbase ') {
                steps {
               sh '''#!/bin/bash
-                    /usr/local/bin/bolt plan run couchbase::couchbase '''  
+                    /usr/local/bin/bolt plan run couchbase::couchbase -u root '''  
              }
             }
             stage('Install Nginx') {
               steps {
                  sh '''#!/bin/bash
-                    /usr/local/bin/bolt plan run nginx::nginx '''
+                    /usr/local/bin/bolt plan run nginx::nginx -u root '''
               }
             }
 	stage('Install RabbitMQ ') {
 	   steps {
 	     sh '''#!/bin/bash
-                    /usr/local/bin/bolt plan run rabbitmq::rabbitmq '''
+                    /usr/local/bin/bolt plan run rabbitmq::rabbitmq -u root '''
 	     }
 	    }
 	   }
