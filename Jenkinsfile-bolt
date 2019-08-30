@@ -18,7 +18,7 @@ pipeline {
             stage('Install Docker') {
                steps {
                     sh '''#!/bin/bash
-                    /usr/local/bin/bolt plan run docker::docker ''' 
+                    /usr/local/bin/bolt plan run docker::docker -u root ''' 
            
              }
             }
