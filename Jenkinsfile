@@ -1,17 +1,18 @@
 pipeline {
+
   agent any
     stages {
       stage('Provisioning') {
         parallel {
              stage('Create VM') {
                  steps('Create VM ') {
-	           ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/iaacdemoappcl.yml')
                    sh '''#!/bin/bash
                    cd \'/root/infrastructure-as-code/terraform/small-size/'
                    /usr/local/bin/terraform apply -auto-approve
                    echo \'ALL VM Created\'  '''
-                        
-                   ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/user_add.yml')
+                    ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/iaacdemoappcl.yml')     
+                    ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/user_add.yml')
+                    ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/update-certs.yaml')
               }		  
             }
           }
