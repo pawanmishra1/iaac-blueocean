@@ -113,7 +113,7 @@ pipeline {
 
             stage('Application vulnerability Scan OpenScap') {
              steps {
-                ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/appscan.yml')
+                ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/complete/appscan.yml')
 
              }
             }
@@ -149,13 +149,13 @@ pipeline {
 
             stage('Ports Security  Scan') {
              steps {
-                ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/portsecurity.yml')
+                ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/complete/portsecurity.yml')
 
              }
             }
             stage('Access Security  Scan') {
             steps {
-                  ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/accesssecurity.yaml')
+                  ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/complete/accesssecurity.yaml')
         }
       } 
      }
