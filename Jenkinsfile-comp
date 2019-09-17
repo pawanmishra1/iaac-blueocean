@@ -117,7 +117,12 @@ pipeline {
 
              }
             }
-
+           
+           stage('Publish CVE Reports') {
+             steps {
+               publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/tmp', reportFiles: 'report.html', reportName: 'OSCAP CVE Report', reportTitles: ''])
+                }
+               }
             stage('Integration Test') {
              steps {
 	            sh '''#!/bin/bash
