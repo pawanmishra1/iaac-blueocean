@@ -113,7 +113,7 @@ pipeline {
 
             stage('Application vulnerability Scan OpenScap') {
              steps {
-                ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/complete/appscan.yml')
+                ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/complete/docker-vs.yaml')
 
              }
             }
