@@ -110,19 +110,7 @@ pipeline {
       }  
       stage('Application Testing') {
          parallel {
-
-            stage('Application vulnerability Scan OpenScap') {
-             steps {
-                ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/complete/docker-vs.yaml')
-
-             }
-            }
-           
-           stage('Publish CVE Reports') {
-             steps {
-               publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/tmp', reportFiles: 'report.html', reportName: 'OSCAP CVE Report', reportTitles: ''])
-                }
-               }
+               
             stage('Integration Test') {
              steps {
 	            sh '''#!/bin/bash
@@ -149,8 +137,21 @@ pipeline {
           }
          }
              
-      stage('Infra Security Inspection') {
+      stage('Security Inspection') {
             parallel {
+               stage('Application vulnerability Scan OpenScap') {
+                 steps {
+                 ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/complete/docker-vs.yaml')
+   
+                    }
+                  }
+
+           stage('Publish CVE Reports') {
+             steps {
+               publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/tmp', reportFiles: 'report-image.html', reportName: 'Image-CVE-Report', reportTitles: ''])
+                publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/tmp', reportFiles: 'report-container.html', reportName: 'Container-CVE-Report', reportTitles: ''])
+                }
+               }
 
             stage('Ports Security  Scan') {
              steps {
