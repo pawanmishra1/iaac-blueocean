@@ -1,0 +1,106 @@
+---
+ - hosts: webserver01 
+   vars:
+   tasks:
+    - name: Ensure rsh-server is removed
+      package:
+        name: "{{item}}"
+        state: absent
+      with_items:
+        - rsh-server
+      tags:
+        - package_rsh-server_removed
+        - high_severity
+        - disable_strategy
+        - low_complexity
+        - low_disruption
+        - CCE-27342-5
+        - NIST-800-53-AC-17(8)
+        - NIST-800-53-CM-7(a)
+        - DISA-STIG-RHEL-07-020000
+
+    - name: Ensure telnet-server is removed
+      package:
+        name: "{{item}}"
+        state: absent
+      with_items:
+        - telnet-server
+      tags:
+        - package_telnet-server_removed
+        - high_severity
+        - disable_strategy
+        - low_complexity
+        - low_disruption
+        - CCE-27165-0
+        - NIST-800-53-AC-17(8)
+        - NIST-800-53-CM-7(a)
+        - DISA-STIG-RHEL-07-021710
+
+    - name: Ensure ypserv is removed
+      package:
+        name: "{{item}}"
+        state: absent
+      with_items:
+        - ypserv
+      tags:
+        - package_ypserv_removed
+        - high_severity
+        - disable_strategy
+        - low_complexity
+        - low_disruption
+        - CCE-27399-5
+        - NIST-800-53-AC-17(8)
+        - NIST-800-53-CM-7(a)
+        - DISA-STIG-RHEL-07-020010
+    - name: Ensure tftp-server is removed
+      package:
+        name: "{{item}}"
+        state: absent
+      with_items:
+        - tftp-server
+      tags:
+        - package_tftp-server_removed
+        - high_severity
+        - disable_strategy
+        - low_complexity
+        - low_disruption
+        - CCE-80213-2
+        - NIST-800-53-AC-17(8)
+        - NIST-800-53-CM-6(c)
+        - NIST-800-53-CM-7
+        - DISA-STIG-RHEL-07-040700
+
+    - name: Ensure vsftpd is removed
+      package:
+        name: "{{item}}"
+        state: absent
+      with_items:
+        - vsftpd
+      tags:
+        - package_vsftpd_removed
+        - high_severity
+        - disable_strategy
+        - low_complexity
+        - low_disruption
+        - CCE-80245-4
+        - NIST-800-53-CM-6(b)
+        - NIST-800-53-CM-7
+        - DISA-STIG-RHEL-07-040690
+
+
+    - name: Ensure xorg-x11-server-common is removed
+      package:
+        name: "{{item}}"
+        state: absent
+      with_items:
+        - xorg-x11-server-common
+      tags:
+        - package_xorg-x11-server-common_removed
+        - medium_severity
+        - disable_strategy
+        - low_complexity
+        - low_disruption
+        - CCE-27218-7
+        - NIST-800-53-AC-17(8).1(ii)
+        - DISA-STIG-RHEL-07-040730
+

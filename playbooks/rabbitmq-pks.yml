@@ -1,0 +1,13 @@
+---
+- hosts: pksmaster
+  become: yes
+  become_user: root
+  tasks:
+  - name: Launch 3 RabbitMQ pods
+    command: "kubectl  apply -f /root/IAAC/playbooks/kube-deplyment/rabbitmq-deployment.yml"
+
+
+  - name: Start RabbitMQ Service
+    command: "kubectl  apply -f /root/IAAC/playbooks/kube-deplyment/rabbitmq-svc.yml"
+
+

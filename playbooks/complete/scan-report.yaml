@@ -1,0 +1,29 @@
+---
+- hosts: webserver01
+  become: yes
+  become_user: root
+  tasks:
+  - name:  download Container Report
+    fetch:
+      src: /root/report-containers.html
+      dest: /tmp/report-containers.html
+      flat: yes
+  - name: download Images Report
+    fetch:
+      src: /root/report-images.html
+      dest: /tmp/report-images.html
+      flat: yes
+
+   - name: download system xccdf Report
+    fetch:
+      src: /root/scan-xccdf-report.html
+      dest: /tmp/scan-xccdf-report.html
+      flat: yes
+    ignore_errors: yes
+  - name: download OVAL Report
+    fetch:
+      src: /root/ssg-scan-oval-report.html
+      dest: /tmp/ssg-scan-oval-report.html
+      flat: yes
+    ignore_errors: yes
+

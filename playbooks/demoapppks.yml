@@ -1,0 +1,12 @@
+---
+- hosts: pksmaster 
+  become: yes
+  become_user: root
+  tasks:
+
+  - name: Create Docker folder
+    become: yes
+    become_user: root
+    file: path=/root/Dockerfiles/ state=directory
+ 
+

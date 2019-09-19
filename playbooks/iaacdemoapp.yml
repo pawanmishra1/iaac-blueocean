@@ -4,23 +4,30 @@
   become_user: root
   tasks:
 
+  - name: Delete Docker folder
+    become: yes
+    become_user: root
+    file: path=/root/Dockerfiles/ state=absent
+
   - name: Create Docker folder
     become: yes
     become_user: root
-    file: path=/root/Dockerfiles/ state=directory
- 
+    file: path=/root/Dockerfiles/ state=directory  
   - name: Copy App files
     copy: 
-      src: kube-deplyment/portal-ui.zip
+      src: /root/IAAC/playbooks/kube-deplyment/portal-ui.zip 
       dest: /root/Dockerfiles/
- 
-  - name: Create App Folder 
+  - name: Create App Folder
     become: yes
     become_user: root
-    unarchive:
-      src: /root/Dockerfiles/portal-ui.zip 
-      dest: /root/Dockerfiles/
-      remote_src: yes
+    command : unzip  /root/Dockerfiles/portal-ui.zip -d /root/Dockerfiles/
+  #- name: Create App Folder 
+  #  become: yes
+  #  become_user: root
+  #  unarchive:
+  #    src: /root/Dockerfiles/portal-ui.zip 
+  #    dest: /root/Dockerfiles/
+  #    remote_src: yes
 
   - name: Create Docker file
     copy: 
@@ -31,7 +38,6 @@
     become: yes
     become_user: root
     command: "docker build -f /root/Dockerfiles/portal-ui/Dockerfile --network=host -t portal-ui:0.0.1  /root/Dockerfiles/portal-ui/"
-
 
   - name: Deploy App on Kubernetes    
     command: "docker run -d -t -i  -e BUILDER_API_URL='http://api.sol-accelerators.com/portal-api'  -p 4200:4200  --name=portal-ui  portal-ui:0.0.1"

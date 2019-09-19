@@ -1,0 +1,69 @@
+# Copyright 2018 VMware, Inc.
+# SPDX-License-Identifier: BSD-2-Clause OR GPL-3.0-only
+
+# Variables file for deploying NSX-T Cluster
+#
+{
+  # Common NSX Appliance variables
+  #
+  "nsx_username": "admin",
+  "nsx_password": "Password@123",
+  "validate_certs": False,
+  # OVA/OVF Information. Path can be on local file system or a HTTP URL
+  #
+  "nsx_ova_path": "/root/vmware",
+  "nsx_ova": "nsx-unified-appliance-2.4.1.0.0.13716579.ova",
+  "nsx_edge_ova": "nsx-edge-2.4.1.0.0.13716583.ova",
+  #
+  # Common network details. This assumes all NSX appliance nodes are on the
+  # same subnet. If there is a need to deploy NSX appliance nodes which are
+  # on different subnets, add node specific details in the blocks below and
+  # use them in the playbooks instead.
+  #
+  "domain": "emcdigital.lab",
+  "netmask": "255.255.255.0",
+  "gateway": "192.168.61.1",
+  "dns_server": "192.168.61.9",
+  "ntp_server": "192.168.61.42",
+  #
+  # First NSX appliance node. Defined separate based on the consumption.
+  # Accepts both IP (IPv4) and FQDN for 'mgmt_ip'
+  #
+  "nsx_node1": {
+    "hostname": "nsx.emcdigital.lab",
+    "edge_hostname": "EdgeNode01.emcdigital.lab",
+    "edge_mgmt_ip": "192.168.61.37",
+    "mgmt_ip": "192.168.61.35",
+    "datacenter": "Datacenter",
+    "cluster": "Cluster_iaac",
+    "datastore": "Datastore_VM",
+    "portgroup": "vmnet"
+  },
+
+  "additional_nodes": [
+    {
+      "hostname": "nsx-02.emcdigital.lab",
+      "mgmt_ip": "192.168.61.36",
+      "prefix": "24",
+      "datacenter_moid": "Datacenter",
+      "cluster_moid": "Cluster_iaac",
+      "datastore_moid": "Datastore_VM",
+      "portgroup_moid": "vmnet"
+    }
+       
+  ],  
+
+
+
+  #
+  # One or more compute managers that have to be registered with NSX
+  #
+  "compute_managers": {
+    "display_name": "nsxc-manager",
+    "mgmt_ip": "192.168.61.10",
+    "origin_type": "vCenter",
+    "credential_type": "UsernamePasswordLoginCredential",
+    "username": "administrator@emcdigital.lab",
+    "password": "Password@123"
+    }
+ }

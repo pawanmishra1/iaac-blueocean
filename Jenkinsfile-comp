@@ -142,15 +142,17 @@ pipeline {
                stage('OVAL Scan of App Images & Container') {
                  steps {
                  ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/complete/docker-vs.yaml')
-                   publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/tmp', reportFiles: 'report-image.html', reportName: 'Image-CVE-Report', reportTitles: ''])
-                     publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/tmp', reportFiles: 'report-container.html', reportName: 'Container-CVE-Report', reportTitles: '']) 
+                   ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/complete/scan-report.yaml')
+                     publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/tmp', reportFiles: 'report-image.html', reportName: 'Image-CVE-Report', reportTitles: ''])
+                       publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/tmp', reportFiles: 'report-container.html', reportName: 'Container-CVE-Report', reportTitles: '']) 
                     }
                   }
                stage('Server Scan for OVAL & XCCDF') {
                  steps {
                  ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/complete/server-scan.yaml')
-                   publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/tmp', reportFiles: 'scan-xccdf-report.html', reportName: 'System-xccdf-Report', reportTitles: ''])
-                     publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/tmp', reportFiles: 'ssg-scan-oval-report.html', reportName: 'Systen-OVAL-Report', reportTitles: ''])
+                    ansiblePlaybook(inventory: '/root/IAAC/playbooks/inventory.ini', playbook: '/root/IAAC/playbooks/complete/scan-report.yaml')
+                     publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/tmp', reportFiles: 'scan-xccdf-report.html', reportName: 'System-xccdf-Report', reportTitles: ''])
+                      publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/tmp', reportFiles: 'ssg-scan-oval-report.html', reportName: 'Systen-OVAL-Report', reportTitles: ''])
                     }
                   }
 

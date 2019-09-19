@@ -1,0 +1,22 @@
+---
+- hosts: all
+  become: yes
+  become_user: root
+  tasks:
+
+  - name: Copy Certificates to server
+    copy:
+      src: "kube-deplyment/emcrootca.zip"
+      dest: "/root/emcrootca.zip"
+
+  - name: Unarchive root certificate
+    become: yes
+    become_user: root
+    unarchive:
+      src: "/root/emcrootca.zip"
+      dest: "/etc/pki/ca-trust/source/anchors/"
+      remote_src: yes
+
+
+  - name: Update CA Trust Certificate
+    command: " update-ca-trust extract "

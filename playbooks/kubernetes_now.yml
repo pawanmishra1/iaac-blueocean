@@ -1,0 +1,9 @@
+---
+- hosts: kubemaster
+  become: yes
+  become_user: root
+  tasks: 
+  - name: Create Cluster
+    command: "kubectl get nodes"
+    ignore_errors: yes
+

@@ -1,0 +1,28 @@
+---
+- hosts: pksmaster 
+  become: yes
+  become_user: root
+  tasks:
+
+  - name: Setup pks login 
+    command: "pks login -a pks.emcdigital.lab -u appmod -p Password@123 -k"
+
+
+  - name: Create PKS Cluster  
+    command: "pks create-cluster pks-lab-cluster --external-hostname pks-lab-cluster.emcdigital.lab --plan small --num-nodes 3 --wait"
+    ignore_errors: yes    
+
+  
+  - name: Get PKS cluster Details
+    command: "pks get-credentials pks-lab-cluster "
+
+#  - name: Get PKS Cluster configuration 
+#    command: "'KUBECONFIG=cluster.config' pks get-credentials pks-lab-cluster "
+   
+  - name: Setup cluster details
+    command: "kubectl config use-context pks-lab-cluster"
+
+  - name: Print cluster details          
+    command: "kubectl cluster-info"
+    ignore_errors: yes
+

@@ -1,0 +1,9 @@
+--- 
+ - hosts: docker 
+   become: yes
+   become_user: root 
+   tasks:
+   - name:  Install Kubernetes
+     command: "docker ps -a"
+     ignore_errors: yes
+

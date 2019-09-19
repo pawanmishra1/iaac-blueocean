@@ -1,0 +1,59 @@
+---
+- hosts: kubemaster
+  become: yes
+  become_user: root
+  tasks:
+
+
+  - name: Copy Couchbase cluster role file
+    copy:
+      src: kube-deplyment/couchbase/cluster-role.yaml
+      dest: /root/cluster-role.yaml
+
+  - name: Create Couchbase cluster role
+    command: "kubectl  apply -f /root/cluster-role.yaml"
+#  - name: Create Service account
+#    command: "kubectl create serviceaccount couchbase-operator --namespace default"
+#  - name: Create Cluster Binding  
+#    command: "kubectl create clusterrolebinding couchbase-operator --clusterrole couchbase-operator --serviceaccount default:couchbase-operator"
+
+  - name: Copy Couchbase Operater file
+    copy:
+      src: kube-deplyment/couchbase/operator.yaml
+      dest: /root/operator.yaml
+
+  - name: Create Couchbase Operater
+    command: "kubectl  apply -f /root/operator.yaml"
+  
+#  - name: Create cbopctl command
+#    copy:
+#      src: kube-deplyment/couchbase/cbopctl
+#      dest: /usr/local/bin/cbopctl
+#      mode: 0777
+
+#  - name: Create Couchbase cluster file
+#    copy:
+#      src: kube-deplyment/couchbase/couchbase-cluster.yaml
+#      dest: /root/couchbase-cluster.yaml
+
+#  - name: Create Couchbase Cluster
+#    command: "cbopctl apply -f /root/couchbase-cluster.yaml"
+
+#  - name: Create postgresql Deployment file
+#    copy:
+#      src: kube-deplyment/postgres-deployment.yml
+#      dest: /root/postgres-deployment.yml
+
+#  - name: Create postgress DB
+#    command: "kubectl  apply -f /root/postgres-deployment.yml"
+
+
+ # - name: Get exposed port
+ #   command: "kubectl get svc postgress --output=jsonpath='{range .spec.ports[0]}{.nodePort}'"
+ #   register: result
+ # - set_fact:
+ #     node_port: "{{ result.stdout }}"
+
+ # - debug: msg="Exposed port {{ node_port }}"
+
+

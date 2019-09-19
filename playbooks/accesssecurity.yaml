@@ -1,0 +1,412 @@
+---
+ - hosts: webserver01 
+   become: yes
+   become_user: root
+   vars:
+   tasks:
+
+    - name: XCCDF Value var_sssd_ldap_tls_ca_dir # promote to variable
+      set_fact:
+        var_sssd_ldap_tls_ca_dir: !!str |-
+            /etc/openldap/cacerts
+      tags:
+        - always
+
+    - name: XCCDF Value sshd_idle_timeout_value # promote to variable
+      ignore_errors: yes
+      set_fact:
+        sshd_idle_timeout_value: !!str |-
+            600
+      tags:
+        - always
+
+    - name: Set SSH Idle Timeout Interval
+      ignore_errors: yes
+      lineinfile:
+        create: yes
+        dest: /etc/ssh/sshd_config
+        regexp: ^ClientAliveInterval
+        line: "ClientAliveInterval {{ sshd_idle_timeout_value }}"
+        validate: sshd -t -f %s
+      #notify: restart sshd
+      tags:
+        - sshd_set_idle_timeout
+        - unknown_severity
+        - restrict_strategy
+        - low_complexity
+        - low_disruption
+        - CCE-27433-2
+        - NIST-800-53-AC-2(5)
+        - NIST-800-53-SA-8(i)
+        - NIST-800-53-AC-12
+        - NIST-800-171-3.1.11
+        - PCI-DSS-Req-8.1.8
+        - CJIS-5.5.6
+        - DISA-STIG-RHEL-07-040320
+
+    - name: Enable SSH Warning Banner
+      ignore_errors: yes
+      lineinfile:
+        create: yes
+        dest: /etc/ssh/sshd_config
+        regexp: ^Banner
+        line: Banner /etc/issue
+        validate: sshd -t -f %s
+      tags:
+        - sshd_enable_warning_banner
+        - medium_severity
+        - restrict_strategy
+        - low_complexity
+        - low_disruption
+        - CCE-27314-4
+        - NIST-800-53-AC-8(a)
+        - NIST-800-53-AC-8(b)
+        - NIST-800-53-AC-8(c)(1)
+        - NIST-800-53-AC-8(c)(2)
+        - NIST-800-53-AC-8(c)(3)
+        - NIST-800-171-3.1.9
+        - CJIS-5.5.6
+        - DISA-STIG-RHEL-07-040170
+
+    - name: XCCDF Value sshd_approved_macs # promote to variable
+      ignore_errors: yes
+      set_fact:
+        sshd_approved_macs: !!str |-
+            hmac-sha2-512,hmac-sha2-256,hmac-sha1,hmac-sha1-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com
+      tags:
+        - always
+
+    - name: "Use Only Approved MACs"
+      ignore_errors: yes
+      lineinfile:
+        create: yes
+        dest: /etc/ssh/sshd_config
+        regexp: ^MACs
+        line: "MACs {{ sshd_approved_macs }}"
+        validate: sshd -t -f %s
+      #notify: restart sshd
+      tags:
+        - sshd_use_approved_macs
+        - medium_severity
+        - restrict_strategy
+        - low_complexity
+        - low_disruption
+        - CCE-27455-5
+        - NIST-800-53-AC-17(2)
+        - NIST-800-53-IA-7
+        - NIST-800-53-SC-13
+        - NIST-800-171-3.1.13
+        - NIST-800-171-3.13.11
+        - NIST-800-171-3.13.8
+        - DISA-STIG-RHEL-07-040400
+
+    - name: Do Not Allow SSH Environment Options
+      ignore_errors: yes
+      lineinfile:
+        create: yes
+        dest: /etc/ssh/sshd_config
+        regexp: ^PermitUserEnvironment
+        line: PermitUserEnvironment no
+        validate: sshd -t -f %s
+      tags:
+        - sshd_do_not_permit_user_env
+        - medium_severity
+        - restrict_strategy
+        - low_complexity
+        - low_disruption
+        - CCE-27363-1
+        - NIST-800-53-CM-6(b)
+        - NIST-800-171-3.1.12
+        - CJIS-5.5.6
+        - DISA-STIG-RHEL-07-010460
+
+    - name: "Disable Kerberos Authentication"
+      ignore_errors: yes
+      lineinfile:
+        create: yes
+        dest: /etc/ssh/sshd_config
+        regexp: (?i)^#?kerberosauthentication
+        line: KerberosAuthentication no
+        validate: sshd -t -f %s
+      #notify: restart sshd
+      tags:
+        - sshd_disable_kerb_auth
+        - medium_severity
+        - restrict_strategy
+        - low_complexity
+        - low_disruption
+        - CCE-80221-5
+        - NIST-800-53-CM-6(c)
+        - NIST-800-171-3.1.12
+        - DISA-STIG-RHEL-07-040440
+
+
+    - name: "Allow Only SSH Protocol 2"
+      ignore_errors: yes
+      lineinfile:
+        dest: /etc/ssh/sshd_config
+        regexp: "^Protocol [0-9]"
+        line: "Protocol 2"
+        validate: sshd -t -f %s
+      #notify: :reload ssh
+      tags:
+        - sshd_allow_only_protocol2
+        - high_severity
+        - restrict_strategy
+        - low_complexity
+        - low_disruption
+        - CCE-27320-1
+        - NIST-800-53-AC-17(8).1(ii)
+        - NIST-800-53-IA-5(1)(c)
+        - NIST-800-171-3.1.13
+        - NIST-800-171-3.5.4
+        - CJIS-5.5.6
+        - DISA-STIG-RHEL-07-040390
+
+    - name: Disable SSH Support for .rhosts Files
+      ignore_errors: yes
+      lineinfile:
+        create: yes
+        dest: /etc/ssh/sshd_config
+        regexp: ^IgnoreRhosts
+        line: IgnoreRhosts yes
+        validate: sshd -t -f %s
+      tags:
+        - sshd_disable_rhosts
+        - medium_severity
+        - restrict_strategy
+        - low_complexity
+        - low_disruption
+        - CCE-27377-1
+        - NIST-800-53-AC-3
+        - NIST-800-53-CM-6(a)
+        - NIST-800-171-3.1.12
+        - CJIS-5.5.6
+        - DISA-STIG-RHEL-07-040350
+
+    - name: Disable SSH Support for Rhosts RSA Authentication
+      ignore_errors: yes     
+      lineinfile:
+        create: yes
+        dest: /etc/ssh/sshd_config
+        regexp: ^RhostsRSAAuthentication
+        line: RhostsRSAAuthentication no
+        validate: sshd -t -f %s
+      tags:
+        - sshd_disable_rhosts_rsa
+        - medium_severity
+        - restrict_strategy
+        - low_complexity
+        - low_disruption
+        - CCE-80373-4
+        - NIST-800-53-CM-6(a)
+        - NIST-800-171-3.1.12
+        - DISA-STIG-RHEL-07-040330
+
+    - name: Enable Encrypted X11 Forwarding
+      ignore_errors: yes
+      lineinfile:
+        create: yes
+        dest: /etc/ssh/sshd_config
+        regexp: ^X11Forwarding
+        line: X11Forwarding yes
+        validate: sshd -t -f %s
+      tags:
+        - sshd_enable_x11_forwarding
+        - high_severity
+        - restrict_strategy
+        - low_complexity
+        - low_disruption
+        - CCE-80226-4
+        - NIST-800-53-CM-2(1)(b)
+        - NIST-800-171-3.1.13
+        - DISA-STIG-RHEL-07-040710
+
+    - name: Use Only Approved Ciphers
+      ignore_errors: yes
+      lineinfile:
+        create: yes
+        dest: /etc/ssh/sshd_config
+        regexp: ^Ciphers
+        line: Ciphers aes128-ctr,aes192-ctr,aes256-ctr,aes128-cbc,3des-cbc,aes192-cbc,aes256-cbc
+        validate: sshd -t -f %s
+      #notify: restart sshd
+      tags:
+        - sshd_use_approved_ciphers
+        - medium_severity
+        - restrict_strategy
+        - low_complexity
+        - low_disruption
+        - CCE-27295-5
+        - NIST-800-53-AC-3
+        - NIST-800-53-AC-17(2)
+        - NIST-800-53-AU-10(5)
+        - NIST-800-53-CM-6(b)
+        - NIST-800-53-IA-5(1)(c)
+        - NIST-800-53-IA-7
+        - NIST-800-171-3.1.13
+        - NIST-800-171-3.13.11
+        - NIST-800-171-3.13.8
+        - CJIS-5.5.6
+        - DISA-STIG-RHEL-07-040110
+
+    - name: Disable Host-Based Authentication
+      ignore_errors: yes
+      lineinfile:
+        create: yes
+        dest: /etc/ssh/sshd_config
+        regexp: ^HostbasedAuthentication
+        line: HostbasedAuthentication no
+      tags:
+        - disable_host_auth
+        - medium_severity
+        - restrict_strategy
+        - low_complexity
+        - low_disruption
+        - CCE-27413-4
+        - NIST-800-53-AC-3
+        - NIST-800-53-CM-6(b)
+        - NIST-800-171-3.1.12
+        - CJIS-5.5.6
+        - DISA-STIG-RHEL-07-010470
+
+    - name: "Enable use of Privilege Separation"
+      ignore_errors: yes
+      lineinfile:
+        create: yes
+        dest: /etc/ssh/sshd_config
+        regexp: (?i)^#?useprivilegeseparation
+        line: UsePrivilegeSeparation sandbox
+        validate: sshd -t -f %s
+      #notify: restart sshd
+      tags:
+        - sshd_use_priv_separation
+        - medium_severity
+        - restrict_strategy
+        - low_complexity
+        - low_disruption
+        - CCE-80223-1
+        - NIST-800-53-AC-6
+        - NIST-800-171-3.1.12
+        - DISA-STIG-RHEL-07-040460
+    - name: "Disable GSSAPI Authentication"
+      ignore_errors: yes
+      lineinfile:
+        create: yes
+        dest: /etc/ssh/sshd_config
+        regexp: (?i)^#?gssapiauthentication
+        line: GSSAPIAuthentication no
+        validate: sshd -t -f %s
+      #notify: sshd -t -f %s
+      tags:
+        - sshd_disable_gssapi_auth
+        - medium_severity
+        - restrict_strategy
+        - low_complexity
+        - low_disruption
+        - CCE-80220-7
+        - NIST-800-53-CM-6(c)
+        - NIST-800-171-3.1.12
+        - DISA-STIG-RHEL-07-040430
+
+    - name: "Disable Compression or Set Compression to delayed"
+      ignore_errors: yes
+      lineinfile:
+        create: yes
+        dest: /etc/ssh/sshd_config
+        regexp: (?i)^#?compression
+        line: Compression delayed
+        validate: sshd -t -f %s
+      #notify: restart sshd
+      tags:
+        - sshd_disable_compression
+        - medium_severity
+        - restrict_strategy
+        - low_complexity
+        - low_disruption
+        - CCE-80224-9
+        - NIST-800-53-CM-6(b)
+        - NIST-800-171-3.1.12
+        - DISA-STIG-RHEL-07-040470
+
+    - name: "Disable SSH Root Login"
+      ignore_errors: yes
+      lineinfile:
+        create: yes
+        dest: "/etc/ssh/sshd_config"
+        regexp: "^PermitRootLogin"
+        line: "PermitRootLogin no"
+        insertafter: '(?i)^#?authentication'
+        validate: sshd -t -f %s
+      #notify: restart sshd
+      tags:
+        - sshd_disable_root_login
+        - medium_severity
+        - restrict_strategy
+        - low_complexity
+        - low_disruption
+        - CCE-27445-6
+        - NIST-800-53-AC-3
+        - NIST-800-53-AC-6(2)
+        - NIST-800-53-IA-2(1)
+        - NIST-800-53-IA-2(5)
+        - NIST-800-171-3.1.1
+        - NIST-800-171-3.1.5
+        - CJIS-5.5.6
+        - DISA-STIG-RHEL-07-040370
+
+    - name: Ensure openssh-server is installed
+      ignore_errors: yes
+      package:
+        name: "{{item}}"
+        state: present
+      with_items:
+        - openssh-server
+      tags:
+        - package_openssh-server_installed
+        - medium_severity
+        - enable_strategy
+        - low_complexity
+        - low_disruption
+        - CCE-80215-7
+        - NIST-800-53-SC-8
+        - DISA-STIG-RHEL-07-040300
+
+    - name: Enable service sshd
+      service:
+        name: "{{item}}"
+        enabled: "yes"
+        state: "started"
+      with_items:
+        - sshd
+      tags:
+        - service_sshd_enabled
+        - medium_severity
+        - enable_strategy
+        - low_complexity
+        - low_disruption
+        - CCE-80216-5
+        - NIST-800-53-SC-8
+        - NIST-800-171-3.1.13
+        - NIST-800-171-3.5.4
+        - NIST-800-171-3.13.8
+        - DISA-STIG-RHEL-07-040310
+
+    - name: Ensure permission 0644 on /etc/ssh/*.pub
+      ignore_errors: yes
+      file:
+        path: "{{ item }}"
+        mode: 0644
+      with_items:
+        - /etc/ssh/*.pub
+      tags:
+        - file_permissions_sshd_pub_key
+        - medium_severity
+        - configure_strategy
+        - low_complexity
+        - low_disruption
+        - CCE-27311-0
+        - NIST-800-53-AC-6
+        - NIST-800-171-3.1.13
+        - NIST-800-171-3.13.10
+        - DISA-STIG-RHEL-07-040410

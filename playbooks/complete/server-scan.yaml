@@ -1,0 +1,46 @@
+---
+- hosts: all 
+  become: yes
+  become_user: root
+  tasks:
+  - name:  Install scanner 
+    yum:
+      name: "scap*"
+      state: latest
+    ignore_errors: yes
+
+  - name:  Install atomic scanner
+    yum:
+      name: "scap-security-guide"
+      state: latest
+    ignore_errors: yes
+  
+
+  - name: OVAL Scan of system
+    command: "oscap oval eval --results /root/scan-oval-results.xml /usr/share/xml/scap/ssg/content/ssg-centos7-ds.xml"
+    ignore_errors: yes
+ 
+  - name: Generate OVAL Reports
+    command: "oscap oval generate report /root/scan-oval-results.xml>/root/ssg-scan-oval-report.html"
+    ignore_errors: yes  
+
+  - name: XCCDF Scan of Systems
+    command: "oscap xccdf eval  --results /root/scan-xccdf-results.xml /usr/share/xml/scap/ssg/content/ssg-rhel7-ds.xml"
+    ignore_errors: yes
+
+  - name: Generate XCCDF Report
+    command: "oscap xccdf generate report /root/scan-xccdf-results.xml>/root/scan-xccdf-report.html"
+    ignore_errors: yes
+
+  - name: download system xccdf Report
+    fetch:
+      src: /root/scan-xccdf-report.html
+      dest: /tmp/scan-xccdf-report.html
+      flat: yes
+    ignore_errors: yes
+  - name: download OVAL Report
+    fetch:
+      src: /root/ssg-scan-oval-report.html
+      dest: /tmp/ssg-scan-oval-report.html
+      flat: yes
+    ignore_errors: yes

@@ -23,11 +23,23 @@
   when: not kubernetes_init_stat.stat.exists
 
 - name: Ensure .kube directory exists.
+  become: yes
+  become_user: root
+  file:
+    path: ~/.kube
+    state: absent
+
+
+- name: Ensure .kube directory exists.
+  become: yes
+  become_user: root
   file:
     path: ~/.kube
     state: directory
 
 - name: Symlink the kubectl admin.conf to ~/.kube/conf.
+  become: yes
+  become_user: root
   file:
     src: /etc/kubernetes/admin.conf
     dest: ~/.kube/config

@@ -1,0 +1,19 @@
+---
+- hosts: pksmaster
+  #become: yes
+  #become_user: root
+  tasks:
+
+
+  - name: Launch 3 nginx pods
+    command: "kubectl  apply -f /root/IAAC/playbooks/kube-deplyment/nginx-deployment.yml"
+
+  #- name: Get exposed port
+   # command: "kubectl get pods  nginx --output=jsonpath='{range .spec.ports[0]}{.nodePort}'"
+  #  register: result
+  #- set_fact:
+  #    node_port: "{{ result.stdout }}"
+
+  #- debug: msg="Exposed port {{ node_port }}"
+
+

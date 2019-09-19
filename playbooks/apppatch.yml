@@ -1,0 +1,11 @@
+---
+- hosts: all
+  become: yes
+  become_user: root
+  tasks:
+  - name:  Install OS Patches
+    yum:
+      name: "docker"
+      state: latest 
+    ignore_errors: yes
+

@@ -1,0 +1,48 @@
+---
+- hosts: docker 
+  become: yes
+  become_user: root
+  tasks:
+  - name:  Install scanner 
+    yum:
+      name: "scap*"
+      state: latest
+    ignore_errors: yes
+
+
+  - name:  Install atomic scanner
+    yum:
+      name: "scap-security-guide"
+      state: latest
+    ignore_errors: yes
+  
+  - name: pull images of Scan
+    command: "docker pull registry.access.redhat.com/rhel7"
+    ignore_errors: yes 
+
+  - name: remove old containers
+    command: "docker rm our-rhel7-container"
+    ignore_errors: yes
+
+  - name: create container for scan
+    command: "docker run --name 'our-rhel7-container' -d  registry.access.redhat.com/rhel7 /bin/bash"
+    ignore_errors: yes
+
+
+  - name: CVE Scan of Containers 
+    command: "oscap-docker container-cve our-rhel7-container"
+    ignore_errors: yes
+
+  - name: CVE Scan of Images
+    command: "oscap-docker image-cve registry.access.redhat.com/rhel7/openscap"
+    ignore_errors: yes
+
+  - name: Vulnerability Scan of Application  Images 
+    command: "oscap-docker image registry.access.redhat.com/rhel7 oval eval --results /root/oval-results-images.xml --report /root/report.html /usr/share/xml/scap/ssg/content/ssg-rhel7-oval.xml"
+    ignore_errors: yes
+
+  - name: Vulnerability  Scan of Application  Containers 
+    command: "oscap-docker container our-rhel7-container oval eval --results /root/oval-results-container.xml --report /root/report-containers.html /usr/share/xml/scap/ssg/content/ssg-rhel7-oval.xml"
+    ignore_errors: yes
+
+

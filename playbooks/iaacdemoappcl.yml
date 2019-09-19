@@ -1,0 +1,12 @@
+---
+- hosts: webserver01 
+  become: yes
+  
+  tasks:
+  - name:  Cleanup Application Container  
+    command: "docker rm -f portal-ui"
+    ignore_errors: yes
+  
+  - name: Clean Applicaton Images
+    command: "docker rmi portal-ui:0.0.1"
+    ignore_errors: yes

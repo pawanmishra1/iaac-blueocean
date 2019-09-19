@@ -1,0 +1,40 @@
+---
+- hosts: pksmaster
+  become: yes
+  become_user: root
+  tasks:
+
+  - name: Create postgressql Configmap Deployment file
+    copy:
+      src: kube-deplyment/postgres-configmap.yml
+      dest: /root/postgres-configmap.yml
+
+  - name: Create postgress config
+    command: "kubectl  apply -f /root/postgres-configmap.yml"
+  
+  - name: Create postgressql storage Deployment file
+    copy:
+      src: kube-deplyment/postgres-storage.yml
+      dest: /root/postgres-storage.yml
+
+  - name: Create postgress storage
+    command: "kubectl  apply -f /root/postgres-storage.yml"
+
+  - name: Create postgresql Deployment file
+    copy:
+      src: kube-deplyment/postgres-deployment.yml
+      dest: /root/postgres-deployment.yml
+
+  - name: Create postgress DB
+    command: "kubectl  apply -f /root/postgres-deployment.yml"
+
+
+ # - name: Get exposed port
+ #   command: "kubectl get svc postgress --output=jsonpath='{range .spec.ports[0]}{.nodePort}'"
+ #   register: result
+ # - set_fact:
+ #     node_port: "{{ result.stdout }}"
+
+ # - debug: msg="Exposed port {{ node_port }}"
+
+

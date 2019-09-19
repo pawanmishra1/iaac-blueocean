@@ -1,0 +1,27 @@
+---
+- hosts: docker 
+  become: yes
+  become_user: root
+  tasks:
+  - name:  Install scanner 
+    yum:
+      name: "scap*"
+      state: latest
+    ignore_errors: yes
+
+
+  - name:  Install atomic scanner
+    yum:
+      name: "atomic"
+      state: latest
+    ignore_errors: yes
+
+  - name: Vulnerability Scan of Application  Images 
+    command: "atomic scan --images"
+    ignore_errors: yes
+
+  - name: Vulnerability  Scan of Application  Containers 
+    command: "atomic scan --containers"
+    ignore_errors: yes
+
+

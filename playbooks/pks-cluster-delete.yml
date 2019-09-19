@@ -1,0 +1,19 @@
+---
+- hosts: pksmaster 
+  become: yes
+  become_user: root
+  tasks:
+
+  - name: Setup pks login 
+    command: "pks login -a pks.emcdigital.lab -u appmod -p Password@123 -k"
+
+
+  - name: Delete PKS Cluster  
+    command: "pks delete-cluster pks-lab-cluster --non-interactive --wait"
+    ignore_errors: yes
+  
+  - name: Check cluster Delete
+    command: "pks clusters "
+
+
+
