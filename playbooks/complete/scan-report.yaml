@@ -5,21 +5,25 @@
   tasks:
   - name:  download Container Report
     fetch:
-      src: /root/report-containers.html
-      dest: /tmp/report-containers.html
+      src: /root/report-cve-containers.html
+      dest: /tmp/report-cve-containers.html
       flat: yes
+    ignore_errors: yes
+
   - name: download Images Report
     fetch:
-      src: /root/report-images.html
-      dest: /tmp/report-images.html
+      src: /root/report-cve-images.html
+      dest: /tmp/report-cve-images.html
       flat: yes
+    ignore_errors: yes
 
-   - name: download system xccdf Report
+  - name: download system xccdf Report
     fetch:
       src: /root/scan-xccdf-report.html
       dest: /tmp/scan-xccdf-report.html
       flat: yes
     ignore_errors: yes
+  
   - name: download OVAL Report
     fetch:
       src: /root/ssg-scan-oval-report.html

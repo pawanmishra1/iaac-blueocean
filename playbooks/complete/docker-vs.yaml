@@ -42,20 +42,24 @@
     ignore_errors: yes
 
   - name: Vulnerability Scan of Application  Images 
-    command: "oscap-docker image  portal-ui oval eval --results /root/oval-results-container.xml --report /root/report-containers.html /usr/share/xml/scap/ssg/content/ssg-rhel7-oval.xml"
+    command: "oscap-docker image  portal-ui oval eval --results /root/oval-results-images.xml --report /root/report-cve-images.html /usr/share/xml/scap/ssg/content/ssg-rhel7-oval.xml"
     ignore_errors: yes
 
   - name: Vulnerability  Scan of Application  Containers 
-    command: "oscap-docker container portal-ui oval eval --results /root/oval-results-container.xml --report /root/report-containers.html /usr/share/xml/scap/ssg/content/ssg-rhel7-oval.xml"
+    command: "oscap-docker container portal-ui oval eval --results /root/oval-results-container.xml --report /root/report-cve-containers.html /usr/share/xml/scap/ssg/content/ssg-rhel7-oval.xml"
     ignore_errors: yes
 
-  - name: download Report
+  - name:  download Container Report
     fetch:
-      src: /root/report-containers.html
-      dest: /tmp/report-containers
+      src: /root/report-cve-containers.html
+      dest: /tmp/report-cve-containers.html
       flat: yes
-  - name: download Report
+    ignore_errors: yes
+
+  - name: download Images Report
     fetch:
-      src: /root/report-images.html
-      dest: /tmp/report-images
+      src: /root/report-cve-images.html
+      dest: /tmp/report-cve-images.html
       flat: yes
+    ignore_errors: yes
+
